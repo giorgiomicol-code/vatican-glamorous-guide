@@ -573,14 +573,32 @@ function toggleLangMenu(){
 
 function openLangMenu(){
   const trigger = document.getElementById('lang-trigger');
+  const appEl = document.querySelector('.app');
   langMenuEl = buildLangMenu();
   document.body.appendChild(langMenuEl);
   const r = trigger.getBoundingClientRect();
+  const bounds = appEl.getBoundingClientRect();
   const menuWidth = 176;
+
+  // Clamp horizontally to the .app frame (not the full browser window) —
+  // on wide desktop viewports .app is a centered, fixed-width "phone" card,
+  // so the menu must stay inside that frame rather than the whole viewport.
   let left = r.right - menuWidth;
-  left = Math.max(8, Math.min(left, window.innerWidth - menuWidth - 8));
+  left = Math.max(bounds.left + 8, Math.min(left, bounds.right - menuWidth - 8));
   langMenuEl.style.left = left + 'px';
-  langMenuEl.style.top = (r.bottom + 8) + 'px';
+
+  // Clamp vertically too: if there isn't enough room below the trigger
+  // (within the .app frame or the viewport), open the menu upward instead.
+  const menuMaxHeight = Math.min(320, window.innerHeight * 0.6);
+  const spaceBelow = Math.min(bounds.bottom, window.innerHeight) - r.bottom - 8;
+  let top;
+  if(spaceBelow >= 160 || spaceBelow >= menuMaxHeight){
+    top = r.bottom + 8;
+  } else {
+    top = Math.max(bounds.top + 8, r.top - menuMaxHeight - 8);
+  }
+  langMenuEl.style.top = top + 'px';
+
   requestAnimationFrame(()=>{ langMenuEl.classList.add('open'); });
   trigger.classList.add('open');
   trigger.setAttribute('aria-expanded','true');
