@@ -49,13 +49,42 @@
                 radial-gradient(90% 90% at 0% 100%, rgba(14,58,102,0.35), transparent 55%);
     pointer-events:none;
   }
-  .top-row{ display:flex; align-items:center; justify-content:space-between; gap:12px; position:relative; z-index:1; }
+  .top-row{ display:flex; align-items:flex-start; justify-content:space-between; gap:12px; position:relative; z-index:1; }
+  .back-link{ display:none; align-items:center; gap:6px; color:#fff; text-decoration:none; font-size:13px; font-weight:600; opacity:.9; margin-bottom:8px; }
+  .back-link.show{ display:inline-flex; }
+  .back-link svg{ width:16px; height:16px; }
   .brand{ display:flex; flex-direction:column; gap:2px; }
   .brand .eyebrow{ font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--brass-light); font-weight:600; }
   .brand h1{ margin:0; font-size:21px; color:#fff; line-height:1.15; }
-  .lang-toggle{ display:flex; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.18); border-radius:999px; padding:3px; gap:2px; flex-shrink:0; }
-  .lang-toggle button{ border:none; background:transparent; color:rgba(255,255,255,0.65); font-family:'Comfortaa'; font-weight:600; font-size:12px; padding:7px 12px; border-radius:999px; cursor:pointer; transition:.2s; }
-  .lang-toggle button.active{ background:var(--brass); color:#04263f; }
+
+  /* Language selector — fixed top-right, portal dropdown */
+  .lang-select{ position:relative; flex-shrink:0; }
+  .lang-select .lang-trigger{
+    display:flex; align-items:center; gap:6px; background:rgba(255,255,255,0.10); border:1px solid rgba(255,255,255,0.22);
+    border-radius:999px; padding:8px 12px; color:#fff; font-family:'Comfortaa'; font-weight:600; font-size:12.5px;
+    cursor:pointer; letter-spacing:.02em;
+  }
+  .lang-select .lang-trigger svg.chev{ width:13px; height:13px; transition:transform .18s ease; }
+  .lang-select .lang-trigger.open svg.chev{ transform:rotate(180deg); }
+  .lang-select .lang-trigger .flag{ font-size:14px; line-height:1; }
+
+  /* menu itself is portaled to <body>; positioned via JS with position:fixed */
+  .lang-menu{
+    position:fixed; z-index:999; min-width:176px; background:var(--paper); border-radius:14px;
+    box-shadow: 0 20px 45px -12px rgba(14,58,102,0.45); border:1px solid var(--line);
+    padding:6px; display:none; max-height:60vh; overflow-y:auto;
+  }
+  .lang-menu.open{ display:block; }
+  .lang-menu button{
+    display:flex; align-items:center; gap:10px; width:100%; text-align:left; border:none; background:none;
+    padding:9px 10px; border-radius:9px; font-family:'Comfortaa'; font-weight:600; font-size:13.5px; color:var(--ink);
+    cursor:pointer; transition:background .15s ease;
+  }
+  .lang-menu button:hover{ background:var(--stone-2); }
+  .lang-menu button.active{ background:var(--stone-2); color:var(--pine); }
+  .lang-menu button .flag{ font-size:16px; }
+  .lang-menu button .code{ margin-left:auto; font-size:10.5px; color:var(--ink-soft); text-transform:uppercase; letter-spacing:.05em; }
+
   .section-title{ position:relative; z-index:1; margin-top:20px; color:var(--stone-2); font-size:13px; display:flex; align-items:center; gap:8px; }
   .section-title .rule{ height:1px; flex:1; background:rgba(255,255,255,0.18); }
 
@@ -72,15 +101,23 @@
   a.card{ display:flex; text-decoration:none; color:inherit; background:var(--paper); border:1px solid var(--line); border-radius: var(--radius); overflow:hidden; position:relative; transition: transform .18s ease; }
   a.card:active{ transform:scale(0.985); }
 
-  .card.hero{ flex-direction:column; box-shadow:var(--shadow); }
-  .card.hero .art{ height:132px; display:flex; align-items:center; justify-content:center; background: linear-gradient(135deg, var(--pine), var(--pine-2)); position:relative; }
-  .card.hero .art::after{ content:""; position:absolute; inset:0; background: radial-gradient(80% 120% at 20% -10%, rgba(143,203,239,0.35), transparent 60%); }
+  .card.hero{ flex-direction:column; box-shadow:var(--shadow); min-height:228px; }
+  .card.hero .art{ height:132px; display:flex; align-items:center; justify-content:center; background: linear-gradient(135deg, var(--pine), var(--pine-2)); position:relative; border-radius: var(--radius) var(--radius) 0 0; }
+  .card.hero .art::after{ content:""; position:absolute; inset:0; background: radial-gradient(80% 120% at 20% -10%, rgba(143,203,239,0.35), transparent 60%); border-radius: inherit; }
   .card.hero .art svg{ width:64px; height:64px; position:relative; z-index:1; }
   .card.hero .body{ padding:16px 18px 18px; }
   .card.hero .rank-tag{ display:inline-block; font-size:10.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--brass); font-weight:700; margin-bottom:6px; }
   .card.hero .rank-tag.alt{ color:var(--sea); }
   .card.hero .title{ font-family:'Comfortaa', sans-serif; font-size:19px; font-weight:600; margin:0 0 4px; }
   .card.hero .sub{ font-size:13.5px; color:var(--ink-soft); margin:0; line-height:1.45; }
+
+  /* Photo-forward hero: image fills ~80% of the fixed card height, text strip ~20% */
+  .card.hero.photo-fill{ height:228px; }
+  .card.hero.photo-fill .art{ flex:1 1 auto; height:auto; min-height:0; }
+  .card.hero.photo-fill .body{ flex:0 0 auto; padding:10px 16px; display:flex; flex-direction:column; justify-content:center; }
+  .card.hero.photo-fill .rank-tag{ margin-bottom:2px; }
+  .card.hero.photo-fill .title{ font-size:16.5px; margin:0; }
+  .card.hero.photo-fill .sub{ display:none; }
 
   .card.medium{ align-items:center; padding:12px; gap:14px; }
   .card.medium .art{ width:60px; height:60px; border-radius:14px; flex-shrink:0; background: linear-gradient(135deg, var(--sea), #2c5153); display:flex; align-items:center; justify-content:center; color:#E8F4FC; }
@@ -111,14 +148,21 @@
 <div class="app">
 
   <header class="top">
+    <a class="back-link" id="back-link" href="index.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+      <span data-i18n="back">Torna alla guida</span>
+    </a>
     <div class="top-row">
       <div class="brand">
         <span class="eyebrow" data-i18n="eyebrow">Guida Ospiti</span>
         <h1>Passeggiata del Gelsomino</h1>
       </div>
-      <div class="lang-toggle" role="group" aria-label="Language">
-        <button id="btn-it" class="active" onclick="setLang('it')">IT</button>
-        <button id="btn-en" onclick="setLang('en')">EN</button>
+      <div class="lang-select" id="lang-select">
+        <button class="lang-trigger" id="lang-trigger" onclick="toggleLangMenu()" aria-haspopup="true" aria-expanded="false">
+          <span class="flag" id="lang-trigger-flag">🇮🇹</span>
+          <span id="lang-trigger-code">IT</span>
+          <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
       </div>
     </div>
     <div class="section-title"><span id="section-label" data-i18n="tab.general.label">Info Generali</span><span class="rule"></span></div>
@@ -181,18 +225,17 @@ const PHOTOS = {
 };
 
 const ICONS = {
-  book: {bg:'<circle cx="12" cy="12" r="10" fill="var(--bgc)" opacity=".18"/>', fg:'<path d="M4 5.5C4 4.7 4.7 4 5.5 4H12v16H5.5A1.5 1.5 0 0 1 4 18.5v-13Z" fill="var(--fgc)" opacity=".85"/><path d="M20 5.5C20 4.7 19.3 4 18.5 4H12v16h6.5a1.5 1.5 0 0 0 1.5-1.5v-13Z" fill="var(--fgc)"/><path d="M12 4v16" stroke="var(--bgc)" stroke-width="1"/>'},
-  cup: {bg:'<circle cx="12" cy="12" r="10" fill="var(--bgc)" opacity=".18"/>', fg:'<path d="M4 8h13v6a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5V8Z" fill="var(--fgc)"/><path d="M17 9h1.5a2.5 2.5 0 0 1 0 5H17" stroke="var(--fgc)" stroke-width="1.6" fill="none"/><path d="M8 2c0 1-1 1-1 2M12 2c0 1-1 1-1 2" stroke="var(--fgc)" stroke-width="1.6" opacity=".6" fill="none"/>'},
-  wifi: {bg:'<circle cx="12" cy="14" r="9" fill="var(--bgc)" opacity=".18"/>', fg:'<path d="M3 8.5a15 15 0 0 1 18 0" stroke="var(--fgc)" stroke-width="2" fill="none" stroke-linecap="round" opacity=".45"/><path d="M6.3 12a10.5 10.5 0 0 1 11.4 0" stroke="var(--fgc)" stroke-width="2" fill="none" stroke-linecap="round" opacity=".7"/><path d="M9.5 15.3a6 6 0 0 1 5 0" stroke="var(--fgc)" stroke-width="2" fill="none" stroke-linecap="round"/><circle cx="12" cy="18.5" r="1.6" fill="var(--fgc)"/>'},
-  pin: {bg:'<circle cx="12" cy="11" r="10" fill="var(--bgc)" opacity=".18"/>', fg:'<path d="M12 21s7-6.6 7-11.8A7 7 0 0 0 5 9.2C5 14.4 12 21 12 21Z" fill="var(--fgc)"/><circle cx="12" cy="9.2" r="2.6" fill="var(--bgc)"/>'},
-  sparkle: {bg:'<circle cx="12" cy="12" r="10" fill="var(--bgc)" opacity=".18"/>', fg:'<path d="M17.5 2.5 10 10" stroke="var(--fgc)" stroke-width="2" stroke-linecap="round"/><path d="M10 10 4.2 13.2c-.6.3-.9 1-.7 1.6l.3.9c.2.6.9.9 1.5.7L12 13.2Z" fill="var(--fgc)"/><path d="M4.5 15.5 3 21M7.3 14.7 6.3 21M10 13.8 9.5 21" stroke="var(--fgc)" stroke-width="1.4" stroke-linecap="round" opacity=".85"/>'},
+  book: {bg:'<circle cx="12" cy="12" r="10" fill="var(--bgc)" opacity=".18"/>', fg:'<path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H19v15.5H6.5A2.5 2.5 0 0 0 4 21V5.5Z" fill="var(--fgc)"/><path d="M19 18.5H6.5A2.5 2.5 0 0 0 4 21" stroke="var(--bgc)" stroke-width="1.4" fill="none"/>'},
+  wifi: {bg:'<circle cx="12" cy="12" r="10" fill="var(--bgc)" opacity=".18"/>', fg:'<path d="M5 9.5a12 12 0 0 1 14 0" stroke="var(--fgc)" stroke-width="1.8" fill="none" stroke-linecap="round"/><path d="M7.8 13a8 8 0 0 1 8.4 0" stroke="var(--fgc)" stroke-width="1.8" fill="none" stroke-linecap="round"/><circle cx="12" cy="16.6" r="1.4" fill="var(--fgc)"/>'},
   phone: {bg:'<circle cx="12" cy="12" r="10" fill="var(--bgc)" opacity=".18"/>', fg:'<path d="M6.5 3h3l1.5 4.5-2.2 1.8a13 13 0 0 0 5.9 5.9l1.8-2.2 4.5 1.5v3a2 2 0 0 1-2.2 2 18 18 0 0 1-14.8-14.8A2 2 0 0 1 6.5 3Z" fill="var(--fgc)"/>'},
-  event: {bg:'<circle cx="12" cy="12" r="10" fill="var(--bgc)" opacity=".18"/>', fg:'<rect x="4" y="5" width="16" height="15" rx="2.5" fill="var(--fgc)" opacity=".2"/><rect x="4" y="5" width="16" height="4.5" rx="2" fill="var(--fgc)"/><path d="M9 3v4M15 3v4" stroke="var(--bgc)" stroke-width="2" stroke-linecap="round"/><circle cx="9" cy="15" r="1.3" fill="var(--fgc)"/><circle cx="14" cy="15" r="1.3" fill="var(--fgc)" opacity=".6"/>'},
+  cup: {bg:'<circle cx="12" cy="12" r="10" fill="var(--bgc)" opacity=".18"/>', fg:'<path d="M6 8h10v6a5 5 0 0 1-5 5h0a5 5 0 0 1-5-5V8Z" fill="var(--fgc)"/><path d="M16 9.5h1.5a2.2 2.2 0 0 1 0 4.4H16" stroke="var(--fgc)" stroke-width="1.6" fill="none"/><path d="M6 5.5h10" stroke="var(--bgc)" stroke-width="1.4"/>'},
+  pin: {bg:'<circle cx="12" cy="11" r="10" fill="var(--bgc)" opacity=".18"/>', fg:'<path d="M12 21s7-6.6 7-11.8A7 7 0 0 0 5 9.2C5 14.4 12 21 12 21Z" fill="var(--fgc)"/><circle cx="12" cy="9.2" r="2.6" fill="var(--bgc)"/>'},
+  sparkle: {bg:'<circle cx="12" cy="12" r="10" fill="var(--bgc)" opacity=".18"/>', fg:'<path d="M12 4l1.6 5.4L19 11l-5.4 1.6L12 18l-1.6-5.4L5 11l5.4-1.6Z" fill="var(--fgc)"/>'},
+  event: {bg:'<circle cx="12" cy="12" r="10" fill="var(--bgc)" opacity=".18"/>', fg:'<rect x="5" y="6" width="14" height="13" rx="2" fill="var(--fgc)"/><path d="M5 10h14" stroke="var(--bgc)" stroke-width="1.4"/><path d="M8 4v3M16 4v3" stroke="var(--fgc)" stroke-width="1.8" stroke-linecap="round"/>'},
   compass: {bg:'<circle cx="12" cy="12" r="10" fill="var(--bgc)" opacity=".18"/>', fg:'<circle cx="12" cy="12" r="9" stroke="var(--fgc)" stroke-width="1.6" fill="none"/><path d="M14.5 9.5 13 13l-3.5 1.5L11 11l3.5-1.5Z" fill="var(--fgc)"/>'},
-  pilgrim: {bg:'<circle cx="12" cy="12" r="10" fill="var(--bgc)" opacity=".18"/>', fg:'<path d="M12 3c1.2 3 1.2 5-.5 6.5M12 3c-1.2 3-1.2 5 .5 6.5" stroke="var(--fgc)" stroke-width="1.6" fill="none" stroke-linecap="round"/><circle cx="12" cy="4.5" r="1.3" fill="var(--fgc)"/><path d="M6 20.5c0-4 2.7-7 6-7s6 3 6 7" fill="var(--fgc)" opacity=".85"/><path d="M6 15.5 4.5 21M18 15.5 19.5 21" stroke="var(--fgc)" stroke-width="1.4" stroke-linecap="round" opacity=".7"/>'},
-  ac: {bg:'<circle cx="12" cy="12" r="10" fill="var(--bgc)" opacity=".18"/>', fg:'<rect x="4" y="6" width="16" height="6.5" rx="2" fill="var(--fgc)"/><circle cx="17.5" cy="9.2" r="1" fill="var(--bgc)"/><path d="M7 16.2c1-1 2 1 3 0s2 1 3 0 2 1 3 0 2 1 3 0" stroke="var(--fgc)" stroke-width="1.4" fill="none" stroke-linecap="round" opacity=".75"/><path d="M7 19c1-1 2 1 3 0s2 1 3 0 2 1 3 0" stroke="var(--fgc)" stroke-width="1.2" fill="none" stroke-linecap="round" opacity=".45"/>'},
+  pilgrim: {bg:'<circle cx="12" cy="12" r="10" fill="var(--bgc)" opacity=".18"/>', fg:'<circle cx="12" cy="7" r="2.6" fill="var(--fgc)"/><path d="M6 21c0-4 2.7-7 6-7s6 3 6 7" stroke="var(--fgc)" stroke-width="1.8" fill="none" stroke-linecap="round"/>'},
+  ac: {bg:'<circle cx="12" cy="12" r="10" fill="var(--bgc)" opacity=".18"/>', fg:'<rect x="4" y="7" width="16" height="6" rx="2" fill="var(--fgc)"/><path d="M8 16l-1.4 3M12 16v3.4M16 16l1.4 3" stroke="var(--fgc)" stroke-width="1.6" stroke-linecap="round"/>'},
   map: {bg:'<circle cx="12" cy="12" r="10" fill="var(--bgc)" opacity=".18"/>', fg:'<path d="M4 6l5-2 6 2 5-2v14l-5 2-6-2-5 2Z" fill="var(--fgc)" opacity=".9"/><path d="M12 9c1.4 0 2.4 1.1 2.4 2.4 0 1.6-2.4 4-2.4 4s-2.4-2.4-2.4-4C9.6 10.1 10.6 9 12 9Z" fill="var(--bgc)"/>'},
-  house: {bg:'<circle cx="12" cy="12" r="10" fill="var(--bgc)" opacity=".18"/>', fg:'<path d="M3 10.5 12 4l9 6.5" stroke="var(--fgc)" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 9.5V20h14V9.5" fill="var(--fgc)" opacity=".85"/><path d="M9 20v-6h6v6" fill="var(--bgc)"/>'}
 };
 function svg(name){
   const i = ICONS[name] || ICONS.house;
@@ -204,55 +247,146 @@ function chevIcon(){
 
 const DATA = {
   general: [
-    { icon:'book', photo:PHOTOS.welcomebook, href:'https://www.passeggiatadelgelsomino.com/welcomebook',
+    { icon:'book', photo:PHOTOS.welcomebook, href:'welcome-book.html',
       it:{t:'Welcome Book', s:"Il benvenuto fotografico all'appartamento: tutto ciò che serve prima di arrivare."},
-      en:{t:'Welcome Book', s:'The full photo welcome to the apartment: everything you need before you arrive.'} },
-    { icon:'wifi', size:'medium', href:'https://www.passeggiatadelgelsomino.com/wi-fi',
+      en:{t:'Welcome Book', s:'The full photo welcome to the apartment: everything you need before you arrive.'},
+      fr:{t:'Welcome Book', s:"L'accueil en photos de l'appartement : tout ce qu'il faut savoir avant d'arriver."},
+      de:{t:'Welcome Book', s:'Der vollständige Foto-Willkommensgruß zur Wohnung: alles, was Sie vor der Ankunft wissen müssen.'},
+      es:{t:'Welcome Book', s:'La bienvenida fotográfica completa al apartamento: todo lo que necesitas antes de llegar.'},
+      hu:{t:'Welcome Book', s:'A lakás teljes fotós bemutatója: minden, amire érkezés előtt szükséged van.'},
+      ro:{t:'Welcome Book', s:'Bun venit foto complet în apartament: tot ce ai nevoie înainte de sosire.'},
+      pl:{t:'Welcome Book', s:'Pełne fotograficzne powitanie w mieszkaniu: wszystko, co trzeba wiedzieć przed przyjazdem.'} },
+    { icon:'wifi', size:'medium', grad:'linear-gradient(135deg,#29C5D6,#0F94A8)', href:'https://www.passeggiatadelgelsomino.com/wi-fi',
       it:{t:'Wi‑Fi', s:'Password: 9a9b9c9d9e — oppure inquadra il QR code in casa per connetterti subito.'},
-      en:{t:'Wi‑Fi', s:'Password: 9a9b9c9d9e — or scan the QR code in the apartment to connect instantly.'} },
-    { icon:'phone', size:'medium', href:'https://www.passeggiatadelgelsomino.com/contacts',
+      en:{t:'Wi‑Fi', s:'Password: 9a9b9c9d9e — or scan the QR code in the apartment to connect instantly.'},
+      fr:{t:'Wi‑Fi', s:"Mot de passe : 9a9b9c9d9e — ou scannez le QR code dans l'appartement pour vous connecter instantanément."},
+      de:{t:'Wi‑Fi', s:'Passwort: 9a9b9c9d9e — oder scannen Sie den QR-Code in der Wohnung, um sich sofort zu verbinden.'},
+      es:{t:'Wi‑Fi', s:'Contraseña: 9a9b9c9d9e — o escanea el código QR en el apartamento para conectarte al instante.'},
+      hu:{t:'Wi‑Fi', s:'Jelszó: 9a9b9c9d9e — vagy olvasd be a lakásban lévő QR-kódot az azonnali csatlakozáshoz.'},
+      ro:{t:'Wi‑Fi', s:'Parolă: 9a9b9c9d9e — sau scanează codul QR din apartament pentru conectare instantanee.'},
+      pl:{t:'Wi‑Fi', s:'Hasło: 9a9b9c9d9e — lub zeskanuj kod QR w mieszkaniu, aby połączyć się natychmiast.'} },
+    { icon:'phone', size:'medium', grad:'linear-gradient(135deg,#A473E0,#7A3FC0)', href:'https://www.passeggiatadelgelsomino.com/contacts',
       it:{t:'Contatti', s:'Gianluca (per ogni necessità): +39 340 277 9645. Paolo (se indicato): +39 345 721 5779. Email: vaticanglamorous@gmail.com'},
-      en:{t:'Contacts', s:'Gianluca (for all issues): +39 340 277 9645. Paolo (if indicated): +39 345 721 5779. Email: vaticanglamorous@gmail.com'} },
+      en:{t:'Contacts', s:'Gianluca (for all issues): +39 340 277 9645. Paolo (if indicated): +39 345 721 5779. Email: vaticanglamorous@gmail.com'},
+      fr:{t:'Contacts', s:'Gianluca (pour tout besoin) : +39 340 277 9645. Paolo (si indiqué) : +39 345 721 5779. Email : vaticanglamorous@gmail.com'},
+      de:{t:'Kontakte', s:'Gianluca (bei jedem Anliegen): +39 340 277 9645. Paolo (falls angegeben): +39 345 721 5779. E-Mail: vaticanglamorous@gmail.com'},
+      es:{t:'Contactos', s:'Gianluca (para cualquier necesidad): +39 340 277 9645. Paolo (si se indica): +39 345 721 5779. Email: vaticanglamorous@gmail.com'},
+      hu:{t:'Elérhetőségek', s:'Gianluca (bármilyen kérdésben): +39 340 277 9645. Paolo (ha jelezve van): +39 345 721 5779. E-mail: vaticanglamorous@gmail.com'},
+      ro:{t:'Contacte', s:'Gianluca (pentru orice nevoie): +39 340 277 9645. Paolo (dacă este indicat): +39 345 721 5779. Email: vaticanglamorous@gmail.com'},
+      pl:{t:'Kontakt', s:'Gianluca (w każdej sprawie): +39 340 277 9645. Paolo (jeśli wskazano): +39 345 721 5779. Email: vaticanglamorous@gmail.com'} },
     { icon:'cup', size:'hero', photo:PHOTOS.ristoranti, href:'https://www.romatoday.it/ristoranti/zona/prati/',
       it:{t:'Ristoranti nella Zona', s:'I migliori ristoranti selezionati nel quartiere, a due passi da San Pietro.'},
-      en:{t:'Restaurants Nearby', s:"The best selected restaurants in the neighbourhood, steps from St. Peter's."} },
-    { icon:'pin', size:'medium', href:'https://maps.app.goo.gl/XtD9nowENpqSZ3Fy5',
+      en:{t:'Restaurants Nearby', s:"The best selected restaurants in the neighbourhood, steps from St. Peter's."},
+      fr:{t:'Restaurants du Quartier', s:'Les meilleurs restaurants sélectionnés du quartier, à deux pas de Saint-Pierre.'},
+      de:{t:'Restaurants in der Nähe', s:'Die besten ausgewählten Restaurants im Viertel, nur wenige Schritte vom Petersdom entfernt.'},
+      es:{t:'Restaurantes Cercanos', s:'Los mejores restaurantes seleccionados del barrio, a pocos pasos de San Pedro.'},
+      hu:{t:'Éttermek a Közelben', s:'A legjobb kiválasztott éttermek a környéken, néhány lépésre a Szent Péter-bazilikától.'},
+      ro:{t:'Restaurante din Zonă', s:'Cele mai bune restaurante selecționate din cartier, la câțiva pași de Sf. Petru.'},
+      pl:{t:'Restauracje w Okolicy', s:'Najlepsze wybrane restauracje w okolicy, kilka kroków od Bazyliki św. Piotra.'} },
+    { icon:'pin', size:'medium', grad:'linear-gradient(135deg,#F0985A,#D46A2E)', href:'https://maps.app.goo.gl/XtD9nowENpqSZ3Fy5',
       it:{t:'La Nostra Posizione', s:"Apri l'appartamento su Google Maps."},
-      en:{t:'Our Location', s:'Open the apartment on Google Maps.'} },
+      en:{t:'Our Location', s:'Open the apartment on Google Maps.'},
+      fr:{t:'Notre Emplacement', s:"Ouvrez l'appartement sur Google Maps."},
+      de:{t:'Unser Standort', s:'Öffnen Sie die Wohnung auf Google Maps.'},
+      es:{t:'Nuestra Ubicación', s:'Abre el apartamento en Google Maps.'},
+      hu:{t:'Elhelyezkedésünk', s:'Nyisd meg a lakást a Google Térképen.'},
+      ro:{t:'Locația Noastră', s:'Deschide apartamentul pe Google Maps.'},
+      pl:{t:'Nasza Lokalizacja', s:'Otwórz mieszkanie w Mapach Google.'} },
     { icon:'sparkle', size:'medium', href:'https://www.passeggiatadelgelsomino.com/cleaning-costs',
       it:{t:'Pulizie Finali', s:"50€ a soggiorno, da pagare all'arrivo. Pagamento tramite SumUP."},
-      en:{t:'Cleaning Costs', s:'€50 per stay, to be paid on arrival. Paid via SumUP.'} },
+      en:{t:'Cleaning Costs', s:'€50 per stay, to be paid on arrival. Paid via SumUP.'},
+      fr:{t:'Frais de Ménage', s:"50 € par séjour, à payer à l'arrivée. Paiement via SumUP."},
+      de:{t:'Reinigungskosten', s:'50 € pro Aufenthalt, zahlbar bei Ankunft. Zahlung über SumUP.'},
+      es:{t:'Costes de Limpieza', s:'50 € por estancia, a pagar a la llegada. Pago mediante SumUP.'},
+      hu:{t:'Takarítási Díj', s:'50 € tartózkodásonként, érkezéskor fizetendő. Fizetés SumUP-on keresztül.'},
+      ro:{t:'Cost Curățenie', s:'50 € pe sejur, de plătit la sosire. Plată prin SumUP.'},
+      pl:{t:'Koszt Sprzątania', s:'50 € za pobyt, płatne przy przyjeździe. Płatność przez SumUP.'} },
   ],
   tours: [
     { icon:'event', photo:PHOTOS.toureventi, href:'https://www.passeggiatadelgelsomino.com/tours-events',
       it:{t:'Tours & Eventi', s:'Prenota tour, esperienze ed eventi con accesso prioritario ai Musei Vaticani.'},
-      en:{t:'Tours & Events', s:'Reserve tours, experiences and events with priority entry to the Vatican Museums.'} },
+      en:{t:'Tours & Events', s:'Reserve tours, experiences and events with priority entry to the Vatican Museums.'},
+      fr:{t:'Visites & Événements', s:'Réservez des visites, expériences et événements avec accès prioritaire aux Musées du Vatican.'},
+      de:{t:'Touren & Veranstaltungen', s:'Buchen Sie Touren, Erlebnisse und Veranstaltungen mit Vorrangeintritt zu den Vatikanischen Museen.'},
+      es:{t:'Tours y Eventos', s:'Reserva tours, experiencias y eventos con entrada prioritaria a los Museos Vaticanos.'},
+      hu:{t:'Túrák és Események', s:'Foglalj túrákat, élményeket és eseményeket elsőbbségi belépéssel a Vatikáni Múzeumokba.'},
+      ro:{t:'Tururi & Evenimente', s:'Rezervă tururi, experiențe și evenimente cu acces prioritar la Muzeele Vaticanului.'},
+      pl:{t:'Wycieczki i Wydarzenia', s:'Zarezerwuj wycieczki, atrakcje i wydarzenia z priorytetowym wstępem do Muzeów Watykańskich.'} },
     { icon:'compass', size:'hero', photo:PHOTOS.escursioni, href:'https://www.villabrando.com/english/excursions',
       it:{t:'Escursioni sulla Costa', s:'Latina, Sabaudia, Circeo & Costa Laziale.'},
-      en:{t:'Coastal Excursions', s:'Latina, Sabaudia, Circeo & the Lazio Coast.'} },
+      en:{t:'Coastal Excursions', s:'Latina, Sabaudia, Circeo & the Lazio Coast.'},
+      fr:{t:'Excursions sur la Côte', s:'Latina, Sabaudia, Circeo et la côte du Latium.'},
+      de:{t:'Ausflüge an die Küste', s:'Latina, Sabaudia, Circeo und die Küste von Latium.'},
+      es:{t:'Excursiones por la Costa', s:'Latina, Sabaudia, Circeo y la costa del Lacio.'},
+      hu:{t:'Kirándulások a Partvidéken', s:'Latina, Sabaudia, Circeo és a Lazio-parti térség.'},
+      ro:{t:'Excursii pe Coastă', s:'Latina, Sabaudia, Circeo și Coasta Lazio.'},
+      pl:{t:'Wycieczki na Wybrzeże', s:'Latina, Sabaudia, Circeo i wybrzeże Lacjum.'} },
     { icon:'pilgrim', size:'medium', photo:PHOTOS.pilgrim, href:'https://www.passeggiatadelgelsomino.com/pilgrim-stay',
       it:{t:'Pilgrim Stay', s:'Informazioni dedicate ai pellegrini in visita al Vaticano.'},
-      en:{t:'Pilgrim Stay', s:'Dedicated information for pilgrims visiting the Vatican.'} },
+      en:{t:'Pilgrim Stay', s:'Dedicated information for pilgrims visiting the Vatican.'},
+      fr:{t:'Pilgrim Stay', s:'Informations dédiées aux pèlerins en visite au Vatican.'},
+      de:{t:'Pilgrim Stay', s:'Spezielle Informationen für Pilger, die den Vatikan besuchen.'},
+      es:{t:'Pilgrim Stay', s:'Información dedicada a los peregrinos que visitan el Vaticano.'},
+      hu:{t:'Pilgrim Stay', s:'Kifejezetten a Vatikánba látogató zarándokoknak szóló információk.'},
+      ro:{t:'Pilgrim Stay', s:'Informații dedicate pelerinilor care vizitează Vaticanul.'},
+      pl:{t:'Pilgrim Stay', s:'Informacje przeznaczone dla pielgrzymów odwiedzających Watykan.'} },
     { icon:'event', size:'hero', photo:PHOTOS.eventiroma, href:'https://www.romatoday.it/eventi/pag/2/',
       it:{t:'Eventi a Roma', s:'Cosa succede in città durante il tuo soggiorno.'},
-      en:{t:'Events in Rome', s:"What's happening in the city during your stay."} },
+      en:{t:'Events in Rome', s:"What's happening in the city during your stay."},
+      fr:{t:'Événements à Rome', s:'Ce qui se passe en ville pendant votre séjour.'},
+      de:{t:'Veranstaltungen in Rom', s:'Was während Ihres Aufenthalts in der Stadt los ist.'},
+      es:{t:'Eventos en Roma', s:'Lo que ocurre en la ciudad durante tu estancia.'},
+      hu:{t:'Események Rómában', s:'Ami a városban történik az ott-tartózkodásod alatt.'},
+      ro:{t:'Evenimente la Roma', s:'Ce se întâmplă în oraș în timpul sejurului tău.'},
+      pl:{t:'Wydarzenia w Rzymie', s:'Co dzieje się w mieście podczas Twojego pobytu.'} },
   ],
   home: [
     { icon:'ac', photo:PHOTOS.ac, href:'https://www.passeggiatadelgelsomino.com/air-conditioning',
       it:{t:'Aria Condizionata', s:'Sistema automatizzato, regolabile manualmente col telecomando se preferisci.'},
-      en:{t:'Air Conditioning', s:'Automated system, adjustable manually with the remote control if you prefer.'} },
+      en:{t:'Air Conditioning', s:'Automated system, adjustable manually with the remote control if you prefer.'},
+      fr:{t:'Climatisation', s:'Système automatisé, réglable manuellement avec la télécommande si vous préférez.'},
+      de:{t:'Klimaanlage', s:'Automatisiertes System, bei Bedarf manuell mit der Fernbedienung einstellbar.'},
+      es:{t:'Aire Acondicionado', s:'Sistema automatizado, ajustable manualmente con el mando a distancia si lo prefieres.'},
+      hu:{t:'Légkondicionálás', s:'Automatizált rendszer, igény esetén kézileg is állítható a távirányítóval.'},
+      ro:{t:'Aer Condiționat', s:'Sistem automatizat, reglabil manual cu telecomanda dacă preferi.'},
+      pl:{t:'Klimatyzacja', s:'System automatyczny, który w razie potrzeby można ręcznie regulować pilotem.'} },
     { icon:'map', size:'hero', photo:PHOTOS.maprome, href:'https://www.passeggiatadelgelsomino.com/map-of-rome',
       it:{t:'Mappa di Roma', s:'Orientati tra i luoghi principali della città.'},
-      en:{t:'Map of Rome', s:"Find your way around the city's main sights."} },
+      en:{t:'Map of Rome', s:"Find your way around the city's main sights."},
+      fr:{t:'Carte de Rome', s:'Repérez-vous parmi les principaux lieux de la ville.'},
+      de:{t:'Karte von Rom', s:'Finden Sie sich zwischen den wichtigsten Sehenswürdigkeiten der Stadt zurecht.'},
+      es:{t:'Mapa de Roma', s:'Oriéntate entre los principales lugares de la ciudad.'},
+      hu:{t:'Róma Térképe', s:'Igazodj el a város legfontosabb helyszínei között.'},
+      ro:{t:'Harta Romei', s:'Orientează-te printre principalele obiective ale orașului.'},
+      pl:{t:'Mapa Rzymu', s:'Odnajdź się wśród najważniejszych miejsc w mieście.'} },
     { icon:'map', size:'hero', photo:PHOTOS.mapvatican, href:'https://www.passeggiatadelgelsomino.com/map-of-vatican-city-area',
       it:{t:'Mappa Area Vaticana', s:'La mappa dettagliata della zona di San Pietro e dei Musei Vaticani.'},
-      en:{t:'Map of Vatican City Area', s:"A detailed map of the St. Peter's and Vatican Museums area."} },
+      en:{t:'Map of Vatican City Area', s:"A detailed map of the St. Peter's and Vatican Museums area."},
+      fr:{t:'Carte de la Zone du Vatican', s:'La carte détaillée du quartier de Saint-Pierre et des Musées du Vatican.'},
+      de:{t:'Karte des Vatikanareals', s:'Die detaillierte Karte des Petersdom-Viertels und der Vatikanischen Museen.'},
+      es:{t:'Mapa de la Zona del Vaticano', s:'El mapa detallado de la zona de San Pedro y los Museos Vaticanos.'},
+      hu:{t:'Vatikáni Terület Térképe', s:'A Szent Péter-bazilika és a Vatikáni Múzeumok környékének részletes térképe.'},
+      ro:{t:'Harta Zonei Vaticanului', s:'Harta detaliată a zonei Sf. Petru și a Muzeelor Vaticanului.'},
+      pl:{t:'Mapa Okolic Watykanu', s:'Szczegółowa mapa okolic Bazyliki św. Piotra i Muzeów Watykańskich.'} },
   ]
 };
 
+const LANG_LABELS = {
+  it:{ name:'Italiano', flag:'🇮🇹', code:'IT' },
+  en:{ name:'English', flag:'🇬🇧', code:'EN' },
+  fr:{ name:'Français', flag:'🇫🇷', code:'FR' },
+  de:{ name:'Deutsch', flag:'🇩🇪', code:'DE' },
+  es:{ name:'Español', flag:'🇪🇸', code:'ES' },
+  hu:{ name:'Magyar', flag:'🇭🇺', code:'HU' },
+  ro:{ name:'Română', flag:'🇷🇴', code:'RO' },
+  pl:{ name:'Polski', flag:'🇵🇱', code:'PL' },
+};
+const LANG_ORDER = ['it','en','fr','de','es','hu','ro','pl'];
+
 const I18N = {
   it:{
-    eyebrow:'Guida Ospiti',
+    eyebrow:'Guida Ospiti', back:'Torna alla guida',
+    'rank.top':'priorità massima', 'rank.alt':'da non perdere',
     'tab.general.label':'Info Generali', 'tab.general.title':'Tutto il necessario, a portata di mano',
     'tab.general.desc':'Wi‑Fi, pulizie, ristoranti e come muoversi vicino al Vaticano.',
     'tab.tours.label':'Tours & Attività', 'tab.tours.title':'Roma da vivere',
@@ -262,7 +396,8 @@ const I18N = {
     'nav.general':'Info', 'nav.tours':'Tours', 'nav.home':'Casa'
   },
   en:{
-    eyebrow:'Guest Guide',
+    eyebrow:'Guest Guide', back:'Back to the guide',
+    'rank.top':'top priority', 'rank.alt':"don't miss",
     'tab.general.label':'General Info', 'tab.general.title':'Everything you need, close at hand',
     'tab.general.desc':'Wi‑Fi, cleaning, restaurants and getting around near the Vatican.',
     'tab.tours.label':'Tours & Activities', 'tab.tours.title':'Rome, ready to explore',
@@ -270,10 +405,77 @@ const I18N = {
     'tab.home.label':'Home & Maps', 'tab.home.title':'The apartment and the city',
     'tab.home.desc':'Air conditioning and useful maps to find your way around Rome and the Vatican.',
     'nav.general':'Info', 'nav.tours':'Tours', 'nav.home':'Home'
+  },
+  fr:{
+    eyebrow:'Guide des Hôtes', back:'Retour au guide',
+    'rank.top':'priorité absolue', 'rank.alt':'à ne pas manquer',
+    'tab.general.label':'Infos Générales', 'tab.general.title':"Tout ce qu'il vous faut, à portée de main",
+    'tab.general.desc':'Wi‑Fi, ménage, restaurants et comment se déplacer près du Vatican.',
+    'tab.tours.label':'Visites & Activités', 'tab.tours.title':'Rome, prête à explorer',
+    'tab.tours.desc':'Visites, infos pour pèlerins et événements autour du Vatican et de Rome.',
+    'tab.home.label':'Logement & Cartes', 'tab.home.title':"L'appartement et la ville",
+    'tab.home.desc':'Climatisation et cartes utiles pour vous repérer à Rome et au Vatican.',
+    'nav.general':'Infos', 'nav.tours':'Visites', 'nav.home':'Logement'
+  },
+  de:{
+    eyebrow:'Gästeführer', back:'Zurück zum Guide',
+    'rank.top':'höchste Priorität', 'rank.alt':'nicht verpassen',
+    'tab.general.label':'Allgemeine Infos', 'tab.general.title':'Alles Wichtige griffbereit',
+    'tab.general.desc':'WLAN, Reinigung, Restaurants und Fortbewegung in der Nähe des Vatikans.',
+    'tab.tours.label':'Touren & Aktivitäten', 'tab.tours.title':'Rom, bereit zur Erkundung',
+    'tab.tours.desc':'Touren, Pilgerinfos und Veranstaltungen rund um den Vatikan und Rom.',
+    'tab.home.label':'Wohnung & Karten', 'tab.home.title':'Die Wohnung und die Stadt',
+    'tab.home.desc':'Klimaanlage und nützliche Karten, um sich in Rom und im Vatikan zurechtzufinden.',
+    'nav.general':'Info', 'nav.tours':'Touren', 'nav.home':'Zuhause'
+  },
+  es:{
+    eyebrow:'Guía del Huésped', back:'Volver a la guía',
+    'rank.top':'prioridad máxima', 'rank.alt':'no te lo pierdas',
+    'tab.general.label':'Información General', 'tab.general.title':'Todo lo que necesitas, a mano',
+    'tab.general.desc':'Wi‑Fi, limpieza, restaurantes y cómo moverte cerca del Vaticano.',
+    'tab.tours.label':'Tours y Actividades', 'tab.tours.title':'Roma, lista para explorar',
+    'tab.tours.desc':'Tours, información para peregrinos y eventos en torno al Vaticano y Roma.',
+    'tab.home.label':'Casa y Mapas', 'tab.home.title':'El apartamento y la ciudad',
+    'tab.home.desc':'Aire acondicionado y mapas útiles para orientarte en Roma y el Vaticano.',
+    'nav.general':'Info', 'nav.tours':'Tours', 'nav.home':'Casa'
+  },
+  hu:{
+    eyebrow:'Vendégkalauz', back:'Vissza az útmutatóhoz',
+    'rank.top':'legfontosabb', 'rank.alt':'ezt ne hagyd ki',
+    'tab.general.label':'Általános Info', 'tab.general.title':'Minden, amire szükséged van, kéznél',
+    'tab.general.desc':'Wi‑Fi, takarítás, éttermek és közlekedés a Vatikán közelében.',
+    'tab.tours.label':'Túrák és Programok', 'tab.tours.title':'Róma, felfedezésre készen',
+    'tab.tours.desc':'Túrák, zarándokinfók és események a Vatikán és Róma környékén.',
+    'tab.home.label':'Otthon és Térképek', 'tab.home.title':'A lakás és a város',
+    'tab.home.desc':'Légkondicionálás és hasznos térképek Rómában és a Vatikánban való eligazodáshoz.',
+    'nav.general':'Info', 'nav.tours':'Túrák', 'nav.home':'Otthon'
+  },
+  ro:{
+    eyebrow:'Ghidul Oaspeților', back:'Înapoi la ghid',
+    'rank.top':'prioritate maximă', 'rank.alt':'de neratat',
+    'tab.general.label':'Informații Generale', 'tab.general.title':'Tot ce ai nevoie, la îndemână',
+    'tab.general.desc':'Wi‑Fi, curățenie, restaurante și cum să te deplasezi lângă Vatican.',
+    'tab.tours.label':'Tururi & Activități', 'tab.tours.title':'Roma, gata de explorat',
+    'tab.tours.desc':'Tururi, informații pentru pelerini și evenimente în jurul Vaticanului și Romei.',
+    'tab.home.label':'Locuință & Hărți', 'tab.home.title':'Apartamentul și orașul',
+    'tab.home.desc':'Aer condiționat și hărți utile pentru a te orienta în Roma și la Vatican.',
+    'nav.general':'Info', 'nav.tours':'Tururi', 'nav.home':'Acasă'
+  },
+  pl:{
+    eyebrow:'Przewodnik dla Gości', back:'Powrót do przewodnika',
+    'rank.top':'najwyższy priorytet', 'rank.alt':'nie przegap',
+    'tab.general.label':'Informacje Ogólne', 'tab.general.title':'Wszystko, czego potrzebujesz, pod ręką',
+    'tab.general.desc':'Wi‑Fi, sprzątanie, restauracje i jak poruszać się w pobliżu Watykanu.',
+    'tab.tours.label':'Wycieczki i Atrakcje', 'tab.tours.title':'Rzym gotowy do odkrycia',
+    'tab.tours.desc':'Wycieczki, informacje dla pielgrzymów i wydarzenia w okolicach Watykanu i Rzymu.',
+    'tab.home.label':'Mieszkanie i Mapy', 'tab.home.title':'Mieszkanie i miasto',
+    'tab.home.desc':'Klimatyzacja i przydatne mapy ułatwiające poruszanie się po Rzymie i Watykanie.',
+    'nav.general':'Info', 'nav.tours':'Wycieczki', 'nav.home':'Dom'
   }
 };
 
-let LANG = 'it';
+const LANG_KEY = 'vbLang';
+let LANG = (localStorage.getItem(LANG_KEY) && I18N[localStorage.getItem(LANG_KEY)]) ? localStorage.getItem(LANG_KEY) : 'it';
 
 function rankClass(i, item){
   if(item && item.size) return item.size;
@@ -286,17 +488,18 @@ function renderStack(id, items){
   const el = document.getElementById(id);
   el.innerHTML = items.map((item,i)=>{
     const cls = rankClass(i, item);
-    const txt = item[LANG];
+    const txt = item[LANG] || item.en;
     const photoStyle = item.photo ? ` style="background-image:url('${item.photo}');background-size:cover;background-position:center;"` : '';
     if(cls==='hero'){
+      const fillClass = item.photoFill ? ' photo-fill' : '';
       const tag = i===0
-        ? `<span class="rank-tag">#1 · ${LANG==='it'?'priorità massima':'top priority'}</span>`
-        : `<span class="rank-tag alt">${LANG==='it'?'da non perdere':"don't miss"}</span>`;
+        ? `<span class="rank-tag">#1 · ${I18N[LANG]['rank.top']}</span>`
+        : `<span class="rank-tag alt">${I18N[LANG]['rank.alt']}</span>`;
       const bgStyle = item.heroBg==='sea' ? ' style="background:linear-gradient(135deg, var(--sea), #2c5153);--fgc:#ffffff;--bgc:rgba(255,255,255,.4)"' : ' style="--fgc:#ffffff;--bgc:rgba(255,255,255,.4)"';
       const art = item.photo
         ? `<div class="art"${photoStyle}></div>`
         : `<div class="art"${bgStyle}>${svg(item.icon)}</div>`;
-      return `<a class="card hero" href="${item.href}" target="_blank" rel="noopener">
+      return `<a class="card hero${fillClass}" href="${item.href}" target="_blank" rel="noopener">
         ${art}
         <div class="body">${tag}<p class="title">${txt.t}</p><p class="sub">${txt.s}</p></div>
       </a>`;
@@ -304,7 +507,7 @@ function renderStack(id, items){
     if(cls==='medium'){
       const art = item.photo
         ? `<div class="art"${photoStyle}></div>`
-        : `<div class="art" style="--fgc:#ffffff;--bgc:rgba(255,255,255,.4)">${svg(item.icon)}</div>`;
+        : `<div class="art" style="background:${item.grad || 'linear-gradient(135deg, var(--sea), #2c5153)'};--fgc:#ffffff;--bgc:rgba(255,255,255,.4)">${svg(item.icon)}</div>`;
       return `<a class="card medium" href="${item.href}" target="_blank" rel="noopener">
         ${art}
         <div class="body"><p class="title">${txt.t}</p><p class="sub">${txt.s}</p></div>
@@ -326,16 +529,82 @@ function applyI18n(){
   });
   document.getElementById('section-label').textContent = I18N[LANG]['tab.' + currentTab + '.label'];
   document.documentElement.lang = LANG;
+  document.getElementById('lang-trigger-flag').textContent = LANG_LABELS[LANG].flag;
+  document.getElementById('lang-trigger-code').textContent = LANG_LABELS[LANG].code;
 }
 
 function setLang(l){
+  if(!I18N[l]) return;
   LANG = l;
-  document.getElementById('btn-it').classList.toggle('active', l==='it');
-  document.getElementById('btn-en').classList.toggle('active', l==='en');
+  localStorage.setItem(LANG_KEY, l);
   applyI18n();
   renderStack('stack-general', DATA.general);
   renderStack('stack-tours', DATA.tours);
   renderStack('stack-home', DATA.home);
+  closeLangMenu();
+}
+
+/* --- Language dropdown: portal pattern ---
+   The menu is appended to document.body on open (position:fixed, coords from
+   getBoundingClientRect of the trigger), so it always escapes any ancestor
+   overflow:hidden / z-index stacking context and never ends up hidden behind cards. */
+let langMenuEl = null;
+
+function buildLangMenu(){
+  const menu = document.createElement('div');
+  menu.className = 'lang-menu';
+  menu.id = 'lang-menu-portal';
+  menu.innerHTML = LANG_ORDER.map(code=>{
+    const l = LANG_LABELS[code];
+    return `<button type="button" class="${code===LANG?'active':''}" data-lang="${code}">
+      <span class="flag">${l.flag}</span><span>${l.name}</span><span class="code">${l.code}</span>
+    </button>`;
+  }).join('');
+  menu.querySelectorAll('button[data-lang]').forEach(btn=>{
+    btn.addEventListener('click', (e)=>{ e.stopPropagation(); setLang(btn.dataset.lang); });
+  });
+  return menu;
+}
+
+function toggleLangMenu(){
+  if(langMenuEl){ closeLangMenu(); return; }
+  openLangMenu();
+}
+
+function openLangMenu(){
+  const trigger = document.getElementById('lang-trigger');
+  langMenuEl = buildLangMenu();
+  document.body.appendChild(langMenuEl);
+  const r = trigger.getBoundingClientRect();
+  const menuWidth = 176;
+  let left = r.right - menuWidth;
+  left = Math.max(8, Math.min(left, window.innerWidth - menuWidth - 8));
+  langMenuEl.style.left = left + 'px';
+  langMenuEl.style.top = (r.bottom + 8) + 'px';
+  requestAnimationFrame(()=>{ langMenuEl.classList.add('open'); });
+  trigger.classList.add('open');
+  trigger.setAttribute('aria-expanded','true');
+  document.addEventListener('click', onOutsideLangClick);
+  window.addEventListener('resize', closeLangMenu);
+  window.addEventListener('scroll', closeLangMenu, true);
+}
+
+function closeLangMenu(){
+  if(!langMenuEl) return;
+  langMenuEl.remove();
+  langMenuEl = null;
+  const trigger = document.getElementById('lang-trigger');
+  trigger.classList.remove('open');
+  trigger.setAttribute('aria-expanded','false');
+  document.removeEventListener('click', onOutsideLangClick);
+  window.removeEventListener('resize', closeLangMenu);
+  window.removeEventListener('scroll', closeLangMenu, true);
+}
+
+function onOutsideLangClick(e){
+  if(langMenuEl && !langMenuEl.contains(e.target) && !document.getElementById('lang-select').contains(e.target)){
+    closeLangMenu();
+  }
 }
 
 let currentTab = 'general';
