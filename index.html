@@ -34,12 +34,12 @@
   h1,h2,h3{ font-family:'Comfortaa', sans-serif; font-weight:500; letter-spacing:-0.01em; }
 
   .app{
-    max-width:520px; margin:0 auto; min-height:100svh; background:var(--stone);
-    position:relative; display:flex; flex-direction:column;
+    max-width:520px; margin:0 auto; height:100svh; background:var(--stone);
+    position:relative; display:flex; flex-direction:column; overflow:hidden;
   }
   @media (min-width:560px){
     body{ background: linear-gradient(180deg,#DCE8F5, #C7DCF0 60%, #b7d0ea); padding:28px 0; }
-    .app{ border-radius:34px; overflow:hidden; min-height:calc(100svh - 56px); box-shadow: 0 30px 80px -20px rgba(14,58,102,0.35); }
+    .app{ border-radius:34px; box-shadow: 0 30px 80px -20px rgba(14,58,102,0.35); height:calc(100svh - 56px); }
   }
 
   header.top{ background:var(--pine); color:#fff; padding:22px 20px 26px; position:relative; overflow:hidden; }
@@ -88,7 +88,7 @@
   .section-title{ position:relative; z-index:1; margin-top:20px; color:var(--stone-2); font-size:13px; display:flex; align-items:center; gap:8px; }
   .section-title .rule{ height:1px; flex:1; background:rgba(255,255,255,0.18); }
 
-  main{ flex:1; padding:18px 16px 100px; }
+  main{ flex:1; min-height:0; overflow-y:auto; -webkit-overflow-scrolling:touch; padding:18px 16px 90px; }
   .panel{ display:none; animation:fade .35s ease; }
   .panel.active{ display:block; }
   @keyframes fade{ from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:none;} }
@@ -135,6 +135,8 @@
   .chevron svg{ width:16px; height:16px; }
 
   .helper-note{ margin-top:14px; font-size:12px; color:var(--ink-soft); text-align:center; line-height:1.5; padding:0 12px; }
+  .page-brand{ margin:22px 4px 4px; text-align:center; font-size:11.5px; color:var(--ink-soft); line-height:1.4; }
+  .page-brand b{ display:block; color:var(--pine); font-size:12.5px; font-weight:700; letter-spacing:0.02em; margin-bottom:2px; }
 
   nav.tabbar{ position:absolute; left:0; right:0; bottom:0; background: rgba(251,248,241,0.92); backdrop-filter: blur(14px); border-top:1px solid var(--line); display:flex; padding:8px 8px calc(10px + env(safe-area-inset-bottom)); gap:4px; z-index:5; }
   nav.tabbar button{ flex:1; display:flex; flex-direction:column; align-items:center; gap:4px; background:none; border:none; padding:8px 4px 6px; border-radius:14px; color:var(--ink-soft); cursor:pointer; font-family:'Comfortaa'; font-weight:600; transition:.2s; }
@@ -192,6 +194,8 @@
       </div>
       <div class="stack" id="stack-home"></div>
     </section>
+
+    <div class="page-brand"><b>Vatican Glamorous</b>Passeggiata del Gelsomino</div>
   </main>
 
   <nav class="tabbar">
@@ -265,15 +269,15 @@ const DATA = {
       hu:{t:'Wi‑Fi', s:'Jelszó: 9a9b9c9d9e — vagy olvasd be a lakásban lévő QR-kódot az azonnali csatlakozáshoz.'},
       ro:{t:'Wi‑Fi', s:'Parolă: 9a9b9c9d9e — sau scanează codul QR din apartament pentru conectare instantanee.'},
       pl:{t:'Wi‑Fi', s:'Hasło: 9a9b9c9d9e — lub zeskanuj kod QR w mieszkaniu, aby połączyć się natychmiast.'} },
-    { icon:'phone', size:'medium', grad:'linear-gradient(135deg,#A473E0,#7A3FC0)', href:'https://www.passeggiatadelgelsomino.com/contacts',
-      it:{t:'Contatti', s:'Gianluca (per ogni necessità): +39 340 277 9645. Paolo (se indicato): +39 345 721 5779. Email: vaticanglamorous@gmail.com'},
-      en:{t:'Contacts', s:'Gianluca (for all issues): +39 340 277 9645. Paolo (if indicated): +39 345 721 5779. Email: vaticanglamorous@gmail.com'},
-      fr:{t:'Contacts', s:'Gianluca (pour tout besoin) : +39 340 277 9645. Paolo (si indiqué) : +39 345 721 5779. Email : vaticanglamorous@gmail.com'},
-      de:{t:'Kontakte', s:'Gianluca (bei jedem Anliegen): +39 340 277 9645. Paolo (falls angegeben): +39 345 721 5779. E-Mail: vaticanglamorous@gmail.com'},
-      es:{t:'Contactos', s:'Gianluca (para cualquier necesidad): +39 340 277 9645. Paolo (si se indica): +39 345 721 5779. Email: vaticanglamorous@gmail.com'},
-      hu:{t:'Elérhetőségek', s:'Gianluca (bármilyen kérdésben): +39 340 277 9645. Paolo (ha jelezve van): +39 345 721 5779. E-mail: vaticanglamorous@gmail.com'},
-      ro:{t:'Contacte', s:'Gianluca (pentru orice nevoie): +39 340 277 9645. Paolo (dacă este indicat): +39 345 721 5779. Email: vaticanglamorous@gmail.com'},
-      pl:{t:'Kontakt', s:'Gianluca (w każdej sprawie): +39 340 277 9645. Paolo (jeśli wskazano): +39 345 721 5779. Email: vaticanglamorous@gmail.com'} },
+    { icon:'phone', size:'medium', grad:'linear-gradient(135deg,#A473E0,#7A3FC0)', href:'contatti.html',
+      it:{t:'Contatti', s:'Gianluca (per ogni necessità): +39 340 277 9645. Email: vaticanglamorous@gmail.com'},
+      en:{t:'Contacts', s:'Gianluca (for all issues): +39 340 277 9645. Email: vaticanglamorous@gmail.com'},
+      fr:{t:'Contacts', s:'Gianluca (pour tout besoin) : +39 340 277 9645. Email : vaticanglamorous@gmail.com'},
+      de:{t:'Kontakte', s:'Gianluca (bei jedem Anliegen): +39 340 277 9645. E-Mail: vaticanglamorous@gmail.com'},
+      es:{t:'Contactos', s:'Gianluca (para cualquier necesidad): +39 340 277 9645. Email: vaticanglamorous@gmail.com'},
+      hu:{t:'Elérhetőségek', s:'Gianluca (bármilyen kérdésben): +39 340 277 9645. E-mail: vaticanglamorous@gmail.com'},
+      ro:{t:'Contacte', s:'Gianluca (pentru orice nevoie): +39 340 277 9645. Email: vaticanglamorous@gmail.com'},
+      pl:{t:'Kontakt', s:'Gianluca (w każdej sprawie): +39 340 277 9645. Email: vaticanglamorous@gmail.com'} },
     { icon:'cup', size:'hero', photo:PHOTOS.ristoranti, href:'https://www.romatoday.it/ristoranti/zona/prati/',
       it:{t:'Ristoranti nella Zona', s:'I migliori ristoranti selezionati nel quartiere, a due passi da San Pietro.'},
       en:{t:'Restaurants Nearby', s:"The best selected restaurants in the neighbourhood, steps from St. Peter's."},
@@ -303,7 +307,7 @@ const DATA = {
       pl:{t:'Koszt Sprzątania', s:'50 € za pobyt, płatne przy przyjeździe. Płatność przez SumUP.'} },
   ],
   tours: [
-    { icon:'event', photo:PHOTOS.toureventi, href:'https://www.passeggiatadelgelsomino.com/tours-events',
+    { icon:'event', photo:PHOTOS.toureventi, href:'tour-eventi.html',
       it:{t:'Tours & Eventi', s:'Prenota tour, esperienze ed eventi con accesso prioritario ai Musei Vaticani.'},
       en:{t:'Tours & Events', s:'Reserve tours, experiences and events with priority entry to the Vatican Museums.'},
       fr:{t:'Visites & Événements', s:'Réservez des visites, expériences et événements avec accès prioritaire aux Musées du Vatican.'},
@@ -393,7 +397,7 @@ const I18N = {
     'tab.tours.desc':'Tour, pellegrinaggi ed eventi nella zona del Vaticano e di Roma.',
     'tab.home.label':'Casa & Mappe', 'tab.home.title':'La casa e la città',
     'tab.home.desc':'Aria condizionata e mappe utili per orientarti a Roma e in Vaticano.',
-    'nav.general':'Info', 'nav.tours':'Tours', 'nav.home':'Casa'
+    'nav.general':'Info', 'nav.tours':'Activities', 'nav.home':'Casa'
   },
   en:{
     eyebrow:'Guest Guide', back:'Back to the guide',
@@ -404,7 +408,7 @@ const I18N = {
     'tab.tours.desc':'Tours, pilgrim info and events around the Vatican and Rome.',
     'tab.home.label':'Home & Maps', 'tab.home.title':'The apartment and the city',
     'tab.home.desc':'Air conditioning and useful maps to find your way around Rome and the Vatican.',
-    'nav.general':'Info', 'nav.tours':'Tours', 'nav.home':'Home'
+    'nav.general':'Info', 'nav.tours':'Activities', 'nav.home':'Home'
   },
   fr:{
     eyebrow:'Guide des Hôtes', back:'Retour au guide',
@@ -415,7 +419,7 @@ const I18N = {
     'tab.tours.desc':'Visites, infos pour pèlerins et événements autour du Vatican et de Rome.',
     'tab.home.label':'Logement & Cartes', 'tab.home.title':"L'appartement et la ville",
     'tab.home.desc':'Climatisation et cartes utiles pour vous repérer à Rome et au Vatican.',
-    'nav.general':'Infos', 'nav.tours':'Visites', 'nav.home':'Logement'
+    'nav.general':'Infos', 'nav.tours':'Activities', 'nav.home':'Logement'
   },
   de:{
     eyebrow:'Gästeführer', back:'Zurück zum Guide',
@@ -426,7 +430,7 @@ const I18N = {
     'tab.tours.desc':'Touren, Pilgerinfos und Veranstaltungen rund um den Vatikan und Rom.',
     'tab.home.label':'Wohnung & Karten', 'tab.home.title':'Die Wohnung und die Stadt',
     'tab.home.desc':'Klimaanlage und nützliche Karten, um sich in Rom und im Vatikan zurechtzufinden.',
-    'nav.general':'Info', 'nav.tours':'Touren', 'nav.home':'Zuhause'
+    'nav.general':'Info', 'nav.tours':'Activities', 'nav.home':'Zuhause'
   },
   es:{
     eyebrow:'Guía del Huésped', back:'Volver a la guía',
@@ -437,7 +441,7 @@ const I18N = {
     'tab.tours.desc':'Tours, información para peregrinos y eventos en torno al Vaticano y Roma.',
     'tab.home.label':'Casa y Mapas', 'tab.home.title':'El apartamento y la ciudad',
     'tab.home.desc':'Aire acondicionado y mapas útiles para orientarte en Roma y el Vaticano.',
-    'nav.general':'Info', 'nav.tours':'Tours', 'nav.home':'Casa'
+    'nav.general':'Info', 'nav.tours':'Activities', 'nav.home':'Casa'
   },
   hu:{
     eyebrow:'Vendégkalauz', back:'Vissza az útmutatóhoz',
@@ -448,7 +452,7 @@ const I18N = {
     'tab.tours.desc':'Túrák, zarándokinfók és események a Vatikán és Róma környékén.',
     'tab.home.label':'Otthon és Térképek', 'tab.home.title':'A lakás és a város',
     'tab.home.desc':'Légkondicionálás és hasznos térképek Rómában és a Vatikánban való eligazodáshoz.',
-    'nav.general':'Info', 'nav.tours':'Túrák', 'nav.home':'Otthon'
+    'nav.general':'Info', 'nav.tours':'Activities', 'nav.home':'Otthon'
   },
   ro:{
     eyebrow:'Ghidul Oaspeților', back:'Înapoi la ghid',
@@ -459,7 +463,7 @@ const I18N = {
     'tab.tours.desc':'Tururi, informații pentru pelerini și evenimente în jurul Vaticanului și Romei.',
     'tab.home.label':'Locuință & Hărți', 'tab.home.title':'Apartamentul și orașul',
     'tab.home.desc':'Aer condiționat și hărți utile pentru a te orienta în Roma și la Vatican.',
-    'nav.general':'Info', 'nav.tours':'Tururi', 'nav.home':'Acasă'
+    'nav.general':'Info', 'nav.tours':'Activities', 'nav.home':'Acasă'
   },
   pl:{
     eyebrow:'Przewodnik dla Gości', back:'Powrót do przewodnika',
@@ -470,7 +474,7 @@ const I18N = {
     'tab.tours.desc':'Wycieczki, informacje dla pielgrzymów i wydarzenia w okolicach Watykanu i Rzymu.',
     'tab.home.label':'Mieszkanie i Mapy', 'tab.home.title':'Mieszkanie i miasto',
     'tab.home.desc':'Klimatyzacja i przydatne mapy ułatwiające poruszanie się po Rzymie i Watykanie.',
-    'nav.general':'Info', 'nav.tours':'Wycieczki', 'nav.home':'Dom'
+    'nav.general':'Info', 'nav.tours':'Activities', 'nav.home':'Dom'
   }
 };
 
