@@ -123,6 +123,27 @@
   .tour-text .tour-sub{ margin:0; font-size:11.5px; color:var(--ink-soft); }
   .tour-arrow{ flex-shrink:0; width:20px; height:20px; color:var(--ink-soft); }
 
+  .mini-feature-card{
+    position:relative; display:flex; align-items:center; justify-content:space-between; gap:12px;
+    border-radius:16px; overflow:hidden; text-decoration:none; padding:0 18px;
+    aspect-ratio:48/11; background:linear-gradient(135deg,#7A3FC0,#4B2380);
+    box-shadow:0 12px 26px -10px rgba(14,58,102,0.45); transition:transform .15s;
+  }
+  .mini-feature-card:active{ transform:scale(0.98); }
+  .mfc-left{ display:flex; align-items:center; gap:12px; min-width:0; }
+  .mfc-icon{
+    width:38px; height:38px; border-radius:12px; background:rgba(255,255,255,0.18);
+    display:flex; align-items:center; justify-content:center; flex-shrink:0;
+  }
+  .mfc-icon svg{ width:20px; height:20px; color:#fff; }
+  .mfc-title{ color:#fff; font-weight:700; font-size:14.5px; margin:0; line-height:1.25; }
+  .mfc-sub{ color:rgba(255,255,255,0.78); font-size:11px; font-weight:600; margin:2px 0 0; }
+  .mfc-open{
+    flex-shrink:0; display:flex; align-items:center; justify-content:center; width:32px; height:32px;
+    border-radius:50%; background:rgba(255,255,255,0.16); color:#fff;
+  }
+  .mfc-open svg{ width:15px; height:15px; }
+
   .feature-grid{ display:flex; flex-direction:column; gap:12px; margin-bottom:22px; }
   .feature-card{
     position:relative; display:block; border-radius:18px; overflow:hidden; text-decoration:none;
@@ -220,6 +241,21 @@
           <span class="feature-open"><span id="o-other">Apri</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></span>
         </div>
       </a>
+
+      <a class="mini-feature-card" id="card-notboring" href="https://villabrando.rezdy.com/" target="_blank" rel="noopener">
+        <div class="mfc-left">
+          <div class="mfc-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4l1.6 5.4L19 11l-5.4 1.6L12 18l-1.6-5.4L5 11l5.4-1.6Z"/></svg>
+          </div>
+          <div>
+            <p class="mfc-title" id="t-notboring">Non il Solito Tour</p>
+            <p class="mfc-sub" id="s-notboring">Esperienze fuori dagli schemi</p>
+          </div>
+        </div>
+        <span class="mfc-open">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+        </span>
+      </a>
     </div>
 
     <div class="section-tag" id="tagDestinations">Destinazioni</div>
@@ -308,14 +344,14 @@
 const LANG_LABELS = { it:'IT', en:'EN', fr:'FR', de:'DE', es:'ES', hu:'HU', ro:'RO', pl:'PL' };
 
 const GYG_URLS = {
-  rome:    'https://gyg.me/1sn7g1DX',
+  rome:    'best-of-rome.html',
   coast:   'https://gyg.me/41MqM8om',
   amalfi:  'https://gyg.me/czSpY3HT',
   pompei:  'https://gyg.me/XFMKOHGm',
   naples:  'https://gyg.me/gJqMkOxG',
   florence:'https://gyg.me/yh3uMsbT',
   orvieto: 'https://gyg.me/JHv3wVD5',
-  other:   'https://villabrando.rezdy.com/'
+  other:   'https://gyg.me/HHIZR4n3'
 };
 
 Object.keys(GYG_URLS).forEach(function(id){
@@ -328,6 +364,7 @@ const I18N = {
     pageTitle:"Tour & Esperienze", pageSub:"Prenota le migliori esperienze da fare nei dintorni",
     powered:"",
     tagDestinations:"Destinazioni", tagOther:"Altro", open:"Apri",
+    notBoringTitle:"Non il Solito Tour", notBoringSub:"Esperienze fuori dagli schemi",
     bRome:"Top", bFlorence:"Top", bAmalfi:"Gita di un Giorno", bPompei:"Da non Perdere", bNaples:"Top", bOrvieto:"Gemma Nascosta", bCoast:"Vicino a Te", bOther:"Extra",
     rome:"Il Meglio di Roma", coast:"Latina, Sabaudia e Costa del Circeo", amalfi:"Il Meglio della Costiera Amalfitana",
     pompei:"Il Meglio di Pompei", naples:"Napoli", florence:"Firenze", orvieto:"Orvieto",
@@ -337,6 +374,7 @@ const I18N = {
     pageTitle:"Tours & Experiences", pageSub:"Book the best experiences nearby",
     powered:"",
     tagDestinations:"Destinations", tagOther:"Other", open:"Open",
+    notBoringTitle:"Not Your Usual Tour", notBoringSub:"Experiences off the beaten path",
     bRome:"Top", bFlorence:"Top", bAmalfi:"Day Trip", bPompei:"Must-see", bNaples:"Top", bOrvieto:"Hidden Gem", bCoast:"Near You", bOther:"Extra",
     rome:"The Best of Rome", coast:"Latina, Sabaudia & Circeo Coast", amalfi:"The Best of Amalfi Coast",
     pompei:"The Best of Pompeii", naples:"Naples", florence:"Florence", orvieto:"Orvieto",
@@ -346,6 +384,7 @@ const I18N = {
     pageTitle:"Visites & Expériences", pageSub:"Réservez les meilleures expériences des environs",
     powered:"",
     tagDestinations:"Destinations", tagOther:"Autres", open:"Ouvrir",
+    notBoringTitle:"Pas le Tour Habituel", notBoringSub:"Des expériences hors des sentiers battus",
     bRome:"Top", bFlorence:"Top", bAmalfi:"Excursion d'une Journée", bPompei:"Incontournable", bNaples:"Top", bOrvieto:"Trésor Caché", bCoast:"Près de Vous", bOther:"Extra",
     rome:"Le Meilleur de Rome", coast:"Latina, Sabaudia et la Côte du Circeo", amalfi:"Le Meilleur de la Côte Amalfitaine",
     pompei:"Le Meilleur de Pompéi", naples:"Naples", florence:"Florence", orvieto:"Orvieto",
@@ -355,6 +394,7 @@ const I18N = {
     pageTitle:"Touren & Erlebnisse", pageSub:"Buche die besten Erlebnisse in der Umgebung",
     powered:"",
     tagDestinations:"Reiseziele", tagOther:"Weitere", open:"Öffnen",
+    notBoringTitle:"Nicht die übliche Tour", notBoringSub:"Erlebnisse abseits der ausgetretenen Pfade",
     bRome:"Top", bFlorence:"Top", bAmalfi:"Tagesausflug", bPompei:"Muss man sehen", bNaples:"Top", bOrvieto:"Geheimtipp", bCoast:"In der Nähe", bOther:"Extra",
     rome:"Das Beste von Rom", coast:"Latina, Sabaudia & Circeo-Küste", amalfi:"Das Beste der Amalfiküste",
     pompei:"Das Beste von Pompeji", naples:"Neapel", florence:"Florenz", orvieto:"Orvieto",
@@ -364,6 +404,7 @@ const I18N = {
     pageTitle:"Tours y Experiencias", pageSub:"Reserva las mejores experiencias de la zona",
     powered:"",
     tagDestinations:"Destinos", tagOther:"Otros", open:"Abrir",
+    notBoringTitle:"No el Tour de Siempre", notBoringSub:"Experiencias fuera de lo común",
     bRome:"Top", bFlorence:"Top", bAmalfi:"Excursión de un Día", bPompei:"Imprescindible", bNaples:"Top", bOrvieto:"Joya Escondida", bCoast:"Cerca de Ti", bOther:"Extra",
     rome:"Lo Mejor de Roma", coast:"Latina, Sabaudia y Costa del Circeo", amalfi:"Lo Mejor de la Costa Amalfitana",
     pompei:"Lo Mejor de Pompeya", naples:"Nápoles", florence:"Florencia", orvieto:"Orvieto",
@@ -373,6 +414,7 @@ const I18N = {
     pageTitle:"Túrák és Élmények", pageSub:"Foglald le a környék legjobb élményeit",
     powered:"",
     tagDestinations:"Úticélok", tagOther:"Egyéb", open:"Megnyitás",
+    notBoringTitle:"Nem a Szokásos Túra", notBoringSub:"Élmények a megszokotton túl",
     bRome:"Top", bFlorence:"Top", bAmalfi:"Egynapos Kirándulás", bPompei:"Kihagyhatatlan", bNaples:"Top", bOrvieto:"Rejtett Gyöngyszem", bCoast:"A Közeledben", bOther:"Extra",
     rome:"Róma Legjava", coast:"Latina, Sabaudia és a Circeo-part", amalfi:"Amalfi-part Legjava",
     pompei:"Pompeii Legjava", naples:"Nápoly", florence:"Firenze", orvieto:"Orvieto",
@@ -382,6 +424,7 @@ const I18N = {
     pageTitle:"Tururi și Experiențe", pageSub:"Rezervă cele mai bune experiențe din zonă",
     powered:"",
     tagDestinations:"Destinații", tagOther:"Altele", open:"Deschide",
+    notBoringTitle:"Nu Turul Obișnuit", notBoringSub:"Experiențe ieșite din tipare",
     bRome:"Top", bFlorence:"Top", bAmalfi:"Excursie de o Zi", bPompei:"De Neratat", bNaples:"Top", bOrvieto:"Comoară Ascunsă", bCoast:"Aproape de Tine", bOther:"Extra",
     rome:"Ce e Mai Bun în Roma", coast:"Latina, Sabaudia și Coasta Circeo", amalfi:"Ce e Mai Bun pe Coasta Amalfi",
     pompei:"Ce e Mai Bun în Pompei", naples:"Napoli", florence:"Florența", orvieto:"Orvieto",
@@ -391,6 +434,7 @@ const I18N = {
     pageTitle:"Wycieczki i Atrakcje", pageSub:"Zarezerwuj najlepsze atrakcje w okolicy",
     powered:"",
     tagDestinations:"Kierunki", tagOther:"Inne", open:"Otwórz",
+    notBoringTitle:"Nie Zwykła Wycieczka", notBoringSub:"Doświadczenia nietuzinkowe",
     bRome:"Top", bFlorence:"Top", bAmalfi:"Wycieczka Jednodniowa", bPompei:"Koniecznie Zobacz", bNaples:"Top", bOrvieto:"Ukryty Skarb", bCoast:"Blisko Ciebie", bOther:"Extra",
     rome:"Najlepsze z Rzymu", coast:"Latina, Sabaudia i Wybrzeże Circeo", amalfi:"Najlepsze z Wybrzeża Amalfi",
     pompei:"Najlepsze z Pompei", naples:"Neapol", florence:"Florencja", orvieto:"Orvieto",
@@ -440,6 +484,8 @@ function setLang(lang){
 
   document.getElementById('s-rome').textContent = d.romeSub;
   document.getElementById('s-other').textContent = d.otherSub;
+  document.getElementById('t-notboring').textContent = d.notBoringTitle;
+  document.getElementById('s-notboring').textContent = d.notBoringSub;
 
   ['rome','coast','amalfi','pompei','naples','florence','orvieto','other'].forEach(function(id){
     document.getElementById('t-' + id).textContent = d[id];

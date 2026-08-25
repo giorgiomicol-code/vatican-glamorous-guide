@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Passeggiata del Gelsomino — Il Meglio di Roma</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pine:#0E3A66;
+    --pine-2:#154C82;
+    --stone:#FFFFFF;
+    --stone-2:#E5F0FA;
+    --brass:#2E86C1;
+    --brass-light:#8FCBEF;
+    --ink:#122436;
+    --ink-soft:#5A7288;
+    --line:rgba(14,58,102,0.12);
+    --shadow: 0 10px 30px -14px rgba(14,58,102,0.30);
+    --radius: 18px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--stone); font-family:'Comfortaa', sans-serif; color:var(--ink);
+    -webkit-font-smoothing:antialiased; min-height:100svh;
+  }
+  .app{
+    max-width:520px; margin:0 auto; min-height:100svh; background:var(--stone); position:relative;
+    display:flex; flex-direction:column; box-shadow:0 0 60px rgba(0,0,0,0.08);
+  }
+  @media (min-width:560px){
+    body{ background: linear-gradient(180deg,#DCE8F5, #C7DCF0 60%, #b7d0ea); padding:28px 0; }
+    .app{ border-radius:34px; overflow:hidden; min-height:calc(100svh - 56px); box-shadow: 0 30px 80px -20px rgba(14,58,102,0.35); }
+  }
+
+  header.top{ background:var(--pine); color:#fff; padding:18px 20px 20px; position:relative; }
+  header.top::before{
+    content:""; position:absolute; inset:0;
+    background:
+      radial-gradient(120% 90% at 100% 0%, rgba(143,203,239,0.30), transparent 55%),
+      radial-gradient(90% 90% at 0% 100%, rgba(14,58,102,0.35), transparent 55%);
+    pointer-events:none;
+  }
+  .back-row{ position:relative; z-index:1; display:flex; align-items:center; justify-content:space-between; gap:10px; }
+  .back-link{ display:flex; align-items:center; gap:6px; color:#fff; text-decoration:none; font-weight:600; font-size:13px; opacity:0.9; }
+  .back-link svg{ width:16px; height:16px; }
+  h1.page-title{ position:relative; z-index:1; margin:14px 0 2px; font-size:22px; font-weight:500; color:#fff; line-height:1.15; }
+  .page-sub{ position:relative; z-index:1; margin:0; font-size:12.5px; color:var(--brass-light); font-weight:600; letter-spacing:0.02em; max-width:320px; line-height:1.4; }
+
+  .lang-select{ position:relative; z-index:20; flex-shrink:0; }
+  .lang-current{
+    display:flex; align-items:center; gap:6px; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.22);
+    border-radius:999px; padding:8px 12px; color:#fff; font-family:'Comfortaa'; font-weight:700; font-size:12px; cursor:pointer;
+  }
+  .lang-current svg{ width:13px; height:13px; transition:transform .2s; }
+  .lang-current.open svg{ transform:rotate(180deg); }
+  .lang-menu{
+    position:fixed; background:#fff; border-radius:14px; box-shadow:0 14px 34px -10px rgba(14,58,102,0.4); border:1px solid var(--line);
+    padding:6px; display:none; min-width:160px; max-height:70vh; overflow-y:auto; z-index:999;
+  }
+  .lang-menu.open{ display:block; }
+  .lang-menu button{
+    display:flex; align-items:center; gap:10px; width:100%; text-align:left; border:none; background:none;
+    padding:9px 10px; border-radius:9px; font-family:'Comfortaa'; font-weight:600; font-size:13px; color:var(--ink); cursor:pointer;
+  }
+  .lang-menu button:hover{ background:var(--stone-2); }
+  .lang-menu button.active{ background:var(--stone-2); color:var(--pine); }
+  .lang-menu button .code{ margin-left:auto; font-size:10px; color:var(--ink-soft); text-transform:uppercase; letter-spacing:.04em; }
+
+  main{ flex:1; padding:18px 16px 28px; }
+
+  .section-tag{
+    display:flex; align-items:center; gap:8px; margin:0 4px 14px;
+    font-size:11.5px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--ink-soft);
+  }
+  .section-tag::after{ content:""; flex:1; height:1px; background:var(--line); }
+
+  .experience-group{
+    position:relative; overflow:hidden;
+    margin:0 0 16px; padding:16px 14px 14px; border:1px solid var(--line); border-radius:20px;
+    box-shadow:0 10px 26px -18px rgba(14,58,102,0.38);
+  }
+  .experience-group::before{
+    content:""; position:absolute; top:0; left:0; right:0; height:4px;
+  }
+  .group-style{
+    background:linear-gradient(145deg, rgba(229,248,252,0.85), rgba(255,255,255,0.98) 58%);
+  }
+  .group-style::before{ background:linear-gradient(90deg,#29C5D6,#0F94A8); }
+  .group-must{
+    background:linear-gradient(145deg, rgba(250,244,231,0.9), rgba(255,255,255,0.98) 60%);
+  }
+  .group-must::before{ background:linear-gradient(90deg,#E0A845,#B8791A); }
+  .group-header{
+    display:flex; align-items:center; gap:11px; margin:2px 1px 14px;
+  }
+  .group-number{
+    width:42px; height:42px; flex-shrink:0; border-radius:13px;
+    display:flex; align-items:center; justify-content:center; color:#fff;
+  }
+  .group-number svg{ width:21px; height:21px; }
+  .group-style .group-number{
+    background:linear-gradient(135deg,#29C5D6,#0F94A8);
+    box-shadow:0 8px 18px -8px rgba(15,148,168,0.6);
+  }
+  .group-must .group-number{
+    background:linear-gradient(135deg,#E0A845,#B8791A);
+    box-shadow:0 8px 18px -8px rgba(184,121,26,0.6);
+  }
+  .group-copy{ min-width:0; }
+  .group-title{
+    margin:0 0 2px; color:var(--pine); font-size:15.5px; line-height:1.2; font-weight:700;
+  }
+  .group-sub{
+    margin:0; color:var(--ink-soft); font-size:10.8px; line-height:1.35; font-weight:500;
+  }
+  .experience-group .pick-card{
+    box-shadow:0 5px 14px -10px rgba(14,58,102,0.32);
+  }
+  .group-style .pick-icon{ background:linear-gradient(135deg,#29C5D6,#0F94A8); }
+  .group-must .pick-icon{ background:linear-gradient(135deg,#E0A845,#B8791A); }
+  .group-style .pick-cta{ color:#0F94A8; }
+  .group-must .pick-cta{ color:#B8791A; }
+  .pick-grid{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  @media (max-width:340px){ .pick-grid{ grid-template-columns:1fr; } }
+  .pick-card{
+    position:relative; display:block; background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:16px 14px 14px; box-shadow:0 6px 16px -10px rgba(14,58,102,0.25); text-decoration:none;
+    color:inherit; transition:transform .15s, box-shadow .15s;
+  }
+  .pick-card:active{ transform:scale(0.97); }
+  .pick-icon{
+    width:42px; height:42px; border-radius:12px; background:linear-gradient(135deg, var(--pine), var(--pine-2));
+    display:flex; align-items:center; justify-content:center; margin-bottom:10px; flex-shrink:0;
+  }
+  .pick-icon svg{ width:22px; height:22px; color:#fff; }
+  .pick-title{ margin:0 0 4px; font-size:13.5px; font-weight:700; color:var(--ink); line-height:1.3; }
+  .pick-sub{ margin:0 0 10px; font-size:11px; color:var(--ink-soft); line-height:1.4; }
+  .pick-cta{
+    display:inline-flex; align-items:center; gap:3px; font-size:11.5px; font-weight:700; color:var(--brass);
+  }
+
+  .explore-more{
+    display:flex; align-items:center; justify-content:space-between; gap:12px; margin-top:20px;
+    background:var(--stone-2); border-radius:16px; padding:16px 18px; text-decoration:none; color:inherit;
+  }
+  .explore-more .em-title{ margin:0 0 2px; font-size:13.5px; font-weight:700; color:var(--ink); }
+  .explore-more .em-sub{ margin:0; font-size:11.5px; color:var(--ink-soft); }
+  .explore-more .em-cta{ flex-shrink:0; font-size:12px; font-weight:700; color:var(--pine); white-space:nowrap; }
+
+  .disclosure{ margin:18px 4px 0; font-size:10px; color:var(--ink-soft); opacity:0.75; line-height:1.5; text-align:center; }
+
+  footer.contact-bar{
+    background:var(--stone-2); padding:16px 20px; display:flex; align-items:center; justify-content:space-between; gap:10px;
+  }
+  .contact-bar .brandline{ font-size:13px; font-weight:700; color:var(--pine); }
+  .contact-bar .brandline small{ display:block; font-weight:500; color:var(--ink-soft); font-size:11px; }
+  .contact-bar a.phone{
+    display:flex; align-items:center; gap:8px; background:var(--pine); color:#fff; text-decoration:none;
+    padding:9px 14px; border-radius:999px; font-weight:700; font-size:12.5px;
+  }
+  .contact-bar a.phone svg{ width:14px; height:14px; }
+</style>
+
+<!-- GetYourGuide Integration Analyzer -->
+<script async defer src="https://widget.getyourguide.com/dist/pa.umd.production.min.js" data-gyg-partner-id="OPQQF64"></script>
+</head>
+<body>
+<div class="app">
+
+  <header class="top">
+    <div class="back-row">
+      <a class="back-link" href="tour-eventi.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+        <span id="backLabel">Tour & Esperienze</span>
+      </a>
+      <div class="lang-select" id="langSelect">
+        <button class="lang-current" id="langCurrentBtn" onclick="toggleLangMenu()">
+          <span id="langCurrentLabel">IT</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="lang-menu" id="langMenu">
+          <button data-lang="it" class="active" onclick="setLang('it')"><span>Italiano</span><span class="code">IT</span></button>
+          <button data-lang="en" onclick="setLang('en')"><span>English</span><span class="code">EN</span></button>
+          <button data-lang="fr" onclick="setLang('fr')"><span>Français</span><span class="code">FR</span></button>
+          <button data-lang="de" onclick="setLang('de')"><span>Deutsch</span><span class="code">DE</span></button>
+          <button data-lang="es" onclick="setLang('es')"><span>Español</span><span class="code">ES</span></button>
+          <button data-lang="hu" onclick="setLang('hu')"><span>Magyar</span><span class="code">HU</span></button>
+          <button data-lang="ro" onclick="setLang('ro')"><span>Română</span><span class="code">RO</span></button>
+          <button data-lang="pl" onclick="setLang('pl')"><span>Polski</span><span class="code">PL</span></button>
+        </div>
+      </div>
+    </div>
+    <h1 class="page-title" id="pageTitle">Il Meglio di Roma</h1>
+    <p class="page-sub" id="pageSub">Le esperienze che consigliamo ai nostri ospiti</p>
+  </header>
+
+  <main>
+    <div class="section-tag" id="tagPicks">Le Nostre Esperienze Consigliate</div>
+
+    <section class="experience-group group-style">
+      <div class="group-header">
+        <div class="group-number">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4l1.6 5.4L19 11l-5.4 1.6L12 18l-1.6-5.4L5 11l5.4-1.6Z"/><path d="M19 4.5l.6 1.9L21.5 7l-1.9.6L19 9.5l-.6-1.9L16.5 7l1.9-.6Z"/></svg>
+        </div>
+        <div class="group-copy">
+          <h2 class="group-title" id="groupStyleTitle">Roma in Style</h2>
+          <p class="group-sub" id="groupStyleSub">Muoviti, divertiti e vivi la città</p>
+        </div>
+      </div>
+      <div class="pick-grid">
+        <a class="pick-card" id="card-golfcart" href="https://www.getyourguide.com/it-it/roma-l33/roma-tour-in-golf-cart-con-degustazione-di-gelato-artigianale-t653524/?partner_id=OPQQF64&amp;cmp=vaticanglamorous_golfcart" target="_blank" rel="noopener sponsored">
+        <div class="pick-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="18" r="2.5"/><circle cx="17" cy="18" r="2.5"/><path d="M9.5 18h5M4.5 18 7 10h6l3.5 8M9 10 7 6h3"/></svg>
+        </div>
+        <p class="pick-title" id="p-golfcart">Roma in Golf Cart</p>
+        <p class="pick-sub" id="s-golfcart">Scopri Roma comodamente e senza fatica</p>
+        <span class="pick-cta" id="cta-golfcart">Scopri ›</span>
+      </a>
+        <a class="pick-card" id="card-bus" href="https://www.getyourguide.com/it-it/roma-l33/roma-visita-della-citta-in-autobus-hop-on-hop-off-con-audioguida-t50675/?partner_id=OPQQF64&amp;cmp=vaticanglamorous_bus" target="_blank" rel="noopener sponsored">
+        <div class="pick-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17h18M5 17V9a2 2 0 0 1 2-2h6l4 4v6"/><circle cx="7.5" cy="19.5" r="1.5"/><circle cx="16.5" cy="19.5" r="1.5"/></svg>
+        </div>
+        <p class="pick-title" id="p-bus">Bus Panoramico di Roma</p>
+        <p class="pick-sub" id="s-bus">Sali e scendi per scoprire la città al tuo ritmo</p>
+        <span class="pick-cta" id="cta-bus">Scopri ›</span>
+      </a>
+        <a class="pick-card" id="card-vespa" href="https://www.getyourguide.com/it-it/roma-l33/roma-giro-in-vespa-con-foto-e-degustazioni-dolci-t724199/?partner_id=OPQQF64&amp;cmp=vaticanglamorous_vespa" target="_blank" rel="noopener sponsored">
+        <div class="pick-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6.5" cy="17.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/><path d="M9 17.5h6M3 17.5 4.5 9h5l3 4.5h4.5M9.5 9 8 6h3"/></svg>
+        </div>
+        <p class="pick-title" id="p-vespa">Roma in Vespa</p>
+        <p class="pick-sub" id="s-vespa">Vivi Roma in autentico stile italiano</p>
+        <span class="pick-cta" id="cta-vespa">Scopri ›</span>
+      </a>
+      </div>
+    </section>
+
+    <section class="experience-group group-must">
+      <div class="group-header">
+        <div class="group-number">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21h16"/><path d="M4 4h16"/><path d="M6 4v13M10 4v13M14 4v13M18 4v13"/></svg>
+        </div>
+        <div class="group-copy">
+          <h2 class="group-title" id="groupMustTitle">I Must-See di Roma &amp; Sapori</h2>
+          <p class="group-sub" id="groupMustSub">I grandi classici e un assaggio autentico di Roma</p>
+        </div>
+      </div>
+      <div class="pick-grid">
+        <a class="pick-card" id="card-vatican" href="https://www.getyourguide.com/it-it/roma-l33/biglietto-di-ingresso-prioritario-per-i-musei-vaticani-e-la-cappella-sistina-t62214/?partner_id=OPQQF64&amp;cmp=vaticanglamorous_vatican" target="_blank" rel="noopener sponsored">
+        <div class="pick-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><circle cx="8.5" cy="9.5" r="1.5" fill="currentColor" stroke="none"/><path d="m20 15-4.5-4.5L9 17"/></svg>
+        </div>
+        <p class="pick-title" id="p-vatican">Musei Vaticani &amp; Cappella Sistina</p>
+        <p class="pick-sub" id="s-vatican">Uno dei grandi capolavori di Roma</p>
+        <span class="pick-cta" id="cta-vatican">Scopri ›</span>
+      </a>
+        <a class="pick-card" id="card-colosseum" href="https://www.getyourguide.com/it-it/roma-l33/colosseo-foro-romano-e-palatino-tour-guidato-t195566/?partner_id=OPQQF64&amp;cmp=vaticanglamorous_colosseum" target="_blank" rel="noopener sponsored">
+        <div class="pick-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21V10a1 1 0 0 1 .4-.8l7-5.4a1 1 0 0 1 1.2 0l7 5.4a1 1 0 0 1 .4.8v11"/><path d="M4 21h16"/><path d="M9 21v-6h6v6"/></svg>
+        </div>
+        <p class="pick-title" id="p-colosseum">Colosseo, Foro Romano &amp; Palatino</p>
+        <p class="pick-sub" id="s-colosseum">Entra nel cuore della Roma antica</p>
+        <span class="pick-cta" id="cta-colosseum">Scopri ›</span>
+      </a>
+        <a class="pick-card" id="card-food" href="https://www.getyourguide.com/it-it/roma-l33/roma-tour-gastronomico-di-trastevere-e-campo-de-fiori-t460750/?partner_id=OPQQF64&amp;cmp=vaticanglamorous_food" target="_blank" rel="noopener sponsored">
+        <div class="pick-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8h10v6a5 5 0 0 1-5 5h0a5 5 0 0 1-5-5V8Z"/><path d="M16 9.5h1.5a2.2 2.2 0 0 1 0 4.4H16"/></svg>
+        </div>
+        <p class="pick-title" id="p-food">Food Tour a Trastevere</p>
+        <p class="pick-sub" id="s-food">Sapori autentici tra Trastevere e Campo de' Fiori</p>
+        <span class="pick-cta" id="cta-food">Scopri ›</span>
+      </a>
+      </div>
+    </section>
+
+    <a class="explore-more" id="exploreMore" href="https://gyg.me/HHIZR4n3" target="_blank" rel="noopener sponsored">
+      <div>
+        <p class="em-title" id="exploreTitle">Cerchi qualcosa di diverso?</p>
+        <p class="em-sub" id="exploreSub">Scopri tutte le attività disponibili a Roma</p>
+      </div>
+      <span class="em-cta" id="exploreCta">Vedi tutte le esperienze ›</span>
+    </a>
+
+    <p class="disclosure" id="disclosureText">Le prenotazioni delle esperienze sono gestite da partner esterni selezionati.</p>
+  </main>
+
+  <footer class="contact-bar">
+    <div class="brandline">Vatican Glamorous<small>Passeggiata del Gelsomino</small></div>
+    <a class="phone" href="tel:+393402779645">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      +39 340 277 9645
+    </a>
+  </footer>
+
+</div>
+
+<script>
+const LANG_LABELS = { it:'IT', en:'EN', fr:'FR', de:'DE', es:'ES', hu:'HU', ro:'RO', pl:'PL' };
+
+const I18N = {
+  it: {
+    back:"Tour & Esperienze", title:"Il Meglio di Roma", sub:"Le esperienze che consigliamo ai nostri ospiti",
+    tagPicks:"Le Nostre Esperienze Consigliate", cta:"Scopri ›",
+    golfcart:"Roma in Golf Cart", golfcartSub:"Scopri Roma comodamente e senza fatica",
+    bus:"Bus Panoramico di Roma", busSub:"Sali e scendi per scoprire la città al tuo ritmo",
+    vespa:"Roma in Vespa", vespaSub:"Vivi Roma in autentico stile italiano",
+    vatican:"Musei Vaticani & Cappella Sistina", vaticanSub:"Uno dei grandi capolavori di Roma",
+    colosseum:"Colosseo, Foro Romano & Palatino", colosseumSub:"Entra nel cuore della Roma antica",
+    food:"Food Tour a Trastevere", foodSub:"Sapori autentici tra Trastevere e Campo de' Fiori",
+    exploreTitle:"Cerchi qualcosa di diverso?", exploreSub:"Scopri tutte le attività disponibili a Roma", exploreCta:"Vedi tutte le esperienze ›",
+    disclosure:"Le prenotazioni delle esperienze sono gestite da partner esterni selezionati."
+  },
+  en: {
+    back:"Tours & Experiences", title:"The Best of Rome", sub:"Our favourite experiences for our guests",
+    tagPicks:"Our Recommended Experiences", cta:"Discover ›",
+    golfcart:"Rome by Golf Cart", golfcartSub:"Discover Rome comfortably, without the walking",
+    bus:"Rome Panoramic Bus", busSub:"Hop on and off to explore the city at your own pace",
+    vespa:"Rome by Vespa", vespaSub:"Experience Rome in authentic Italian style",
+    vatican:"Vatican Museums & Sistine Chapel", vaticanSub:"One of Rome's great masterpieces",
+    colosseum:"Colosseum, Roman Forum & Palatine Hill", colosseumSub:"Step into the heart of ancient Rome",
+    food:"Trastevere Food Tour", foodSub:"Authentic flavours between Trastevere and Campo de' Fiori",
+    exploreTitle:"Looking for something different?", exploreSub:"Browse all the experiences available in Rome", exploreCta:"See all experiences ›",
+    disclosure:"Experience bookings are handled by selected external partners."
+  },
+  fr: {
+    back:"Visites & Expériences", title:"Le Meilleur de Rome", sub:"Les expériences que nous recommandons à nos hôtes",
+    tagPicks:"Nos Expériences Recommandées", cta:"Découvrir ›",
+    golfcart:"Rome en Golf Cart", golfcartSub:"Découvrez Rome confortablement, sans effort",
+    bus:"Bus Panoramique de Rome", busSub:"Montez et descendez pour découvrir la ville à votre rythme",
+    vespa:"Rome en Vespa", vespaSub:"Vivez Rome dans un style italien authentique",
+    vatican:"Musées du Vatican & Chapelle Sixtine", vaticanSub:"L'un des grands chefs-d'œuvre de Rome",
+    colosseum:"Colisée, Forum Romain & Palatin", colosseumSub:"Entrez au cœur de la Rome antique",
+    food:"Tour Gastronomique à Trastevere", foodSub:"Saveurs authentiques entre Trastevere et Campo de' Fiori",
+    exploreTitle:"Vous cherchez autre chose ?", exploreSub:"Découvrez toutes les expériences disponibles à Rome", exploreCta:"Voir toutes les expériences ›",
+    disclosure:"Les réservations des expériences sont gérées par des partenaires externes sélectionnés."
+  },
+  de: {
+    back:"Touren & Erlebnisse", title:"Das Beste von Rom", sub:"Die Erlebnisse, die wir unseren Gästen empfehlen",
+    tagPicks:"Unsere Empfohlenen Erlebnisse", cta:"Entdecken ›",
+    golfcart:"Rom im Golfwagen", golfcartSub:"Entdecken Sie Rom bequem und mühelos",
+    bus:"Panoramabus durch Rom", busSub:"Steigen Sie ein und aus und entdecken Sie die Stadt in Ihrem Tempo",
+    vespa:"Rom mit der Vespa", vespaSub:"Erleben Sie Rom im authentischen italienischen Stil",
+    vatican:"Vatikanische Museen & Sixtinische Kapelle", vaticanSub:"Eines der großen Meisterwerke Roms",
+    colosseum:"Kolosseum, Forum Romanum & Palatin", colosseumSub:"Tauchen Sie ein ins Herz des antiken Rom",
+    food:"Kulinarische Tour durch Trastevere", foodSub:"Authentische Aromen zwischen Trastevere und Campo de' Fiori",
+    exploreTitle:"Suchen Sie etwas anderes?", exploreSub:"Entdecken Sie alle verfügbaren Erlebnisse in Rom", exploreCta:"Alle Erlebnisse ansehen ›",
+    disclosure:"Die Buchung der Erlebnisse erfolgt über ausgewählte externe Partner."
+  },
+  es: {
+    back:"Tours y Experiencias", title:"Lo Mejor de Roma", sub:"Las experiencias que recomendamos a nuestros huéspedes",
+    tagPicks:"Nuestras Experiencias Recomendadas", cta:"Descubrir ›",
+    golfcart:"Roma en Golf Cart", golfcartSub:"Descubre Roma cómodamente y sin esfuerzo",
+    bus:"Autobús Panorámico de Roma", busSub:"Sube y baja para descubrir la ciudad a tu ritmo",
+    vespa:"Roma en Vespa", vespaSub:"Vive Roma al auténtico estilo italiano",
+    vatican:"Museos Vaticanos y Capilla Sixtina", vaticanSub:"Una de las grandes obras maestras de Roma",
+    colosseum:"Coliseo, Foro Romano y Palatino", colosseumSub:"Entra en el corazón de la Roma antigua",
+    food:"Tour Gastronómico en Trastevere", foodSub:"Sabores auténticos entre Trastevere y Campo de' Fiori",
+    exploreTitle:"¿Buscas algo diferente?", exploreSub:"Descubre todas las experiencias disponibles en Roma", exploreCta:"Ver todas las experiencias ›",
+    disclosure:"Las reservas de las experiencias las gestionan socios externos seleccionados."
+  },
+  hu: {
+    back:"Túrák és Élmények", title:"Róma Legjava", sub:"Az élmények, amelyeket vendégeinknek ajánlunk",
+    tagPicks:"Ajánlott Élményeink", cta:"Felfedezés ›",
+    golfcart:"Róma Golfkocsival", golfcartSub:"Fedezd fel Rómát kényelmesen, fáradság nélkül",
+    bus:"Róma Panorámabusz", busSub:"Szállj fel és le, fedezd fel a várost a saját tempódban",
+    vespa:"Róma Vespával", vespaSub:"Élj át Rómát hiteles olasz stílusban",
+    vatican:"Vatikáni Múzeumok és Sixtus-kápolna", vaticanSub:"Róma egyik nagy remekműve",
+    colosseum:"Colosseum, Forum Romanum és Palatinus", colosseumSub:"Lépj be az ókori Róma szívébe",
+    food:"Gasztronómiai Túra Trastevereben", foodSub:"Hiteles ízek Trastevere és Campo de' Fiori között",
+    exploreTitle:"Valami mást keresel?", exploreSub:"Fedezd fel az összes elérhető élményt Rómában", exploreCta:"Összes élmény megtekintése ›",
+    disclosure:"Az élmények foglalását kiválasztott külső partnerek kezelik."
+  },
+  ro: {
+    back:"Tururi și Experiențe", title:"Ce e Mai Bun în Roma", sub:"Experiențele pe care le recomandăm oaspeților noștri",
+    tagPicks:"Experiențele Noastre Recomandate", cta:"Descoperă ›",
+    golfcart:"Roma cu Golf Cart", golfcartSub:"Descoperă Roma confortabil, fără efort",
+    bus:"Autobuz Panoramic al Romei", busSub:"Urcă și coboară pentru a descoperi orașul în ritmul tău",
+    vespa:"Roma cu Vespa", vespaSub:"Trăiește Roma în stil italian autentic",
+    vatican:"Muzeele Vaticanului și Capela Sixtină", vaticanSub:"Una dintre marile capodopere ale Romei",
+    colosseum:"Colosseum, Forul Roman și Palatin", colosseumSub:"Pătrunde în inima Romei antice",
+    food:"Tur Gastronomic în Trastevere", foodSub:"Arome autentice între Trastevere și Campo de' Fiori",
+    exploreTitle:"Cauți ceva diferit?", exploreSub:"Descoperă toate experiențele disponibile în Roma", exploreCta:"Vezi toate experiențele ›",
+    disclosure:"Rezervările experiențelor sunt gestionate de parteneri externi selecționați."
+  },
+  pl: {
+    back:"Wycieczki i Atrakcje", title:"Najlepsze z Rzymu", sub:"Atrakcje, które polecamy naszym gościom",
+    tagPicks:"Nasze Polecane Atrakcje", cta:"Odkryj ›",
+    golfcart:"Rzym Wózkiem Golfowym", golfcartSub:"Odkryj Rzym wygodnie i bez zmęczenia",
+    bus:"Autobus Panoramiczny po Rzymie", busSub:"Wsiadaj i wysiadaj, by poznawać miasto w swoim tempie",
+    vespa:"Rzym na Vespie", vespaSub:"Poczuj Rzym w autentycznym włoskim stylu",
+    vatican:"Muzea Watykańskie i Kaplica Sykstyńska", vaticanSub:"Jedno z wielkich arcydzieł Rzymu",
+    colosseum:"Koloseum, Forum Romanum i Palatyn", colosseumSub:"Wejdź w serce starożytnego Rzymu",
+    food:"Wycieczka Kulinarna po Trastevere", foodSub:"Autentyczne smaki między Trastevere a Campo de' Fiori",
+    exploreTitle:"Szukasz czegoś innego?", exploreSub:"Odkryj wszystkie dostępne atrakcje w Rzymie", exploreCta:"Zobacz wszystkie atrakcje ›",
+    disclosure:"Rezerwacje atrakcji obsługują wybrani partnerzy zewnętrzni."
+  }
+};
+
+
+const GROUP_I18N = {
+  it:{styleTitle:"Roma in Style",styleSub:"Muoviti, divertiti e vivi la città",mustTitle:"I Must-See di Roma & Sapori",mustSub:"I grandi classici e un assaggio autentico di Roma"},
+  en:{styleTitle:"Rome in Style",styleSub:"See the city the fun and effortless way",mustTitle:"Rome Must-Sees & Taste",mustSub:"Iconic sights and authentic Roman flavours"},
+  fr:{styleTitle:"Rome avec Style",styleSub:"Découvrez la ville de façon ludique et confortable",mustTitle:"Les Incontournables de Rome & Saveurs",mustSub:"Les grands classiques et les saveurs authentiques de Rome"},
+  de:{styleTitle:"Rom mit Stil",styleSub:"Entdecken Sie die Stadt bequem und mit Spaß",mustTitle:"Roms Must-Sees & Genuss",mustSub:"Ikonische Sehenswürdigkeiten und authentische römische Aromen"},
+  es:{styleTitle:"Roma con Estilo",styleSub:"Descubre la ciudad de forma cómoda y divertida",mustTitle:"Imprescindibles de Roma & Sabores",mustSub:"Los grandes clásicos y los sabores auténticos de Roma"},
+  hu:{styleTitle:"Róma Stílusosan",styleSub:"Fedezd fel a várost kényelmesen és élvezetesen",mustTitle:"Róma Kötelező Látnivalói & Ízei",mustSub:"Ikonikus helyek és autentikus római ízek"},
+  ro:{styleTitle:"Roma cu Stil",styleSub:"Descoperă orașul confortabil și cu plăcere",mustTitle:"Atracțiile Esențiale ale Romei & Gusturi",mustSub:"Locuri emblematice și arome romane autentice"},
+  pl:{styleTitle:"Rzym ze Stylem",styleSub:"Odkrywaj miasto wygodnie i z przyjemnością",mustTitle:"Najważniejsze Atrakcje Rzymu & Smaki",mustSub:"Ikoniczne miejsca i autentyczne rzymskie smaki"}
+};
+
+const menu = document.getElementById('langMenu');
+const btn = document.getElementById('langCurrentBtn');
+
+function toggleLangMenu(){
+  const isOpen = menu.classList.contains('open');
+  if(!isOpen){
+    const rect = btn.getBoundingClientRect();
+    const appEl = document.querySelector('.app');
+    const bounds = appEl.getBoundingClientRect();
+    const menuWidth = 176;
+    menu.style.display = 'block';
+    let left = rect.right - menuWidth;
+    left = Math.max(bounds.left + 8, Math.min(left, bounds.right - menuWidth - 8));
+    menu.style.left = left + 'px';
+    menu.style.right = 'auto';
+    menu.style.width = menuWidth + 'px';
+    let top = rect.bottom + 8;
+    const menuMaxHeight = Math.min(320, window.innerHeight * 0.6);
+    if(top + menuMaxHeight > Math.min(bounds.bottom, window.innerHeight)){
+      top = Math.max(bounds.top + 8, rect.top - menuMaxHeight - 8);
+    }
+    menu.style.top = top + 'px';
+    menu.style.display = '';
+  }
+  menu.classList.toggle('open');
+  btn.classList.toggle('open');
+}
+
+document.addEventListener('click', function(e){
+  const sel = document.getElementById('langSelect');
+  if(sel && !sel.contains(e.target)){
+    menu.classList.remove('open');
+    btn.classList.remove('open');
+  }
+});
+window.addEventListener('resize', function(){
+  menu.classList.remove('open');
+  btn.classList.remove('open');
+});
+
+function setLang(lang){
+  if(!I18N[lang]) lang = 'it';
+  const d = I18N[lang];
+  localStorage.setItem('vbLang', lang);
+  document.getElementById('langCurrentLabel').textContent = LANG_LABELS[lang];
+  document.querySelectorAll('.lang-menu button').forEach(function(b){
+    b.classList.toggle('active', b.dataset.lang === lang);
+  });
+  menu.classList.remove('open');
+  btn.classList.remove('open');
+
+  document.getElementById('backLabel').textContent = d.back;
+  document.getElementById('pageTitle').textContent = d.title;
+  document.getElementById('pageSub').textContent = d.sub;
+  document.getElementById('tagPicks').textContent = d.tagPicks;
+  const g = GROUP_I18N[lang] || GROUP_I18N.it;
+  document.getElementById('groupStyleTitle').textContent = g.styleTitle;
+  document.getElementById('groupStyleSub').textContent = g.styleSub;
+  document.getElementById('groupMustTitle').textContent = g.mustTitle;
+  document.getElementById('groupMustSub').textContent = g.mustSub;
+
+  document.getElementById('p-golfcart').textContent = d.golfcart;
+  document.getElementById('s-golfcart').textContent = d.golfcartSub;
+  document.getElementById('p-bus').textContent = d.bus;
+  document.getElementById('s-bus').textContent = d.busSub;
+  document.getElementById('p-vespa').textContent = d.vespa;
+  document.getElementById('s-vespa').textContent = d.vespaSub;
+  document.getElementById('p-vatican').textContent = d.vatican;
+  document.getElementById('s-vatican').textContent = d.vaticanSub;
+  document.getElementById('p-colosseum').textContent = d.colosseum;
+  document.getElementById('s-colosseum').textContent = d.colosseumSub;
+  document.getElementById('p-food').textContent = d.food;
+  document.getElementById('s-food').textContent = d.foodSub;
+
+  ['golfcart','bus','vespa','vatican','colosseum','food'].forEach(function(id){
+    document.getElementById('cta-' + id).textContent = d.cta;
+  });
+
+  document.getElementById('exploreTitle').textContent = d.exploreTitle;
+  document.getElementById('exploreSub').textContent = d.exploreSub;
+  document.getElementById('exploreCta').textContent = d.exploreCta;
+  document.getElementById('disclosureText').textContent = d.disclosure;
+
+  document.documentElement.lang = lang;
+}
+
+setLang(localStorage.getItem('vbLang') || 'it');
+</script>
+
+</body>
+</html>
