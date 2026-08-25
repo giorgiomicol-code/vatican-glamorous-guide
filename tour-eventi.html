@@ -47,6 +47,31 @@
   h1.page-title{ position:relative; z-index:1; margin:14px 0 2px; font-size:22px; font-weight:500; color:#fff; line-height:1.15; }
   .page-sub{ position:relative; z-index:1; margin:0; font-size:12.5px; color:var(--brass-light); font-weight:600; letter-spacing:0.02em; max-width:320px; line-height:1.4; }
 
+  .header-actions{ display:flex; align-items:center; gap:8px; flex-shrink:0; }
+  .share-trigger{
+    display:flex; align-items:center; justify-content:center; width:34px; height:34px; flex-shrink:0;
+    background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.22); border-radius:50%;
+    color:#fff; cursor:pointer;
+  }
+  .share-trigger svg{ width:15px; height:15px; }
+  .share-menu{
+    position:fixed; background:#fff; border-radius:14px; box-shadow:0 14px 34px -10px rgba(14,58,102,0.4); border:1px solid var(--line);
+    padding:6px; display:none; z-index:999;
+  }
+  .share-menu.open{ display:block; }
+  .share-option{
+    display:flex; align-items:center; gap:10px; width:100%; box-sizing:border-box; text-align:left; border:none; background:none;
+    padding:9px 10px; border-radius:9px; font-family:'Comfortaa'; font-weight:600; font-size:13px; color:var(--ink); cursor:pointer;
+    text-decoration:none;
+  }
+  .share-option:hover{ background:var(--stone-2); }
+  .so-icon{ width:30px; height:30px; border-radius:9px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .so-icon svg{ width:15px; height:15px; }
+  .so-icon.wa{ background:#E9F8EF; color:#1F9254; }
+  .so-icon.mail, .so-icon.copy{ background:var(--stone-2); color:var(--pine); }
+  .share-copied{ font-size:10.5px; color:#1F9254; font-weight:700; margin-left:auto; opacity:0; transition:opacity .2s; }
+  .share-copied.show{ opacity:1; }
+
   .lang-select{ position:relative; z-index:20; flex-shrink:0; }
   .lang-current{
     display:flex; align-items:center; gap:6px; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.22);
@@ -197,7 +222,28 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
         Guest Guide
       </a>
-      <div class="lang-select" id="langSelect">
+      <div class="header-actions">
+        <div class="share-select" id="shareSelect">
+          <button class="share-trigger" id="shareTriggerBtn" onclick="toggleShareMenu()" aria-label="Condividi">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m8 7 4-4 4 4"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/></svg>
+          </button>
+          <div class="share-menu" id="shareMenu">
+            <a class="share-option" id="shareWa" href="#" target="_blank" rel="noopener">
+              <span class="so-icon wa"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></span>
+              <span>WhatsApp</span>
+            </a>
+            <a class="share-option" id="shareMail" href="#">
+              <span class="so-icon mail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></span>
+              <span id="shareLabelMail">Email</span>
+            </a>
+            <button type="button" class="share-option" id="shareCopyBtn" onclick="copyShareLink()">
+              <span class="so-icon copy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></span>
+              <span id="shareLabelCopy">Copia link</span>
+              <span class="share-copied" id="shareCopiedTag">✓</span>
+            </button>
+          </div>
+        </div>
+        <div class="lang-select" id="langSelect">
         <button class="lang-current" id="langCurrentBtn" onclick="toggleLangMenu()">
           <span id="langCurrentLabel">IT</span>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
@@ -212,6 +258,7 @@
           <button data-lang="ro" onclick="setLang('ro')"><span class="code">RO</span>Română</button>
           <button data-lang="pl" onclick="setLang('pl')"><span class="code">PL</span>Polski</button>
         </div>
+      </div>
       </div>
     </div>
     <h1 class="page-title" id="pageTitle">Tour & Esperienze</h1>
@@ -363,7 +410,7 @@ const I18N = {
   it: {
     pageTitle:"Tour & Esperienze", pageSub:"Prenota le migliori esperienze da fare nei dintorni",
     powered:"",
-    tagDestinations:"Destinazioni", tagOther:"Altro", open:"Apri",
+    tagDestinations:"Destinazioni", tagOther:"Altro", open:"Apri", shareEmail:"Email", shareCopy:"Copia link",
     notBoringTitle:"Non il Solito Tour", notBoringSub:"Esperienze fuori dagli schemi",
     bRome:"Top", bFlorence:"Top", bAmalfi:"Gita di un Giorno", bPompei:"Da non Perdere", bNaples:"Top", bOrvieto:"Gemma Nascosta", bCoast:"Vicino a Te", bOther:"Extra",
     rome:"Il Meglio di Roma", coast:"Latina, Sabaudia e Costa del Circeo", amalfi:"Il Meglio della Costiera Amalfitana",
@@ -373,7 +420,7 @@ const I18N = {
   en: {
     pageTitle:"Tours & Experiences", pageSub:"Book the best experiences nearby",
     powered:"",
-    tagDestinations:"Destinations", tagOther:"Other", open:"Open",
+    tagDestinations:"Destinations", tagOther:"Other", open:"Open", shareEmail:"Email", shareCopy:"Copy link",
     notBoringTitle:"Not Your Usual Tour", notBoringSub:"Experiences off the beaten path",
     bRome:"Top", bFlorence:"Top", bAmalfi:"Day Trip", bPompei:"Must-see", bNaples:"Top", bOrvieto:"Hidden Gem", bCoast:"Near You", bOther:"Extra",
     rome:"The Best of Rome", coast:"Latina, Sabaudia & Circeo Coast", amalfi:"The Best of Amalfi Coast",
@@ -383,7 +430,7 @@ const I18N = {
   fr: {
     pageTitle:"Visites & Expériences", pageSub:"Réservez les meilleures expériences des environs",
     powered:"",
-    tagDestinations:"Destinations", tagOther:"Autres", open:"Ouvrir",
+    tagDestinations:"Destinations", tagOther:"Autres", open:"Ouvrir", shareEmail:"E-mail", shareCopy:"Copier le lien",
     notBoringTitle:"Pas le Tour Habituel", notBoringSub:"Des expériences hors des sentiers battus",
     bRome:"Top", bFlorence:"Top", bAmalfi:"Excursion d'une Journée", bPompei:"Incontournable", bNaples:"Top", bOrvieto:"Trésor Caché", bCoast:"Près de Vous", bOther:"Extra",
     rome:"Le Meilleur de Rome", coast:"Latina, Sabaudia et la Côte du Circeo", amalfi:"Le Meilleur de la Côte Amalfitaine",
@@ -393,7 +440,7 @@ const I18N = {
   de: {
     pageTitle:"Touren & Erlebnisse", pageSub:"Buche die besten Erlebnisse in der Umgebung",
     powered:"",
-    tagDestinations:"Reiseziele", tagOther:"Weitere", open:"Öffnen",
+    tagDestinations:"Reiseziele", tagOther:"Weitere", open:"Öffnen", shareEmail:"E-Mail", shareCopy:"Link kopieren",
     notBoringTitle:"Nicht die übliche Tour", notBoringSub:"Erlebnisse abseits der ausgetretenen Pfade",
     bRome:"Top", bFlorence:"Top", bAmalfi:"Tagesausflug", bPompei:"Muss man sehen", bNaples:"Top", bOrvieto:"Geheimtipp", bCoast:"In der Nähe", bOther:"Extra",
     rome:"Das Beste von Rom", coast:"Latina, Sabaudia & Circeo-Küste", amalfi:"Das Beste der Amalfiküste",
@@ -403,7 +450,7 @@ const I18N = {
   es: {
     pageTitle:"Tours y Experiencias", pageSub:"Reserva las mejores experiencias de la zona",
     powered:"",
-    tagDestinations:"Destinos", tagOther:"Otros", open:"Abrir",
+    tagDestinations:"Destinos", tagOther:"Otros", open:"Abrir", shareEmail:"Correo", shareCopy:"Copiar enlace",
     notBoringTitle:"No el Tour de Siempre", notBoringSub:"Experiencias fuera de lo común",
     bRome:"Top", bFlorence:"Top", bAmalfi:"Excursión de un Día", bPompei:"Imprescindible", bNaples:"Top", bOrvieto:"Joya Escondida", bCoast:"Cerca de Ti", bOther:"Extra",
     rome:"Lo Mejor de Roma", coast:"Latina, Sabaudia y Costa del Circeo", amalfi:"Lo Mejor de la Costa Amalfitana",
@@ -413,7 +460,7 @@ const I18N = {
   hu: {
     pageTitle:"Túrák és Élmények", pageSub:"Foglald le a környék legjobb élményeit",
     powered:"",
-    tagDestinations:"Úticélok", tagOther:"Egyéb", open:"Megnyitás",
+    tagDestinations:"Úticélok", tagOther:"Egyéb", open:"Megnyitás", shareEmail:"E-mail", shareCopy:"Link másolása",
     notBoringTitle:"Nem a Szokásos Túra", notBoringSub:"Élmények a megszokotton túl",
     bRome:"Top", bFlorence:"Top", bAmalfi:"Egynapos Kirándulás", bPompei:"Kihagyhatatlan", bNaples:"Top", bOrvieto:"Rejtett Gyöngyszem", bCoast:"A Közeledben", bOther:"Extra",
     rome:"Róma Legjava", coast:"Latina, Sabaudia és a Circeo-part", amalfi:"Amalfi-part Legjava",
@@ -423,7 +470,7 @@ const I18N = {
   ro: {
     pageTitle:"Tururi și Experiențe", pageSub:"Rezervă cele mai bune experiențe din zonă",
     powered:"",
-    tagDestinations:"Destinații", tagOther:"Altele", open:"Deschide",
+    tagDestinations:"Destinații", tagOther:"Altele", open:"Deschide", shareEmail:"E-mail", shareCopy:"Copiază linkul",
     notBoringTitle:"Nu Turul Obișnuit", notBoringSub:"Experiențe ieșite din tipare",
     bRome:"Top", bFlorence:"Top", bAmalfi:"Excursie de o Zi", bPompei:"De Neratat", bNaples:"Top", bOrvieto:"Comoară Ascunsă", bCoast:"Aproape de Tine", bOther:"Extra",
     rome:"Ce e Mai Bun în Roma", coast:"Latina, Sabaudia și Coasta Circeo", amalfi:"Ce e Mai Bun pe Coasta Amalfi",
@@ -433,7 +480,7 @@ const I18N = {
   pl: {
     pageTitle:"Wycieczki i Atrakcje", pageSub:"Zarezerwuj najlepsze atrakcje w okolicy",
     powered:"",
-    tagDestinations:"Kierunki", tagOther:"Inne", open:"Otwórz",
+    tagDestinations:"Kierunki", tagOther:"Inne", open:"Otwórz", shareEmail:"E-mail", shareCopy:"Kopiuj link",
     notBoringTitle:"Nie Zwykła Wycieczka", notBoringSub:"Doświadczenia nietuzinkowe",
     bRome:"Top", bFlorence:"Top", bAmalfi:"Wycieczka Jednodniowa", bPompei:"Koniecznie Zobacz", bNaples:"Top", bOrvieto:"Ukryty Skarb", bCoast:"Blisko Ciebie", bOther:"Extra",
     rome:"Najlepsze z Rzymu", coast:"Latina, Sabaudia i Wybrzeże Circeo", amalfi:"Najlepsze z Wybrzeża Amalfi",
@@ -446,14 +493,25 @@ const menu = document.getElementById('langMenu');
 const btn = document.getElementById('langCurrentBtn');
 
 function toggleLangMenu(){
+  closeShareMenu();
   const isOpen = menu.classList.contains('open');
   if(!isOpen){
     if(menu.parentElement !== document.body){ document.body.appendChild(menu); }
     const rect = btn.getBoundingClientRect();
-    menu.style.top = (rect.bottom + 8) + 'px';
-    const rightEdge = window.innerWidth - rect.right;
-    menu.style.right = rightEdge + 'px';
-    menu.style.left = 'auto';
+    const appEl = document.querySelector('.app');
+    const bounds = appEl.getBoundingClientRect();
+    const menuWidth = 176;
+    menu.style.width = menuWidth + 'px';
+    let left = rect.right - menuWidth;
+    left = Math.max(bounds.left + 8, Math.min(left, bounds.right - menuWidth - 8));
+    menu.style.left = left + 'px';
+    menu.style.right = 'auto';
+    let top = rect.bottom + 8;
+    const menuMaxHeight = Math.min(320, window.innerHeight * 0.6);
+    if(top + menuMaxHeight > Math.min(bounds.bottom, window.innerHeight)){
+      top = Math.max(bounds.top + 8, rect.top - menuMaxHeight - 8);
+    }
+    menu.style.top = top + 'px';
   }
   menu.classList.toggle('open');
   btn.classList.toggle('open');
@@ -467,7 +525,65 @@ document.addEventListener('click', function(e){
     menu.classList.remove('open');
     btn.classList.remove('open');
   }
+  const shareSel = document.getElementById('shareSelect');
+  const shareMenuEl = document.getElementById('shareMenu');
+  const clickedInsideShareSelect = shareSel && shareSel.contains(e.target);
+  const clickedInsideShareMenu = shareMenuEl && shareMenuEl.contains(e.target);
+  if(!clickedInsideShareSelect && !clickedInsideShareMenu){
+    closeShareMenu();
+  }
 });
+
+function closeShareMenu(){
+  const shareMenuEl = document.getElementById('shareMenu');
+  const shareBtn = document.getElementById('shareTriggerBtn');
+  if(shareMenuEl){ shareMenuEl.classList.remove('open'); }
+  if(shareBtn){ shareBtn.classList.remove('open'); }
+}
+
+function toggleShareMenu(){
+  menu.classList.remove('open');
+  btn.classList.remove('open');
+  const shareMenuEl = document.getElementById('shareMenu');
+  const shareBtn = document.getElementById('shareTriggerBtn');
+  const isOpen = shareMenuEl.classList.contains('open');
+  if(!isOpen){
+    if(shareMenuEl.parentElement !== document.body){ document.body.appendChild(shareMenuEl); }
+    const rect = shareBtn.getBoundingClientRect();
+    const appEl = document.querySelector('.app');
+    const bounds = appEl.getBoundingClientRect();
+    const menuWidth = 200;
+    shareMenuEl.style.width = menuWidth + 'px';
+    let left = rect.right - menuWidth;
+    left = Math.max(bounds.left + 8, Math.min(left, bounds.right - menuWidth - 8));
+    shareMenuEl.style.left = left + 'px';
+    let top = rect.bottom + 8;
+    const menuMaxHeight = Math.min(220, window.innerHeight * 0.6);
+    if(top + menuMaxHeight > Math.min(bounds.bottom, window.innerHeight)){
+      top = Math.max(bounds.top + 8, rect.top - menuMaxHeight - 8);
+    }
+    shareMenuEl.style.top = top + 'px';
+    setupShareLinks();
+  }
+  shareMenuEl.classList.toggle('open');
+  shareBtn.classList.toggle('open');
+}
+
+function setupShareLinks(){
+  const url = window.location.href;
+  const title = document.title;
+  document.getElementById('shareWa').href = 'https://wa.me/?text=' + encodeURIComponent(title + ' — ' + url);
+  document.getElementById('shareMail').href = 'mailto:?subject=' + encodeURIComponent(title) + '&body=' + encodeURIComponent(url);
+}
+
+function copyShareLink(){
+  const url = window.location.href;
+  const tag = document.getElementById('shareCopiedTag');
+  navigator.clipboard.writeText(url).then(function(){
+    tag.classList.add('show');
+    setTimeout(function(){ tag.classList.remove('show'); }, 1600);
+  }).catch(function(){});
+}
 
 function setLang(lang){
   const d = I18N[lang];
@@ -481,6 +597,8 @@ function setLang(lang){
   document.getElementById('pageTitle').textContent = d.pageTitle;
   document.getElementById('pageSub').textContent = d.pageSub;
   document.getElementById('tagDestinations').textContent = d.tagDestinations;
+  document.getElementById('shareLabelMail').textContent = d.shareEmail;
+  document.getElementById('shareLabelCopy').textContent = d.shareCopy;
 
   document.getElementById('s-rome').textContent = d.romeSub;
   document.getElementById('s-other').textContent = d.otherSub;
