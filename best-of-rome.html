@@ -28,12 +28,12 @@
     -webkit-font-smoothing:antialiased; min-height:100svh;
   }
   .app{
-    max-width:520px; margin:0 auto; min-height:100svh; background:var(--stone); position:relative;
-    display:flex; flex-direction:column; box-shadow:0 0 60px rgba(0,0,0,0.08);
+    max-width:520px; margin:0 auto; height:100svh; background:var(--stone); position:relative;
+    display:flex; flex-direction:column; overflow:hidden; box-shadow:0 0 60px rgba(0,0,0,0.08);
   }
   @media (min-width:560px){
     body{ background: linear-gradient(180deg,#DCE8F5, #C7DCF0 60%, #b7d0ea); padding:28px 0; }
-    .app{ border-radius:34px; overflow:hidden; min-height:calc(100svh - 56px); box-shadow: 0 30px 80px -20px rgba(14,58,102,0.35); }
+    .app{ border-radius:34px; overflow:hidden; height:calc(100svh - 56px); box-shadow: 0 30px 80px -20px rgba(14,58,102,0.35); }
   }
 
   header.top{
@@ -102,7 +102,13 @@
   .lang-menu button.active{ background:var(--stone-2); color:var(--pine); }
   .lang-menu button .code{ margin-left:auto; font-size:10px; color:var(--ink-soft); text-transform:uppercase; letter-spacing:.04em; }
 
-  main{ flex:1; padding:18px 16px 28px; }
+  main{ flex:1; min-height:0; overflow-y:auto; -webkit-overflow-scrolling:touch; padding:18px 16px 20px; }
+
+  nav.tabbar{ position:relative; flex-shrink:0; left:0; right:0; bottom:0; background: rgba(255,255,255,0.96); backdrop-filter: blur(14px); border-top:1px solid var(--line); display:flex; padding:6px 8px calc(8px + env(safe-area-inset-bottom)); gap:4px; z-index:5; }
+  nav.tabbar button, nav.tabbar a{ flex:1; display:flex; align-items:center; justify-content:center; background:none; border:none; padding:10px 4px; border-radius:14px; color:var(--ink-soft); cursor:pointer; font-family:'Comfortaa'; font-weight:600; transition:.2s; text-decoration:none; }
+  nav.tabbar button svg, nav.tabbar a svg{ width:22px; height:22px; }
+  nav.tabbar button span, nav.tabbar a span{ display:none; }
+  nav.tabbar button.active, nav.tabbar a.active{ color:var(--pine); background:var(--stone-2); }
 
   .section-tag{
     display:flex; align-items:center; gap:8px; margin:0 4px 14px;
@@ -328,15 +334,34 @@
     </a>
 
     <p class="disclosure" id="disclosureText">Le prenotazioni delle esperienze sono gestite da partner esterni selezionati.</p>
+
+    <div class="contact-bar" style="border-radius:16px; margin-top:18px;">
+      <div class="brandline">Vatican Glamorous<small>Passeggiata del Gelsomino</small></div>
+      <a class="phone" href="tel:+393402779645">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        +39 340 277 9645
+      </a>
+    </div>
   </main>
 
-  <footer class="contact-bar">
-    <div class="brandline">Vatican Glamorous<small>Passeggiata del Gelsomino</small></div>
-    <a class="phone" href="tel:+393402779645">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-      +39 340 277 9645
+  <nav class="tabbar">
+    <a class="tab-btn" href="index.html#tours">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
+      <span id="navToursLabel">Tour ed Eventi</span>
     </a>
-  </footer>
+    <a class="tab-btn active" href="best-of-rome.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.6 6.9L22 9.6l-5.5 4.8L18 22l-6-3.6L6 22l1.5-7.6L2 9.6l7.4-.7Z"/></svg>
+      <span id="navTopTourLabel">Top Tour</span>
+    </a>
+    <a class="tab-btn" href="index.html#general">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 4l9 6.5"/><path d="M5 9.5V20h14V9.5"/><path d="M9 20v-6h6v6"/></svg>
+      <span id="navGeneralLabel">La Nostra Casa</span>
+    </a>
+    <a class="tab-btn" href="index.html#home">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2Z"/><path d="M9 4v14M15 6v14"/></svg>
+      <span id="navHomeLabel">La Nostra Città</span>
+    </a>
+  </nav>
 
 </div>
 
@@ -354,7 +379,8 @@ const I18N = {
     colosseum:"Colosseo, Foro Romano & Palatino", colosseumSub:"Entra nel cuore della Roma antica",
     food:"Food Tour a Trastevere", foodSub:"Sapori autentici tra Trastevere e Campo de' Fiori",
     exploreTitle:"Cerchi qualcosa di diverso?", exploreSub:"Scopri tutte le attività disponibili a Roma", exploreCta:"Vedi tutte le esperienze ›",
-    disclosure:"Le prenotazioni delle esperienze sono gestite da partner esterni selezionati."
+    disclosure:"Le prenotazioni delle esperienze sono gestite da partner esterni selezionati.",
+    navTours:"Tour ed Eventi", navGeneral:"La Nostra Casa", navHome:"La Nostra Città"
   },
   en: {
     back:"Tours & Experiences", title:"The Best of Rome", sub:"Our favourite experiences for our guests",
@@ -366,7 +392,8 @@ const I18N = {
     colosseum:"Colosseum, Roman Forum & Palatine Hill", colosseumSub:"Step into the heart of ancient Rome",
     food:"Trastevere Food Tour", foodSub:"Authentic flavours between Trastevere and Campo de' Fiori",
     exploreTitle:"Looking for something different?", exploreSub:"Browse all the experiences available in Rome", exploreCta:"See all experiences ›",
-    disclosure:"Experience bookings are handled by selected external partners."
+    disclosure:"Experience bookings are handled by selected external partners.",
+    navTours:"Tours & Events", navGeneral:"Our Home", navHome:"Our City"
   },
   fr: {
     back:"Visites & Expériences", title:"Le Meilleur de Rome", sub:"Les expériences que nous recommandons à nos hôtes",
@@ -378,7 +405,8 @@ const I18N = {
     colosseum:"Colisée, Forum Romain & Palatin", colosseumSub:"Entrez au cœur de la Rome antique",
     food:"Tour Gastronomique à Trastevere", foodSub:"Saveurs authentiques entre Trastevere et Campo de' Fiori",
     exploreTitle:"Vous cherchez autre chose ?", exploreSub:"Découvrez toutes les expériences disponibles à Rome", exploreCta:"Voir toutes les expériences ›",
-    disclosure:"Les réservations des expériences sont gérées par des partenaires externes sélectionnés."
+    disclosure:"Les réservations des expériences sont gérées par des partenaires externes sélectionnés.",
+    navTours:"Visites & Événements", navGeneral:"Notre Maison", navHome:"Notre Ville"
   },
   de: {
     back:"Touren & Erlebnisse", title:"Das Beste von Rom", sub:"Die Erlebnisse, die wir unseren Gästen empfehlen",
@@ -390,7 +418,8 @@ const I18N = {
     colosseum:"Kolosseum, Forum Romanum & Palatin", colosseumSub:"Tauchen Sie ein ins Herz des antiken Rom",
     food:"Kulinarische Tour durch Trastevere", foodSub:"Authentische Aromen zwischen Trastevere und Campo de' Fiori",
     exploreTitle:"Suchen Sie etwas anderes?", exploreSub:"Entdecken Sie alle verfügbaren Erlebnisse in Rom", exploreCta:"Alle Erlebnisse ansehen ›",
-    disclosure:"Die Buchung der Erlebnisse erfolgt über ausgewählte externe Partner."
+    disclosure:"Die Buchung der Erlebnisse erfolgt über ausgewählte externe Partner.",
+    navTours:"Touren & Veranstaltungen", navGeneral:"Unser Zuhause", navHome:"Unsere Stadt"
   },
   es: {
     back:"Tours y Experiencias", title:"Lo Mejor de Roma", sub:"Las experiencias que recomendamos a nuestros huéspedes",
@@ -402,7 +431,8 @@ const I18N = {
     colosseum:"Coliseo, Foro Romano y Palatino", colosseumSub:"Entra en el corazón de la Roma antigua",
     food:"Tour Gastronómico en Trastevere", foodSub:"Sabores auténticos entre Trastevere y Campo de' Fiori",
     exploreTitle:"¿Buscas algo diferente?", exploreSub:"Descubre todas las experiencias disponibles en Roma", exploreCta:"Ver todas las experiencias ›",
-    disclosure:"Las reservas de las experiencias las gestionan socios externos seleccionados."
+    disclosure:"Las reservas de las experiencias las gestionan socios externos seleccionados.",
+    navTours:"Tours y Eventos", navGeneral:"Nuestra Casa", navHome:"Nuestra Ciudad"
   },
   hu: {
     back:"Túrák és Élmények", title:"Róma Legjava", sub:"Az élmények, amelyeket vendégeinknek ajánlunk",
@@ -414,7 +444,8 @@ const I18N = {
     colosseum:"Colosseum, Forum Romanum és Palatinus", colosseumSub:"Lépj be az ókori Róma szívébe",
     food:"Gasztronómiai Túra Trastevereben", foodSub:"Hiteles ízek Trastevere és Campo de' Fiori között",
     exploreTitle:"Valami mást keresel?", exploreSub:"Fedezd fel az összes elérhető élményt Rómában", exploreCta:"Összes élmény megtekintése ›",
-    disclosure:"Az élmények foglalását kiválasztott külső partnerek kezelik."
+    disclosure:"Az élmények foglalását kiválasztott külső partnerek kezelik.",
+    navTours:"Túrák és Események", navGeneral:"Otthonunk", navHome:"Városunk"
   },
   ro: {
     back:"Tururi și Experiențe", title:"Ce e Mai Bun în Roma", sub:"Experiențele pe care le recomandăm oaspeților noștri",
@@ -426,7 +457,8 @@ const I18N = {
     colosseum:"Colosseum, Forul Roman și Palatin", colosseumSub:"Pătrunde în inima Romei antice",
     food:"Tur Gastronomic în Trastevere", foodSub:"Arome autentice între Trastevere și Campo de' Fiori",
     exploreTitle:"Cauți ceva diferit?", exploreSub:"Descoperă toate experiențele disponibile în Roma", exploreCta:"Vezi toate experiențele ›",
-    disclosure:"Rezervările experiențelor sunt gestionate de parteneri externi selecționați."
+    disclosure:"Rezervările experiențelor sunt gestionate de parteneri externi selecționați.",
+    navTours:"Tururi și Evenimente", navGeneral:"Casa Noastră", navHome:"Orașul Nostru"
   },
   pl: {
     back:"Wycieczki i Atrakcje", title:"Najlepsze z Rzymu", sub:"Atrakcje, które polecamy naszym gościom",
@@ -438,7 +470,8 @@ const I18N = {
     colosseum:"Koloseum, Forum Romanum i Palatyn", colosseumSub:"Wejdź w serce starożytnego Rzymu",
     food:"Wycieczka Kulinarna po Trastevere", foodSub:"Autentyczne smaki między Trastevere a Campo de' Fiori",
     exploreTitle:"Szukasz czegoś innego?", exploreSub:"Odkryj wszystkie dostępne atrakcje w Rzymie", exploreCta:"Zobacz wszystkie atrakcje ›",
-    disclosure:"Rezerwacje atrakcji obsługują wybrani partnerzy zewnętrzni."
+    disclosure:"Rezerwacje atrakcji obsługują wybrani partnerzy zewnętrzni.",
+    navTours:"Wycieczki i Wydarzenia", navGeneral:"Nasz Dom", navHome:"Nasze Miasto"
   }
 };
 
@@ -563,6 +596,11 @@ function setLang(lang){
   });
   menu.classList.remove('open');
   btn.classList.remove('open');
+
+  document.getElementById('navToursLabel').textContent = d.navTours;
+  document.getElementById('navTopTourLabel').textContent = 'Top Tour';
+  document.getElementById('navGeneralLabel').textContent = d.navGeneral;
+  document.getElementById('navHomeLabel').textContent = d.navHome;
 
   document.getElementById('backLabel').textContent = d.back;
   document.getElementById('pageTitle').textContent = d.title;
