@@ -350,7 +350,7 @@ const DATA = {
       hu:{t:'Kirándulások a Partvidéken', s:'Latina, Sabaudia, Circeo és a Lazio-parti térség.'},
       ro:{t:'Excursii pe Coastă', s:'Latina, Sabaudia, Circeo și Coasta Lazio.'},
       pl:{t:'Wycieczki na Wybrzeże', s:'Latina, Sabaudia, Circeo i wybrzeże Lacjum.'} },
-    { icon:'pilgrim', size:'medium', photo:PHOTOS.pilgrim, href:'https://www.passeggiatadelgelsomino.com/pilgrim-stay',
+    { icon:'pilgrim', size:'medium', photo:PHOTOS.pilgrim, href:'pilgrim-stay.html',
       it:{t:'Pilgrim Stay', s:'Informazioni dedicate ai pellegrini in visita al Vaticano.'},
       en:{t:'Pilgrim Stay', s:'Dedicated information for pilgrims visiting the Vatican.'},
       fr:{t:'Pilgrim Stay', s:'Informations dédiées aux pèlerins en visite au Vatican.'},
@@ -653,6 +653,8 @@ function setTab(tab){
   document.getElementById('panel-'+tab).classList.add('active');
   document.querySelectorAll('.tab-btn').forEach(b=>b.classList.toggle('active', b.dataset.tab===tab));
   document.getElementById('section-label').textContent = I18N[LANG]['tab.' + tab + '.label'];
+  const mainEl = document.querySelector('main');
+  if(mainEl) mainEl.scrollTop = 0;
 }
 
 renderStack('stack-general', DATA.general, {bigPhoto:true});
