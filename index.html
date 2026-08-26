@@ -154,11 +154,10 @@
   .page-brand b{ display:block; color:var(--pine); font-size:12.5px; font-weight:700; letter-spacing:0.02em; margin-bottom:2px; }
 
   nav.tabbar{ position:absolute; left:0; right:0; bottom:0; background: rgba(251,248,241,0.92); backdrop-filter: blur(14px); border-top:1px solid var(--line); display:flex; padding:8px 8px calc(10px + env(safe-area-inset-bottom)); gap:4px; z-index:5; }
-  nav.tabbar button{ flex:1; display:flex; flex-direction:column; align-items:center; gap:4px; background:none; border:none; padding:8px 4px 6px; border-radius:14px; color:var(--ink-soft); cursor:pointer; font-family:'Comfortaa'; font-weight:600; transition:.2s; }
-  nav.tabbar button svg{ width:21px; height:21px; }
-  nav.tabbar button span{ font-size:9.5px; line-height:1.15; letter-spacing:.01em; text-align:center; }
-  nav.tabbar button[data-tab="tours"] span{ font-size:8.8px; }
-  nav.tabbar button.active{ color:var(--pine); background:var(--stone-2); }
+  nav.tabbar button, nav.tabbar a{ flex:1; display:flex; flex-direction:column; align-items:center; gap:4px; background:none; border:none; padding:8px 4px 6px; border-radius:14px; color:var(--ink-soft); cursor:pointer; font-family:'Comfortaa'; font-weight:600; transition:.2s; text-decoration:none; }
+  nav.tabbar button svg, nav.tabbar a svg{ width:21px; height:21px; }
+  nav.tabbar button span, nav.tabbar a span{ font-size:10.5px; letter-spacing:.02em; }
+  nav.tabbar button.active, nav.tabbar a.active{ color:var(--pine); background:var(--stone-2); }
   ::-webkit-scrollbar{ width:0; height:0; }
 </style>
 </head>
@@ -218,15 +217,15 @@
   <nav class="tabbar">
     <button class="tab-btn active" data-tab="tours" onclick="setTab('tours')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
-      <span data-i18n="nav.tours">Esperienze, Eventi, Escursioni</span>
+      <span data-i18n="nav.tours">Tour ed Eventi</span>
     </button>
-    <button class="tab-btn top-tour-btn" type="button" onclick="window.location.href='best-of-rome.html'" aria-label="Top Tour">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3 2.6 5.3 5.9.9-4.3 4.2 1 5.9-5.2-2.8-5.2 2.8 1-5.9-4.3-4.2 5.9-.9L12 3Z"/></svg>
-      <span data-i18n="nav.topTour">Top Tour</span>
-    </button>
+    <a class="tab-btn" href="best-of-rome.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.6 6.9L22 9.6l-5.5 4.8L18 22l-6-3.6L6 22l1.5-7.6L2 9.6l7.4-.7Z"/></svg>
+      <span data-i18n="nav.toptour">Top Tour</span>
+    </a>
     <button class="tab-btn" data-tab="general" onclick="setTab('general')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 4l9 6.5"/><path d="M5 9.5V20h14V9.5"/><path d="M9 20v-6h6v6"/></svg>
-      <span data-i18n="nav.general">La Nostra Casa</span>
+      <span data-i18n="nav.general">Info</span>
     </button>
     <button class="tab-btn" data-tab="home" onclick="setTab('home')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2Z"/><path d="M9 4v14M15 6v14"/></svg>
@@ -418,7 +417,7 @@ const I18N = {
     'tab.tours.desc':'Tour, pellegrinaggi ed eventi nella zona del Vaticano e di Roma.',
     'tab.home.label':'La Nostra Città', 'tab.home.title':'La casa e la città',
     'tab.home.desc':'Aria condizionata e mappe utili per orientarti a Roma e in Vaticano.',
-    'nav.general':'La Nostra Casa', 'nav.tours':'Esperienze, Eventi, Escursioni', 'nav.topTour':'Top Tour', 'nav.home':'La Nostra Città'
+    'nav.general':'La Nostra Casa', 'nav.tours':'Tour ed Eventi', 'nav.home':'La Nostra Città', 'nav.toptour':'Top Tour'
   },
   en:{
     eyebrow:'Guest Guide', back:'Back to the guide',
@@ -429,7 +428,7 @@ const I18N = {
     'tab.tours.desc':'Tours, pilgrim info and events around the Vatican and Rome.',
     'tab.home.label':'Our City', 'tab.home.title':'The apartment and the city',
     'tab.home.desc':'Air conditioning and useful maps to find your way around Rome and the Vatican.',
-    'nav.general':'Our Home', 'nav.tours':'Experiences, Events & Excursions', 'nav.topTour':'Top Tour', 'nav.home':'Our City'
+    'nav.general':'Our Home', 'nav.tours':'Tours & Events', 'nav.home':'Our City', 'nav.toptour':'Top Tour'
   },
   fr:{
     eyebrow:'Guide des Hôtes', back:'Retour au guide',
@@ -440,7 +439,7 @@ const I18N = {
     'tab.tours.desc':'Visites, infos pour pèlerins et événements autour du Vatican et de Rome.',
     'tab.home.label':'Notre Ville', 'tab.home.title':"L'appartement et la ville",
     'tab.home.desc':'Climatisation et cartes utiles pour vous repérer à Rome et au Vatican.',
-    'nav.general':'Notre Maison', 'nav.tours':'Expériences, Événements & Excursions', 'nav.topTour':'Top Tour', 'nav.home':'Notre Ville'
+    'nav.general':'Notre Maison', 'nav.tours':'Visites & Événements', 'nav.home':'Notre Ville', 'nav.toptour':'Top Tour'
   },
   de:{
     eyebrow:'Gästeführer', back:'Zurück zum Guide',
@@ -451,7 +450,7 @@ const I18N = {
     'tab.tours.desc':'Touren, Pilgerinfos und Veranstaltungen rund um den Vatikan und Rom.',
     'tab.home.label':'Unsere Stadt', 'tab.home.title':'Die Wohnung und die Stadt',
     'tab.home.desc':'Klimaanlage und nützliche Karten, um sich in Rom und im Vatikan zurechtzufinden.',
-    'nav.general':'Unser Zuhause', 'nav.tours':'Erlebnisse, Events & Ausflüge', 'nav.topTour':'Top Tour', 'nav.home':'Unsere Stadt'
+    'nav.general':'Unser Zuhause', 'nav.tours':'Touren & Veranstaltungen', 'nav.home':'Unsere Stadt', 'nav.toptour':'Top Tour'
   },
   es:{
     eyebrow:'Guía del Huésped', back:'Volver a la guía',
@@ -462,7 +461,7 @@ const I18N = {
     'tab.tours.desc':'Tours, información para peregrinos y eventos en torno al Vaticano y Roma.',
     'tab.home.label':'Nuestra Ciudad', 'tab.home.title':'El apartamento y la ciudad',
     'tab.home.desc':'Aire acondicionado y mapas útiles para orientarte en Roma y el Vaticano.',
-    'nav.general':'Nuestra Casa', 'nav.tours':'Experiencias, Eventos y Excursiones', 'nav.topTour':'Top Tour', 'nav.home':'Nuestra Ciudad'
+    'nav.general':'Nuestra Casa', 'nav.tours':'Tours y Eventos', 'nav.home':'Nuestra Ciudad', 'nav.toptour':'Top Tour'
   },
   hu:{
     eyebrow:'Vendégkalauz', back:'Vissza az útmutatóhoz',
@@ -473,7 +472,7 @@ const I18N = {
     'tab.tours.desc':'Túrák, zarándokinfók és események a Vatikán és Róma környékén.',
     'tab.home.label':'Városunk', 'tab.home.title':'A lakás és a város',
     'tab.home.desc':'Légkondicionálás és hasznos térképek Rómában és a Vatikánban való eligazodáshoz.',
-    'nav.general':'Otthonunk', 'nav.tours':'Élmények, Események és Kirándulások', 'nav.topTour':'Top Tour', 'nav.home':'Városunk'
+    'nav.general':'Otthonunk', 'nav.tours':'Túrák és Események', 'nav.home':'Városunk', 'nav.toptour':'Top Tour'
   },
   ro:{
     eyebrow:'Ghidul Oaspeților', back:'Înapoi la ghid',
@@ -484,7 +483,7 @@ const I18N = {
     'tab.tours.desc':'Tururi, informații pentru pelerini și evenimente în jurul Vaticanului și Romei.',
     'tab.home.label':'Orașul Nostru', 'tab.home.title':'Apartamentul și orașul',
     'tab.home.desc':'Aer condiționat și hărți utile pentru a te orienta în Roma și la Vatican.',
-    'nav.general':'Casa Noastră', 'nav.tours':'Experiențe, Evenimente și Excursii', 'nav.topTour':'Top Tour', 'nav.home':'Orașul Nostru'
+    'nav.general':'Casa Noastră', 'nav.tours':'Tururi și Evenimente', 'nav.home':'Orașul Nostru', 'nav.toptour':'Top Tour'
   },
   pl:{
     eyebrow:'Przewodnik dla Gości', back:'Powrót do przewodnika',
@@ -495,7 +494,7 @@ const I18N = {
     'tab.tours.desc':'Wycieczki, informacje dla pielgrzymów i wydarzenia w okolicach Watykanu i Rzymu.',
     'tab.home.label':'Nasze Miasto', 'tab.home.title':'Mieszkanie i miasto',
     'tab.home.desc':'Klimatyzacja i przydatne mapy ułatwiające poruszanie się po Rzymie i Watykanie.',
-    'nav.general':'Nasz Dom', 'nav.tours':'Atrakcje, Wydarzenia i Wycieczki', 'nav.topTour':'Top Tour', 'nav.home':'Nasze Miasto'
+    'nav.general':'Nasz Dom', 'nav.tours':'Wycieczki i Wydarzenia', 'nav.home':'Nasze Miasto', 'nav.toptour':'Top Tour'
   }
 };
 
@@ -665,6 +664,13 @@ function setTab(tab){
 renderStack('stack-general', DATA.general, {bigPhoto:true});
 renderStack('stack-tours', DATA.tours, {bigPhoto:true});
 renderStack('stack-home', DATA.home);
+
+(function(){
+  const hash = (window.location.hash || '').replace('#', '');
+  if(hash === 'general' || hash === 'home' || hash === 'tours'){
+    setTab(hash);
+  }
+})();
 applyI18n();
 </script>
 </body>
