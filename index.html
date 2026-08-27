@@ -125,14 +125,14 @@
   .card.hero.big-photo .art{ height:198px; }
   .card.hero.big-photo .body{ padding:8px 16px 10px; }
   .card.hero.big-photo .rank-tag{ display:none; }
-  .card.hero.big-photo .title{
-    font-size:15px; font-weight:600; margin:0 0 2px; line-height:1.25;
-    white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  .card .caption-line{
+    display:flex; align-items:baseline; min-width:0; width:100%; margin:0;
+    white-space:nowrap; overflow:hidden; font-size:clamp(10px, 2.8vw, 12.5px); line-height:1.35;
   }
-  .card.hero.big-photo .sub{
-    display:block; font-size:12px; color:var(--ink-soft); line-height:1.3; margin:0;
-    white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
-  }
+  .card .caption-line strong{ color:var(--ink); font-size:1.08em; font-weight:700; flex:0 0 auto; }
+  .card .caption-line span{ color:var(--ink-soft); min-width:0; overflow:hidden; text-overflow:ellipsis; }
+  .card .caption-line .caption-sep{ padding:0 .38em; flex:0 0 auto; color:var(--brass); }
+  .card.hero.big-photo .caption-line{ font-size:clamp(10px, 2.75vw, 12px); }
 
   .card.medium{ align-items:center; padding:12px; gap:14px; }
   .card.medium .art{ width:60px; height:60px; border-radius:14px; flex-shrink:0; background: linear-gradient(135deg, var(--sea), #2c5153); display:flex; align-items:center; justify-content:center; color:#E8F4FC; }
@@ -150,6 +150,12 @@
   .chevron svg{ width:16px; height:16px; }
 
   .helper-note{ margin-top:14px; font-size:12px; color:var(--ink-soft); text-align:center; line-height:1.5; padding:0 12px; }
+  .guide-return{
+    display:flex; align-items:center; justify-content:center; gap:7px; width:100%;
+    margin:22px 0 2px; padding:12px 14px; border:1px solid var(--line); border-radius:14px;
+    background:var(--stone-2); color:var(--pine); text-decoration:none; font-size:12.5px; font-weight:700;
+  }
+  .guide-return svg{ width:16px; height:16px; flex:0 0 auto; }
   .page-brand{ margin:22px 4px 4px; text-align:center; font-size:11.5px; color:var(--ink-soft); line-height:1.4; }
   .page-brand b{ display:block; color:var(--pine); font-size:12.5px; font-weight:700; letter-spacing:0.02em; margin-bottom:2px; }
 
@@ -208,6 +214,10 @@
         <p data-i18n="tab.general.desc">Wi‑Fi, pulizie, ristoranti e come muoversi vicino al Vaticano.</p>
       </div>
       <div class="stack" id="stack-general"></div>
+      <a class="guide-return" href="index.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+        <span data-i18n="back">Torna alla guida</span>
+      </a>
     </section>
 
     <section id="panel-tours" class="panel active">
@@ -216,6 +226,10 @@
         <p data-i18n="tab.tours.desc">Tour, pellegrinaggi ed eventi nella zona del Vaticano e di Roma.</p>
       </div>
       <div class="stack" id="stack-tours"></div>
+      <a class="guide-return" href="index.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+        <span data-i18n="back">Torna alla guida</span>
+      </a>
     </section>
 
     <section id="panel-home" class="panel">
@@ -224,6 +238,10 @@
         <p data-i18n="tab.home.desc">Aria condizionata e mappe utili per orientarti a Roma e in Vaticano.</p>
       </div>
       <div class="stack" id="stack-home"></div>
+      <a class="guide-return" href="index.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+        <span data-i18n="back">Torna alla guida</span>
+      </a>
     </section>
 
     <div class="page-brand"><b>Vatican Glamorous</b>Passeggiata del Gelsomino</div>
@@ -292,15 +310,15 @@ function chevIcon(){
 const DATA = {
   general: [
     { icon:'book', photo:PHOTOS.welcomebook, href:'welcome-book.html',
-      it:{t:'Welcome Book', s:"Il benvenuto fotografico all'appartamento: tutto ciò che serve prima di arrivare."},
-      en:{t:'Welcome Book', s:'The full photo welcome to the apartment: everything you need before you arrive.'},
-      fr:{t:'Welcome Book', s:"L'accueil en photos de l'appartement : tout ce qu'il faut savoir avant d'arriver."},
-      de:{t:'Welcome Book', s:'Der vollständige Foto-Willkommensgruß zur Wohnung: alles, was Sie vor der Ankunft wissen müssen.'},
-      es:{t:'Welcome Book', s:'La bienvenida fotográfica completa al apartamento: todo lo que necesitas antes de llegar.'},
-      hu:{t:'Welcome Book', s:'A lakás teljes fotós bemutatója: minden, amire érkezés előtt szükséged van.'},
-      ro:{t:'Welcome Book', s:'Bun venit foto complet în apartament: tot ce ai nevoie înainte de sosire.'},
-      pl:{t:'Welcome Book', s:'Pełne fotograficzne powitanie w mieszkaniu: wszystko, co trzeba wiedzieć przed przyjazdem.'} },
-    { icon:'wifi', size:'medium', grad:'linear-gradient(135deg,#29C5D6,#0F94A8)', href:'wifi.html',
+      it:{t:'Welcome Book', s:"Foto e informazioni prima dell'arrivo."},
+      en:{t:'Welcome Book', s:'Photos and essentials before arrival.'},
+      fr:{t:'Welcome Book', s:"Photos et infos avant l'arrivée."},
+      de:{t:'Welcome Book', s:'Fotos und Infos vor der Anreise.'},
+      es:{t:'Welcome Book', s:'Fotos e información antes de llegar.'},
+      hu:{t:'Welcome Book', s:'Fotók és tudnivalók érkezés előtt.'},
+      ro:{t:'Welcome Book', s:'Fotografii și informații înainte de sosire.'},
+      pl:{t:'Welcome Book', s:'Zdjęcia i informacje przed przyjazdem.'} },
+    { icon:'wifi', size:'medium', titleOnly:true, grad:'linear-gradient(135deg,#29C5D6,#0F94A8)', href:'wifi.html',
       it:{t:'Wi‑Fi', s:'Password: 9a9b9c9d9e — oppure inquadra il QR code in casa per connetterti subito.'},
       en:{t:'Wi‑Fi', s:'Password: 9a9b9c9d9e — or scan the QR code in the apartment to connect instantly.'},
       fr:{t:'Wi‑Fi', s:"Mot de passe : 9a9b9c9d9e — ou scannez le QR code dans l'appartement pour vous connecter instantanément."},
@@ -309,7 +327,7 @@ const DATA = {
       hu:{t:'Wi‑Fi', s:'Jelszó: 9a9b9c9d9e — vagy olvasd be a lakásban lévő QR-kódot az azonnali csatlakozáshoz.'},
       ro:{t:'Wi‑Fi', s:'Parolă: 9a9b9c9d9e — sau scanează codul QR din apartament pentru conectare instantanee.'},
       pl:{t:'Wi‑Fi', s:'Hasło: 9a9b9c9d9e — lub zeskanuj kod QR w mieszkaniu, aby połączyć się natychmiast.'} },
-    { icon:'phone', size:'medium', grad:'linear-gradient(135deg,#A473E0,#7A3FC0)', href:'contatti.html',
+    { icon:'phone', size:'medium', titleOnly:true, grad:'linear-gradient(135deg,#A473E0,#7A3FC0)', href:'contatti.html',
       it:{t:'Contatti', s:'Gianluca (per ogni necessità): +39 340 277 9645. Email: vaticanglamorous@gmail.com'},
       en:{t:'Contacts', s:'Gianluca (for all issues): +39 340 277 9645. Email: vaticanglamorous@gmail.com'},
       fr:{t:'Contacts', s:'Gianluca (pour tout besoin) : +39 340 277 9645. Email : vaticanglamorous@gmail.com'},
@@ -319,99 +337,99 @@ const DATA = {
       ro:{t:'Contacte', s:'Gianluca (pentru orice nevoie): +39 340 277 9645. Email: vaticanglamorous@gmail.com'},
       pl:{t:'Kontakt', s:'Gianluca (w każdej sprawie): +39 340 277 9645. Email: vaticanglamorous@gmail.com'} },
     { icon:'cup', size:'hero', photo:PHOTOS.ristoranti, href:'https://www.romatoday.it/ristoranti/zona/prati/',
-      it:{t:'Ristoranti nella Zona', s:'I migliori ristoranti selezionati nel quartiere, a due passi da San Pietro.'},
-      en:{t:'Restaurants Nearby', s:"The best selected restaurants in the neighbourhood, steps from St. Peter's."},
-      fr:{t:'Restaurants du Quartier', s:'Les meilleurs restaurants sélectionnés du quartier, à deux pas de Saint-Pierre.'},
-      de:{t:'Restaurants in der Nähe', s:'Die besten ausgewählten Restaurants im Viertel, nur wenige Schritte vom Petersdom entfernt.'},
-      es:{t:'Restaurantes Cercanos', s:'Los mejores restaurantes seleccionados del barrio, a pocos pasos de San Pedro.'},
-      hu:{t:'Éttermek a Közelben', s:'A legjobb kiválasztott éttermek a környéken, néhány lépésre a Szent Péter-bazilikától.'},
-      ro:{t:'Restaurante din Zonă', s:'Cele mai bune restaurante selecționate din cartier, la câțiva pași de Sf. Petru.'},
-      pl:{t:'Restauracje w Okolicy', s:'Najlepsze wybrane restauracje w okolicy, kilka kroków od Bazyliki św. Piotra.'} },
+      it:{t:'Ristoranti in Zona', s:'Locali selezionati vicino a San Pietro.'},
+      en:{t:'Restaurants Nearby', s:"Selected places near St. Peter's."},
+      fr:{t:'Restaurants à Proximité', s:'Adresses choisies près de Saint-Pierre.'},
+      de:{t:'Restaurants in der Nähe', s:'Ausgewählte Lokale nahe dem Petersdom.'},
+      es:{t:'Restaurantes Cercanos', s:'Locales elegidos cerca de San Pedro.'},
+      hu:{t:'Éttermek a Közelben', s:'Válogatott helyek a Szent Péter térnél.'},
+      ro:{t:'Restaurante în Zonă', s:'Localuri alese lângă Sf. Petru.'},
+      pl:{t:'Restauracje w Okolicy', s:'Wybrane lokale obok Placu św. Piotra.'} },
     { icon:'pin', size:'medium', grad:'linear-gradient(135deg,#F0985A,#D46A2E)', href:'https://maps.app.goo.gl/XtD9nowENpqSZ3Fy5',
-      it:{t:'La Nostra Posizione', s:"Apri l'appartamento su Google Maps."},
-      en:{t:'Our Location', s:'Open the apartment on Google Maps.'},
-      fr:{t:'Notre Emplacement', s:"Ouvrez l'appartement sur Google Maps."},
-      de:{t:'Unser Standort', s:'Öffnen Sie die Wohnung auf Google Maps.'},
-      es:{t:'Nuestra Ubicación', s:'Abre el apartamento en Google Maps.'},
-      hu:{t:'Elhelyezkedésünk', s:'Nyisd meg a lakást a Google Térképen.'},
-      ro:{t:'Locația Noastră', s:'Deschide apartamentul pe Google Maps.'},
-      pl:{t:'Nasza Lokalizacja', s:'Otwórz mieszkanie w Mapach Google.'} },
+      it:{t:'La Nostra Posizione', s:'Apri Google Maps.'},
+      en:{t:'Our Location', s:'Open Google Maps.'},
+      fr:{t:'Notre Emplacement', s:'Ouvrir Google Maps.'},
+      de:{t:'Unser Standort', s:'Google Maps öffnen.'},
+      es:{t:'Nuestra Ubicación', s:'Abrir Google Maps.'},
+      hu:{t:'Elhelyezkedésünk', s:'Megnyitás a Google Térképen.'},
+      ro:{t:'Locația Noastră', s:'Deschide Google Maps.'},
+      pl:{t:'Nasza Lokalizacja', s:'Otwórz Mapy Google.'} },
     { icon:'sparkle', size:'medium', href:'cleaning-costs.html',
-      it:{t:'Pulizie Finali', s:"50€ a soggiorno, da pagare all'arrivo. Pagamento tramite SumUP."},
-      en:{t:'Cleaning Costs', s:'€50 per stay, to be paid on arrival. Paid via SumUP.'},
-      fr:{t:'Frais de Ménage', s:"50 € par séjour, à payer à l'arrivée. Paiement via SumUP."},
-      de:{t:'Reinigungskosten', s:'50 € pro Aufenthalt, zahlbar bei Ankunft. Zahlung über SumUP.'},
-      es:{t:'Costes de Limpieza', s:'50 € por estancia, a pagar a la llegada. Pago mediante SumUP.'},
-      hu:{t:'Takarítási Díj', s:'50 € tartózkodásonként, érkezéskor fizetendő. Fizetés SumUP-on keresztül.'},
-      ro:{t:'Cost Curățenie', s:'50 € pe sejur, de plătit la sosire. Plată prin SumUP.'},
-      pl:{t:'Koszt Sprzątania', s:'50 € za pobyt, płatne przy przyjeździe. Płatność przez SumUP.'} },
+      it:{t:'Pulizie Finali', s:'Dettagli e modalità di pagamento.'},
+      en:{t:'Cleaning Costs', s:'Details and payment information.'},
+      fr:{t:'Frais de Ménage', s:'Détails et modalités de paiement.'},
+      de:{t:'Reinigungskosten', s:'Details und Zahlungsinformationen.'},
+      es:{t:'Costes de Limpieza', s:'Detalles e información de pago.'},
+      hu:{t:'Takarítási Díj', s:'Részletek és fizetési információk.'},
+      ro:{t:'Cost Curățenie', s:'Detalii și informații de plată.'},
+      pl:{t:'Koszt Sprzątania', s:'Szczegóły i informacje o płatności.'} },
     { icon:'ac', photo:PHOTOS.ac, href:'https://www.passeggiatadelgelsomino.com/air-conditioning',
-      it:{t:'Aria Condizionata', s:'Sistema automatizzato, regolabile manualmente col telecomando se preferisci.'},
-      en:{t:'Air Conditioning', s:'Automated system, adjustable manually with the remote control if you prefer.'},
-      fr:{t:'Climatisation', s:'Système automatisé, réglable manuellement avec la télécommande si vous préférez.'},
-      de:{t:'Klimaanlage', s:'Automatisiertes System, bei Bedarf manuell mit der Fernbedienung einstellbar.'},
-      es:{t:'Aire Acondicionado', s:'Sistema automatizado, ajustable manualmente con el mando a distancia si lo prefieres.'},
-      hu:{t:'Légkondicionálás', s:'Automatizált rendszer, igény esetén kézileg is állítható a távirányítóval.'},
-      ro:{t:'Aer Condiționat', s:'Sistem automatizat, reglabil manual cu telecomanda dacă preferi.'},
-      pl:{t:'Klimatyzacja', s:'System automatyczny, który w razie potrzeby można ręcznie regulować pilotem.'} },
+      it:{t:'Aria Condizionata', s:'Automatica o con telecomando.'},
+      en:{t:'Air Conditioning', s:'Automatic or remote-controlled.'},
+      fr:{t:'Climatisation', s:'Automatique ou par télécommande.'},
+      de:{t:'Klimaanlage', s:'Automatisch oder per Fernbedienung.'},
+      es:{t:'Aire Acondicionado', s:'Automático o con mando.'},
+      hu:{t:'Légkondicionálás', s:'Automatikus vagy távirányítós.'},
+      ro:{t:'Aer Condiționat', s:'Automat sau cu telecomandă.'},
+      pl:{t:'Klimatyzacja', s:'Automatyczna lub z pilotem.'} },
   ],
   tours: [
     { icon:'event', photo:PHOTOS.toureventi, href:'tour-eventi.html',
-      it:{t:'Esperienze', s:'Prenota tour, esperienze ed eventi con accesso prioritario ai Musei Vaticani.'},
-      en:{t:'Experiences', s:'Reserve tours, experiences and events with priority entry to the Vatican Museums.'},
-      fr:{t:'Expériences', s:'Réservez des visites, expériences et événements avec accès prioritaire aux Musées du Vatican.'},
-      de:{t:'Erlebnisse', s:'Buchen Sie Touren, Erlebnisse und Veranstaltungen mit Vorrangeintritt zu den Vatikanischen Museen.'},
-      es:{t:'Experiencias', s:'Reserva tours, experiencias y eventos con entrada prioritaria a los Museos Vaticanos.'},
-      hu:{t:'Élmények', s:'Foglalj túrákat, élményeket és eseményeket elsőbbségi belépéssel a Vatikáni Múzeumokba.'},
-      ro:{t:'Experiențe', s:'Rezervă tururi, experiențe și evenimente cu acces prioritar la Muzeele Vaticanului.'},
-      pl:{t:'Doświadczenia', s:'Zarezerwuj wycieczki, atrakcje i wydarzenia z priorytetowym wstępem do Muzeów Watykańskich.'} },
+      it:{t:'Esperienze', s:'Tour ed eventi con ingresso prioritario.'},
+      en:{t:'Experiences', s:'Tours and events with priority entry.'},
+      fr:{t:'Expériences', s:'Visites et événements avec accès prioritaire.'},
+      de:{t:'Erlebnisse', s:'Touren und Events mit bevorzugtem Eintritt.'},
+      es:{t:'Experiencias', s:'Tours y eventos con acceso prioritario.'},
+      hu:{t:'Élmények', s:'Túrák és események elsőbbségi belépéssel.'},
+      ro:{t:'Experiențe', s:'Tururi și evenimente cu acces prioritar.'},
+      pl:{t:'Doświadczenia', s:'Wycieczki i wydarzenia z priorytetem.'} },
     { icon:'event', size:'hero', photo:PHOTOS.eventiroma, href:'https://www.romatoday.it/eventi/pag/2/',
-      it:{t:'Eventi a Roma', s:'Cosa succede in città durante il tuo soggiorno.'},
-      en:{t:'Events in Rome', s:"What's happening in the city during your stay."},
-      fr:{t:'Événements à Rome', s:'Ce qui se passe en ville pendant votre séjour.'},
-      de:{t:'Veranstaltungen in Rom', s:'Was während Ihres Aufenthalts in der Stadt los ist.'},
-      es:{t:'Eventos en Roma', s:'Lo que ocurre en la ciudad durante tu estancia.'},
-      hu:{t:'Események Rómában', s:'Ami a városban történik az ott-tartózkodásod alatt.'},
-      ro:{t:'Evenimente la Roma', s:'Ce se întâmplă în oraș în timpul sejurului tău.'},
-      pl:{t:'Wydarzenia w Rzymie', s:'Co dzieje się w mieście podczas Twojego pobytu.'} },
+      it:{t:'Eventi a Roma', s:'Gli eventi durante il tuo soggiorno.'},
+      en:{t:'Events in Rome', s:'Events during your stay.'},
+      fr:{t:'Événements à Rome', s:'Les événements pendant votre séjour.'},
+      de:{t:'Events in Rom', s:'Veranstaltungen während Ihres Aufenthalts.'},
+      es:{t:'Eventos en Roma', s:'Eventos durante tu estancia.'},
+      hu:{t:'Események Rómában', s:'Programok a tartózkodás alatt.'},
+      ro:{t:'Evenimente la Roma', s:'Evenimente în timpul sejurului.'},
+      pl:{t:'Wydarzenia w Rzymie', s:'Wydarzenia podczas pobytu.'} },
     { icon:'compass', size:'hero', photo:PHOTOS.escursioni, href:'https://gyg.me/2NU4eZiI',
-      it:{t:'Escursioni sulla Costa', s:'Latina, Sabaudia, Circeo & Costa Laziale.'},
-      en:{t:'Coastal Excursions', s:'Latina, Sabaudia, Circeo & the Lazio Coast.'},
-      fr:{t:'Excursions sur la Côte', s:'Latina, Sabaudia, Circeo et la côte du Latium.'},
-      de:{t:'Ausflüge an die Küste', s:'Latina, Sabaudia, Circeo und die Küste von Latium.'},
-      es:{t:'Excursiones por la Costa', s:'Latina, Sabaudia, Circeo y la costa del Lacio.'},
-      hu:{t:'Kirándulások a Partvidéken', s:'Latina, Sabaudia, Circeo és a Lazio-parti térség.'},
-      ro:{t:'Excursii pe Coastă', s:'Latina, Sabaudia, Circeo și Coasta Lazio.'},
-      pl:{t:'Wycieczki na Wybrzeże', s:'Latina, Sabaudia, Circeo i wybrzeże Lacjum.'} },
+      it:{t:'Escursioni sulla Costa', s:'Latina, Sabaudia e Circeo.'},
+      en:{t:'Coastal Excursions', s:'Latina, Sabaudia and Circeo.'},
+      fr:{t:'Excursions sur la Côte', s:'Latina, Sabaudia et Circeo.'},
+      de:{t:'Ausflüge an die Küste', s:'Latina, Sabaudia und Circeo.'},
+      es:{t:'Excursiones por la Costa', s:'Latina, Sabaudia y Circeo.'},
+      hu:{t:'Kirándulások a Partvidéken', s:'Latina, Sabaudia és Circeo.'},
+      ro:{t:'Excursii pe Coastă', s:'Latina, Sabaudia și Circeo.'},
+      pl:{t:'Wycieczki na Wybrzeże', s:'Latina, Sabaudia i Circeo.'} },
     { icon:'pilgrim', size:'medium', photo:PHOTOS.pilgrim, href:'pilgrim-stay.html',
-      it:{t:'Pilgrim Stay', s:'Informazioni dedicate ai pellegrini in visita al Vaticano.'},
-      en:{t:'Pilgrim Stay', s:'Dedicated information for pilgrims visiting the Vatican.'},
-      fr:{t:'Pilgrim Stay', s:'Informations dédiées aux pèlerins en visite au Vatican.'},
-      de:{t:'Pilgrim Stay', s:'Spezielle Informationen für Pilger, die den Vatikan besuchen.'},
-      es:{t:'Pilgrim Stay', s:'Información dedicada a los peregrinos que visitan el Vaticano.'},
-      hu:{t:'Pilgrim Stay', s:'Kifejezetten a Vatikánba látogató zarándokoknak szóló információk.'},
-      ro:{t:'Pilgrim Stay', s:'Informații dedicate pelerinilor care vizitează Vaticanul.'},
-      pl:{t:'Pilgrim Stay', s:'Informacje przeznaczone dla pielgrzymów odwiedzających Watykan.'} },
+      it:{t:'Pilgrim Stay', s:'Informazioni per la visita in Vaticano.'},
+      en:{t:'Pilgrim Stay', s:'Information for visiting the Vatican.'},
+      fr:{t:'Pilgrim Stay', s:'Infos pour visiter le Vatican.'},
+      de:{t:'Pilgrim Stay', s:'Infos für den Vatikanbesuch.'},
+      es:{t:'Pilgrim Stay', s:'Información para visitar el Vaticano.'},
+      hu:{t:'Pilgrim Stay', s:'Információk a vatikáni látogatáshoz.'},
+      ro:{t:'Pilgrim Stay', s:'Informații pentru vizita la Vatican.'},
+      pl:{t:'Pilgrim Stay', s:'Informacje na wizytę w Watykanie.'} },
   ],
   home: [
     { icon:'map', size:'hero', photo:PHOTOS.maprome, lightbox:true, href:'https://www.passeggiatadelgelsomino.com/map-of-rome',
-      it:{t:'Mappa di Roma', s:'Orientati tra i luoghi principali della città.'},
-      en:{t:'Map of Rome', s:"Find your way around the city's main sights."},
-      fr:{t:'Carte de Rome', s:'Repérez-vous parmi les principaux lieux de la ville.'},
-      de:{t:'Karte von Rom', s:'Finden Sie sich zwischen den wichtigsten Sehenswürdigkeiten der Stadt zurecht.'},
-      es:{t:'Mapa de Roma', s:'Oriéntate entre los principales lugares de la ciudad.'},
-      hu:{t:'Róma Térképe', s:'Igazodj el a város legfontosabb helyszínei között.'},
-      ro:{t:'Harta Romei', s:'Orientează-te printre principalele obiective ale orașului.'},
-      pl:{t:'Mapa Rzymu', s:'Odnajdź się wśród najważniejszych miejsc w mieście.'} },
+      it:{t:'Mappa di Roma', s:'I luoghi principali della città.'},
+      en:{t:'Map of Rome', s:"The city's main sights."},
+      fr:{t:'Carte de Rome', s:'Les principaux lieux de la ville.'},
+      de:{t:'Karte von Rom', s:'Die wichtigsten Orte der Stadt.'},
+      es:{t:'Mapa de Roma', s:'Los principales lugares de la ciudad.'},
+      hu:{t:'Róma Térképe', s:'A város főbb látnivalói.'},
+      ro:{t:'Harta Romei', s:'Principalele atracții ale orașului.'},
+      pl:{t:'Mapa Rzymu', s:'Najważniejsze miejsca w mieście.'} },
     { icon:'map', size:'hero', photo:PHOTOS.mapvatican, lightbox:true, href:'https://www.passeggiatadelgelsomino.com/map-of-vatican-city-area',
-      it:{t:'Mappa Area Vaticana', s:'La mappa dettagliata della zona di San Pietro e dei Musei Vaticani.'},
-      en:{t:'Map of Vatican City Area', s:"A detailed map of the St. Peter's and Vatican Museums area."},
-      fr:{t:'Carte de la Zone du Vatican', s:'La carte détaillée du quartier de Saint-Pierre et des Musées du Vatican.'},
-      de:{t:'Karte des Vatikanareals', s:'Die detaillierte Karte des Petersdom-Viertels und der Vatikanischen Museen.'},
-      es:{t:'Mapa de la Zona del Vaticano', s:'El mapa detallado de la zona de San Pedro y los Museos Vaticanos.'},
-      hu:{t:'Vatikáni Terület Térképe', s:'A Szent Péter-bazilika és a Vatikáni Múzeumok környékének részletes térképe.'},
-      ro:{t:'Harta Zonei Vaticanului', s:'Harta detaliată a zonei Sf. Petru și a Muzeelor Vaticanului.'},
-      pl:{t:'Mapa Okolic Watykanu', s:'Szczegółowa mapa okolic Bazyliki św. Piotra i Muzeów Watykańskich.'} },
+      it:{t:'Mappa Area Vaticana', s:'San Pietro e Musei Vaticani.'},
+      en:{t:'Vatican Area Map', s:"St. Peter's and Vatican Museums."},
+      fr:{t:'Carte du Vatican', s:'Saint-Pierre et Musées du Vatican.'},
+      de:{t:'Karte des Vatikans', s:'Petersdom und Vatikanische Museen.'},
+      es:{t:'Mapa del Vaticano', s:'San Pedro y Museos Vaticanos.'},
+      hu:{t:'Vatikáni Térkép', s:'Szent Péter tér és Vatikáni Múzeumok.'},
+      ro:{t:'Harta Vaticanului', s:'Sf. Petru și Muzeele Vaticanului.'},
+      pl:{t:'Mapa Watykanu', s:'Plac św. Piotra i Muzea Watykańskie.'} },
   ]
 };
 
@@ -542,10 +560,11 @@ function renderStack(id, items, opts){
   el.innerHTML = items.map((item,i)=>{
     const cls = rankClass(i, item);
     const txt = item[LANG] || item.en;
+    const caption = `<p class="caption-line"><strong>${txt.t}</strong>${item.titleOnly ? '' : `<span class="caption-sep">·</span><span>${txt.s}</span>`}</p>`;
     const photoStyle = item.photo ? ` style="background-image:url('${item.photo}');background-size:cover;background-position:center;"` : '';
     if(cls==='hero'){
       const fillClass = (item.photoFill ? ' photo-fill' : '') + (opts.bigPhoto ? ' big-photo' : '');
-      const tag = opts.bigPhoto ? '' : (i===0
+      const tag = (opts.bigPhoto || opts.hideRanks) ? '' : (i===0
         ? `<span class="rank-tag">#1 · ${I18N[LANG]['rank.top']}</span>`
         : `<span class="rank-tag alt">${I18N[LANG]['rank.alt']}</span>`);
       const bgStyle = item.heroBg==='sea' ? ' style="background:linear-gradient(135deg, var(--sea), #2c5153);--fgc:#ffffff;--bgc:rgba(255,255,255,.4)"' : ' style="--fgc:#ffffff;--bgc:rgba(255,255,255,.4)"';
@@ -557,7 +576,7 @@ function renderStack(id, items, opts){
         : ` href="${item.href}" target="_blank" rel="noopener"`;
       return `<a class="card hero${fillClass}"${linkAttrs}>
         ${art}
-        <div class="body">${tag}<p class="title">${txt.t}</p><p class="sub">${txt.s}</p></div>
+        <div class="body">${tag}${caption}</div>
       </a>`;
     }
     if(cls==='medium'){
@@ -566,7 +585,7 @@ function renderStack(id, items, opts){
         : `<div class="art" style="background:${item.grad || 'linear-gradient(135deg, var(--sea), #2c5153)'};--fgc:#ffffff;--bgc:rgba(255,255,255,.4)">${svg(item.icon)}</div>`;
       return `<a class="card medium" href="${item.href}" target="_blank" rel="noopener">
         ${art}
-        <div class="body"><p class="title">${txt.t}</p><p class="sub">${txt.s}</p></div>
+        <div class="body">${caption}</div>
         <span class="chevron">${chevIcon()}</span>
       </a>`;
     }
@@ -596,7 +615,7 @@ function setLang(l){
   applyI18n();
   renderStack('stack-general', DATA.general, {bigPhoto:true});
   renderStack('stack-tours', DATA.tours, {bigPhoto:true});
-  renderStack('stack-home', DATA.home);
+  renderStack('stack-home', DATA.home, {hideRanks:true});
   closeLangMenu();
 }
 
@@ -694,7 +713,7 @@ function setTab(tab){
 
 renderStack('stack-general', DATA.general, {bigPhoto:true});
 renderStack('stack-tours', DATA.tours, {bigPhoto:true});
-renderStack('stack-home', DATA.home);
+renderStack('stack-home', DATA.home, {hideRanks:true});
 
 (function(){
   const hash = (window.location.hash || '').replace('#', '');
