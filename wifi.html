@@ -95,7 +95,7 @@
     padding:22px; display:flex; flex-direction:column; align-items:center; width:100%; margin-bottom:20px;
   }
   .qr-card img{ width:100%; max-width:260px; height:auto; border-radius:10px; }
-  .qr-hint{ margin:14px 0 0; font-size:12px; color:var(--ink-soft); text-align:center; line-height:1.5; }
+  .qr-hint{ margin:14px 0 0; font-size:13px; color:var(--ink-soft); text-align:center; line-height:1.5; }
 
   .creds{ width:100%; background:var(--stone-2); border-radius:14px; padding:16px 18px; margin-bottom:6px; }
   .creds .row{ display:flex; align-items:center; justify-content:space-between; padding:9px 0; border-bottom:1px solid rgba(14,58,102,0.10); }
@@ -165,6 +165,13 @@
         <span class="label" id="labelPassword">Password</span>
         <span class="value">9a9b9c9d9e</span>
       </div>
+    </div>
+
+    <div style="background:var(--pine); border-radius:14px; padding:13px 16px; margin-top:18px; display:flex;">
+      <a class="back-link" href="index.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+        <span id="backLabelBottom">Guida</span>
+      </a>
     </div>
   </main>
 
@@ -244,6 +251,7 @@ function setLang(lang){
   btn.classList.remove('open');
 
   document.getElementById('backLabel').textContent = d.back;
+  document.getElementById('backLabelBottom').textContent = d.back;
   document.getElementById('pageTitle').textContent = d.title;
   document.getElementById('pageSub').textContent = d.sub;
   document.getElementById('bannerLabel').textContent = d.banner;

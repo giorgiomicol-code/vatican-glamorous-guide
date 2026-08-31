@@ -113,7 +113,7 @@
     color:var(--role-color, var(--violet));
   }
   .cc-note{
-    margin:14px 0 16px; font-size:12.5px; color:var(--ink-soft); font-style:italic; line-height:1.5;
+    margin:14px 0 16px; font-size:13.5px; color:var(--ink-soft); font-style:italic; line-height:1.5;
     position:relative; z-index:1;
   }
   .cc-actions{ display:flex; gap:10px; position:relative; z-index:1; }
@@ -246,6 +246,13 @@
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
       <p id="tipText">Per problemi in casa (Wi‑Fi, elettricità, serratura, ecc.) scrivi prima a Gianluca: risponde più in fretta.</p>
     </div>
+
+    <div style="background:var(--pine); border-radius:14px; padding:13px 16px; margin-top:18px; display:flex;">
+      <a class="back-link" href="index.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+        <span id="backLabelBottom">Guida</span>
+      </a>
+    </div>
   </main>
 
   <footer class="contact-bar">
@@ -364,6 +371,7 @@ function setLang(lang){
   btn.classList.remove('open');
 
   document.getElementById('backLabel').textContent = d.back;
+  document.getElementById('backLabelBottom').textContent = d.back;
   document.getElementById('pageTitle').textContent = d.title;
   document.getElementById('pageSub').textContent = d.sub;
   document.getElementById('role1').textContent = d.role1;

@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Passeggiata del Gelsomino — Escursioni</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pine:#0E3A66;
+    --pine-2:#154C82;
+    --stone:#FFFFFF;
+    --stone-2:#E5F0FA;
+    --paper:#FFFFFF;
+    --brass:#2E86C1;
+    --brass-light:#8FCBEF;
+    --sea:#1F6F9C;
+    --clay:#3E7CB1;
+    --ink:#122436;
+    --ink-soft:#5A7288;
+    --line:rgba(14,58,102,0.12);
+    --shadow: 0 10px 30px -14px rgba(14,58,102,0.30);
+    --radius: 18px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--stone);
+    font-family:'Comfortaa', sans-serif;
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+    min-height:100svh;
+  }
+  h1,h2,h3{ font-family:'Comfortaa', sans-serif; font-weight:500; letter-spacing:-0.01em; }
+
+  .app{
+    max-width:560px;
+    margin:0 auto;
+    min-height:100svh;
+    background:var(--stone);
+    display:flex;
+    flex-direction:column;
+  }
+  @media (min-width:600px){
+    body{ background: linear-gradient(180deg,#DCE8F5, #C7DCF0 60%, #b7d0ea); padding:28px 0; }
+    .app{ border-radius:34px; overflow:hidden; min-height:calc(100svh - 56px); box-shadow: 0 30px 80px -20px rgba(14,58,102,0.35); }
+  }
+
+  header.top{
+    background: linear-gradient(160deg, var(--pine) 0%, #0A2A4A 100%);
+    color:#fff; padding:18px 20px 26px; position:relative; overflow:hidden;
+    min-height:220px; display:flex; flex-direction:column; justify-content:space-between;
+  }
+  header.top::before{
+    content:""; position:absolute; inset:0;
+    background:
+      radial-gradient(120% 90% at 100% 0%, rgba(143,203,239,0.35), transparent 55%),
+      radial-gradient(90% 90% at 0% 100%, rgba(14,58,102,0.35), transparent 55%);
+    pointer-events:none;
+  }
+  .top-row{ display:flex; align-items:center; justify-content:space-between; gap:12px; position:relative; z-index:1; }
+  .back-link{ display:flex; align-items:center; gap:6px; color:#fff; text-decoration:none; font-size:13px; font-weight:600; }
+  .back-link svg{ width:16px; height:16px; }
+
+  .lang-select{ position:relative; flex-shrink:0; z-index:20; }
+  .lang-current{
+    display:flex; align-items:center; gap:6px; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.18);
+    border-radius:999px; padding:8px 12px; color:#fff; font-family:'Comfortaa'; font-weight:700; font-size:12px; cursor:pointer;
+  }
+  .lang-current svg{ width:13px; height:13px; transition:transform .2s; }
+  .lang-current.open svg{ transform:rotate(180deg); }
+  .lang-menu{
+    position:fixed; background:#fff; border-radius:14px; box-shadow:0 14px 34px -10px rgba(14,58,102,0.4);
+    border:1px solid var(--line); padding:6px; display:none; min-width:170px; max-height:70vh; overflow-y:auto; z-index:999;
+  }
+  .lang-menu.open{ display:block; }
+  .lang-menu button{
+    display:flex; align-items:center; gap:10px; width:100%; text-align:left; border:none; background:none;
+    padding:9px 10px; border-radius:9px; font-family:'Comfortaa'; font-weight:600; font-size:13px;
+    color:var(--ink); cursor:pointer;
+  }
+  .lang-menu button:hover{ background:var(--stone-2); }
+  .lang-menu button.active{ background:var(--brass); color:#fff; }
+  .lang-menu button.active .code{ background:rgba(255,255,255,0.3); color:#fff; }
+  .lang-menu button .code{
+    width:24px; height:18px; border-radius:4px; background:var(--stone-2); color:var(--sea);
+    font-size:9.5px; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0;
+  }
+
+  .header-bottom{ position:relative; z-index:1; margin-top:18px; }
+  .eyebrow{ font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--brass-light); font-weight:700; margin-bottom:4px; display:block; }
+  h1.page-title{ margin:0; font-size:25px; color:#fff; }
+  .page-sub{ margin:6px 0 0; font-size:13px; color:rgba(255,255,255,0.72); line-height:1.5; }
+
+  main{ flex:1; padding:20px 18px 44px; }
+
+  .intro-text{
+    background:var(--stone-2); border-radius:var(--radius); padding:16px 18px;
+    font-size:13.5px; line-height:1.6; color:var(--ink); margin-bottom:22px;
+  }
+  .intro-text b{ color:var(--pine); }
+
+  .feature-card{
+    display:flex; align-items:center; gap:14px; text-decoration:none; color:#fff;
+    background: linear-gradient(135deg, #F6B93B, #E07B2E);
+    border-radius:var(--radius); padding:16px 18px; margin-bottom:28px;
+    box-shadow: 0 14px 26px -12px rgba(224,123,46,0.55);
+  }
+  .feature-card .ic{
+    width:46px; height:46px; border-radius:13px; background:rgba(255,255,255,0.22);
+    display:flex; align-items:center; justify-content:center; flex-shrink:0;
+  }
+  .feature-card .ic svg{ width:24px; height:24px; }
+  .feature-card .txt{ min-width:0; }
+  .feature-card .txt p.t{ margin:0 0 2px; font-size:14.5px; font-weight:700; }
+  .feature-card .txt p.s{ margin:0; font-size:13px; color:rgba(255,255,255,0.85); }
+  .feature-card .arrow{ margin-left:auto; flex-shrink:0; opacity:.85; }
+  .feature-card .arrow svg{ width:17px; height:17px; }
+
+  .link-list{ display:flex; flex-direction:column; gap:6px; }
+  .link-row{
+    display:flex; align-items:stretch; gap:6px;
+    background:var(--paper); border:1px solid var(--line); border-radius:12px;
+    padding:2px;
+  }
+  .link-row a.lr-main{
+    flex:1; min-width:0; display:flex; align-items:center; justify-content:space-between; gap:10px;
+    padding:11px 12px; text-decoration:none; color:var(--ink); border-radius:10px;
+  }
+  .link-row a.lr-main:active{ background:var(--stone-2); }
+  .lr-name{ font-size:13px; font-weight:600; line-height:1.35; }
+  .lr-ext{ color:var(--ink-soft); opacity:.45; flex-shrink:0; display:flex; }
+  .lr-ext svg{ width:14px; height:14px; }
+
+  .res-title{ font-size:12px; text-transform:uppercase; letter-spacing:.1em; font-weight:700; color:var(--sea); margin:0 0 10px; }
+  .helper-note{ margin-top:22px; font-size:11.5px; color:var(--ink-soft); text-align:center; line-height:1.5; padding:0 8px; }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <header class="top">
+    <div class="top-row">
+      <a class="back-link" href="index.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
+        <span id="backLabel">Guida</span>
+      </a>
+      <div class="lang-select" id="langSelect">
+        <button class="lang-current" id="langCurrentBtn" onclick="toggleLangMenu()">
+          <span id="langCurrentLabel">IT</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="lang-menu" id="langMenu">
+          <button data-lang="it" class="active" onclick="setLang('it')"><span class="code">IT</span>Italiano</button>
+          <button data-lang="en" onclick="setLang('en')"><span class="code">EN</span>English</button>
+          <button data-lang="fr" onclick="setLang('fr')"><span class="code">FR</span>Français</button>
+          <button data-lang="de" onclick="setLang('de')"><span class="code">DE</span>Deutsch</button>
+          <button data-lang="es" onclick="setLang('es')"><span class="code">ES</span>Español</button>
+          <button data-lang="hu" onclick="setLang('hu')"><span class="code">HU</span>Magyar</button>
+          <button data-lang="ro" onclick="setLang('ro')"><span class="code">RO</span>Română</button>
+          <button data-lang="pl" onclick="setLang('pl')"><span class="code">PL</span>Polski</button>
+        </div>
+      </div>
+    </div>
+    <div class="header-bottom">
+      <span class="eyebrow" id="eyebrowLabel">Attività</span>
+      <h1 class="page-title" id="pageTitle">Escursioni</h1>
+      <p class="page-sub" id="pageSub">Cibo, sapori e cultura della costa pontina, nel Lazio.</p>
+    </div>
+  </header>
+
+  <main>
+    <div class="intro-text" id="introText">Villa Brando è la tua meta ideale per una vacanza di lusso, immersa nel verde a breve distanza da Roma, dal mare e da Sabaudia. La zona offre una vasta gamma di attività: scegli le tue preferite, rilassati e goditi uno dei rifugi più esclusivi della costa laziale.</div>
+
+    <a class="feature-card" href="https://www.latinatoday.it/eventi/" target="_blank" rel="noopener">
+      <div class="ic">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>
+      </div>
+      <div class="txt">
+        <p class="t" id="eventsTitle">Eventi a Latina, Sabaudia e Dintorni</p>
+        <p class="s" id="eventsSub">Sagre, concerti e appuntamenti in zona.</p>
+      </div>
+      <span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span>
+    </a>
+
+    <p class="res-title" id="resTitle">Approfondimenti</p>
+    <div class="link-list" style="margin-bottom:8px;">
+      <div class="link-row">
+        <a class="lr-main" href="https://www.villabrando.com/italiano/escursioni/info-turistiche" target="_blank" rel="noopener">
+          <span class="lr-name" id="infoTitle">Info Turistiche</span>
+          <span class="lr-ext"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+        </a>
+      </div>
+      <div class="link-row">
+        <a class="lr-main" href="https://www.villabrando.com/italiano/escursioni/nelle-vicinanze" target="_blank" rel="noopener">
+          <span class="lr-name" id="nearbyTitle">Nelle Vicinanze</span>
+          <span class="lr-ext"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+        </a>
+      </div>
+    </div>
+
+    <p class="helper-note" id="helperNote">Tutti i link aprono siti esterni non gestiti da Villa Brando: orari e disponibilità possono variare, verifica sempre prima di partire.</p>
+
+    <div style="background:var(--pine); border-radius:14px; padding:13px 16px; margin-top:22px; display:flex;">
+      <a class="back-link" href="index.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
+        <span id="backLabelBottom">Guida</span>
+      </a>
+    </div>
+  </main>
+
+</div>
+
+<script>
+const LANG_LABELS = { it:'IT', en:'EN', fr:'FR', de:'DE', es:'ES', hu:'HU', ro:'RO', pl:'PL' };
+
+const I18N = {
+  it: {
+    back:"Guida", eyebrow:"Attività", title:"Escursioni", sub:"Cibo, sapori e cultura della costa pontina, nel Lazio.",
+    intro:"Villa Brando è la tua meta ideale per una vacanza di lusso, immersa nel verde a breve distanza da Roma, dal mare e da Sabaudia. La zona offre una vasta gamma di attività: scegli le tue preferite, rilassati e goditi uno dei rifugi più esclusivi della costa laziale.",
+    eventsTitle:"Eventi a Latina, Sabaudia e Dintorni", eventsSub:"Sagre, concerti e appuntamenti in zona.",
+    resTitle:"Approfondimenti", infoTitle:"Info Turistiche", nearbyTitle:"Nelle Vicinanze",
+    helper:"Tutti i link aprono siti esterni non gestiti da Villa Brando: orari e disponibilità possono variare, verifica sempre prima di partire."
+  },
+  en: {
+    back:"Guide", eyebrow:"Activities", title:"Excursions", sub:"Food, tastes & culture of the Pontine coast, in Lazio.",
+    intro:"Villa Brando is your ideal destination for a luxury vacation, nestled in greenery just a short distance from Rome, the sea, and Sabaudia. The area offers a wide range of activities: pick your favourites, relax, and enjoy one of the finest retreats on the Lazio coast.",
+    eventsTitle:"Events in Latina, Sabaudia & Surroundings", eventsSub:"Festivals, concerts and happenings nearby.",
+    resTitle:"More Resources", infoTitle:"Touristic Infos", nearbyTitle:"Hereabouts",
+    helper:"All links open external sites not managed by Villa Brando: hours and availability may vary, always check before heading out."
+  },
+  fr: {
+    back:"Guide", eyebrow:"Activités", title:"Excursions", sub:"Gastronomie, saveurs et culture de la côte pontine, dans le Latium.",
+    intro:"Villa Brando est votre destination idéale pour des vacances de luxe, nichée dans la verdure à faible distance de Rome, de la mer et de Sabaudia. La région offre un large éventail d'activités : choisissez vos préférées, détendez-vous et profitez de l'un des plus beaux refuges de la côte du Latium.",
+    eventsTitle:"Événements à Latina, Sabaudia et Alentours", eventsSub:"Fêtes locales, concerts et rendez-vous à proximité.",
+    resTitle:"En Savoir Plus", infoTitle:"Infos Touristiques", nearbyTitle:"À Proximité",
+    helper:"Tous les liens ouvrent des sites externes non gérés par Villa Brando : horaires et disponibilités peuvent varier, vérifiez toujours avant de partir."
+  },
+  de: {
+    back:"Guide", eyebrow:"Aktivitäten", title:"Ausflüge", sub:"Essen, Geschmack & Kultur der Küste von Latina.",
+    intro:"Villa Brando ist Ihr ideales Ziel für einen luxuriösen Urlaub, im Grünen und nur kurz entfernt von Rom, dem Meer und Sabaudia. Die Gegend bietet vielfältige Aktivitäten — wählen Sie Ihre Favoriten und genießen Sie einen der schönsten Rückzugsorte an der Küste von Latium.",
+    eventsTitle:"Veranstaltungen in Latina, Sabaudia & Umgebung", eventsSub:"Feste, Konzerte und Termine in der Nähe.",
+    resTitle:"Weitere Infos", infoTitle:"Touristeninfos", nearbyTitle:"In der Umgebung",
+    helper:"Alle Links führen zu externen, nicht von Villa Brando verwalteten Seiten: Öffnungszeiten und Verfügbarkeit können abweichen, bitte vorab prüfen."
+  },
+  es: {
+    back:"Guía", eyebrow:"Actividades", title:"Excursiones", sub:"Comida, sabores y cultura de la costa pontina, en el Lazio.",
+    intro:"Villa Brando es tu destino ideal para unas vacaciones de lujo, rodeada de vegetación y a poca distancia de Roma, el mar y Sabaudia. La zona ofrece muchísimas actividades: elige tus favoritas, relájate y disfruta de uno de los mejores refugios de la costa del Lazio.",
+    eventsTitle:"Eventos en Latina, Sabaudia y Alrededores", eventsSub:"Fiestas, conciertos y citas en la zona.",
+    resTitle:"Más Recursos", infoTitle:"Información Turística", nearbyTitle:"En los Alrededores",
+    helper:"Todos los enlaces abren sitios externos no gestionados por Villa Brando: horarios y disponibilidad pueden variar, verifica siempre antes de salir."
+  },
+  hu: {
+    back:"Kalauz", eyebrow:"Programok", title:"Kirándulások", sub:"Gasztronómia, ízek és kultúra a pontini partvidéken, Lazióban.",
+    intro:"A Villa Brando az ideális úti célod egy luxus nyaraláshoz, zöld környezetben, rövid távolságra Rómától, a tengertől és Sabaudiától. A környék számos programot kínál: válaszd ki kedvenceidet, lazíts, és élvezd a Lazio-part egyik legszebb menedékét.",
+    eventsTitle:"Események Latinában, Sabaudiában és Környékén", eventsSub:"Helyi fesztiválok, koncertek és programok.",
+    resTitle:"További Információk", infoTitle:"Turisztikai Információk", nearbyTitle:"A Közelben",
+    helper:"Minden link külső, a Villa Brando által nem kezelt oldalakra mutat: a nyitvatartás és elérhetőség változhat, indulás előtt mindig ellenőrizd."
+  },
+  ro: {
+    back:"Ghid", eyebrow:"Activități", title:"Excursii", sub:"Mâncare, arome și cultură pe coasta pontină, în Lazio.",
+    intro:"Villa Brando este destinația ta ideală pentru o vacanță de lux, înconjurată de verdeață, la mică distanță de Roma, de mare și de Sabaudia. Zona oferă o gamă largă de activități: alege-le pe cele preferate, relaxează-te și bucură-te de unul dintre cele mai frumoase refugii de pe coasta Lazio.",
+    eventsTitle:"Evenimente în Latina, Sabaudia și Împrejurimi", eventsSub:"Sărbători locale, concerte și evenimente din zonă.",
+    resTitle:"Mai Multe Informații", infoTitle:"Informații Turistice", nearbyTitle:"În Apropiere",
+    helper:"Toate linkurile deschid site-uri externe care nu sunt gestionate de Villa Brando: orarele și disponibilitatea pot varia, verifică întotdeauna înainte de a pleca."
+  },
+  pl: {
+    back:"Przewodnik", eyebrow:"Atrakcje", title:"Wycieczki", sub:"Jedzenie, smaki i kultura wybrzeża pontyjskiego, w Lacjum.",
+    intro:"Villa Brando to Twój idealny cel na luksusowe wakacje, otoczony zielenią, w niedużej odległości od Rzymu, morza i Sabaudii. Okolica oferuje szeroki wybór atrakcji: wybierz swoje ulubione, zrelaksuj się i ciesz się jednym z najpiękniejszych zakątków wybrzeża Lacjum.",
+    eventsTitle:"Wydarzenia w Latinie, Sabaudii i Okolicy", eventsSub:"Lokalne festyny, koncerty i wydarzenia w okolicy.",
+    resTitle:"Więcej Informacji", infoTitle:"Informacje Turystyczne", nearbyTitle:"W Pobliżu",
+    helper:"Wszystkie linki prowadzą do zewnętrznych stron nie zarządzanych przez Villa Brando: godziny i dostępność mogą się różnić, zawsze sprawdź przed wyjazdem."
+  }
+};
+
+const menu = document.getElementById('langMenu');
+const btn = document.getElementById('langCurrentBtn');
+
+function toggleLangMenu(){
+  const isOpen = menu.classList.contains('open');
+  if(!isOpen){
+    const rect = btn.getBoundingClientRect();
+    const appEl = document.querySelector('.app');
+    const bounds = appEl.getBoundingClientRect();
+    const menuWidth = 176;
+    menu.style.display = 'block';
+    let left = rect.right - menuWidth;
+    left = Math.max(bounds.left + 8, Math.min(left, bounds.right - menuWidth - 8));
+    menu.style.left = left + 'px';
+    menu.style.right = 'auto';
+    menu.style.width = menuWidth + 'px';
+    let top = rect.bottom + 8;
+    const menuMaxHeight = Math.min(320, window.innerHeight * 0.6);
+    if(top + menuMaxHeight > Math.min(bounds.bottom, window.innerHeight)){
+      top = Math.max(bounds.top + 8, rect.top - menuMaxHeight - 8);
+    }
+    menu.style.top = top + 'px';
+    menu.style.display = '';
+  }
+  menu.classList.toggle('open');
+  btn.classList.toggle('open');
+}
+
+document.addEventListener('click', function(e){
+  const sel = document.getElementById('langSelect');
+  if(sel && !sel.contains(e.target)){
+    menu.classList.remove('open');
+    btn.classList.remove('open');
+  }
+});
+window.addEventListener('resize', function(){
+  menu.classList.remove('open');
+  btn.classList.remove('open');
+});
+
+function setLang(lang){
+  if(!I18N[lang]) lang = 'it';
+  const d = I18N[lang];
+  localStorage.setItem('vbLang', lang);
+  document.getElementById('langCurrentLabel').textContent = LANG_LABELS[lang];
+  document.querySelectorAll('.lang-menu button').forEach(function(b){
+    b.classList.toggle('active', b.dataset.lang === lang);
+  });
+  menu.classList.remove('open');
+  btn.classList.remove('open');
+
+  document.getElementById('backLabel').textContent = d.back;
+  document.getElementById('backLabelBottom').textContent = d.back;
+  document.getElementById('eyebrowLabel').textContent = d.eyebrow;
+  document.getElementById('pageTitle').textContent = d.title;
+  document.getElementById('pageSub').textContent = d.sub;
+  document.getElementById('introText').textContent = d.intro;
+  document.getElementById('eventsTitle').textContent = d.eventsTitle;
+  document.getElementById('eventsSub').textContent = d.eventsSub;
+  document.getElementById('resTitle').textContent = d.resTitle;
+  document.getElementById('infoTitle').textContent = d.infoTitle;
+  document.getElementById('nearbyTitle').textContent = d.nearbyTitle;
+  document.getElementById('helperNote').textContent = d.helper;
+
+  document.documentElement.lang = lang;
+}
+
+setLang(localStorage.getItem('vbLang') || 'it');
+</script>
+
+</body>
+</html>

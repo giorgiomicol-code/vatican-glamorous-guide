@@ -84,7 +84,7 @@
   }
   .payment-icon svg{ width:29px; height:29px; color:#fff; }
   .payment-card h2{ margin:0 0 6px; font-size:19px; font-weight:600; color:var(--ink); }
-  .payment-card .p-desc{ margin:0 0 22px; font-size:13px; color:var(--ink-soft); line-height:1.55; }
+  .payment-card .p-desc{ margin:0 0 22px; font-size:14px; color:var(--ink-soft); line-height:1.55; }
   .price-tag{ font-size:38px; font-weight:700; color:var(--pine); line-height:1; margin-bottom:4px; }
   .price-note{ font-size:11.5px; color:var(--ink-soft); text-transform:uppercase; letter-spacing:0.06em; font-weight:700; margin-bottom:22px; }
   .pay-btn{
@@ -173,6 +173,13 @@
     <div class="info-note">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
       <span id="infoText">Il pagamento va effettuato al check-in. Se hai domande sui costi, scrivi pure a Gianluca.</span>
+    </div>
+
+    <div style="background:var(--pine); border-radius:14px; padding:13px 16px; margin-top:18px; display:flex;">
+      <a class="back-link" href="index.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+        <span id="backLabelBottom">Guida</span>
+      </a>
     </div>
   </main>
 
@@ -292,6 +299,7 @@ function setLang(lang){
   btn.classList.remove('open');
 
   document.getElementById('backLabel').textContent = d.back;
+  document.getElementById('backLabelBottom').textContent = d.back;
   document.getElementById('eyebrowLabel').textContent = d.eyebrow;
   document.getElementById('pageTitle').textContent = d.title;
   document.getElementById('pageSub').textContent = d.sub;

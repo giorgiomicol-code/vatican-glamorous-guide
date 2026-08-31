@@ -109,7 +109,7 @@
   }
   .reason-icon svg{ width:21px; height:21px; color:#fff; }
   .reason-title{ margin:0 0 3px; font-size:14px; font-weight:700; color:var(--ink); }
-  .reason-desc{ margin:0; font-size:12.5px; color:var(--ink-soft); line-height:1.5; }
+  .reason-desc{ margin:0; font-size:13.5px; color:var(--ink-soft); line-height:1.5; }
 
   footer.contact-bar{
     background:var(--stone-2); padding:16px 20px; display:flex; align-items:center; justify-content:space-between; gap:10px;
@@ -215,6 +215,13 @@
           <p class="reason-desc" id="r4Desc">Parcheggio privato sicuro e gratuito proprio sotto l'edificio, a due passi dalla Basilica di San Pietro.</p>
         </div>
       </div>
+    </div>
+
+    <div style="background:var(--pine); border-radius:14px; padding:13px 16px; margin-top:18px; display:flex;">
+      <a class="back-link" href="index.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+        <span id="backLabelBottom">Guida</span>
+      </a>
     </div>
   </main>
 
@@ -374,6 +381,7 @@ function setLang(lang){
   btn.classList.remove('open');
 
   document.getElementById('backLabel').textContent = d.back;
+  document.getElementById('backLabelBottom').textContent = d.back;
   document.getElementById('eyebrowLabel').textContent = d.eyebrow;
   document.getElementById('pageTitle').textContent = d.title;
   document.getElementById('pageSub').textContent = d.sub;
