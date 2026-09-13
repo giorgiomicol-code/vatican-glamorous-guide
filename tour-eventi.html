@@ -20,12 +20,12 @@
     -webkit-font-smoothing:antialiased; min-height:100svh;
   }
   .app{
-    max-width:520px; margin:0 auto; min-height:100svh; background:var(--stone); position:relative;
-    display:flex; flex-direction:column; box-shadow:0 0 60px rgba(0,0,0,0.08);
+    max-width:520px; margin:0 auto; height:100svh; background:var(--stone); position:relative;
+    display:flex; flex-direction:column; overflow:hidden; box-shadow:0 0 60px rgba(0,0,0,0.08);
   }
   @media (min-width:560px){
     body{ background: linear-gradient(180deg,#DCD3BC, #C9BE9F 60%, #b9ad8c); padding:28px 0; }
-    .app{ border-radius:34px; overflow:hidden; min-height:calc(100svh - 56px); box-shadow: 0 30px 80px -20px rgba(20,26,20,0.55); }
+    .app{ border-radius:34px; overflow:hidden; height:calc(100svh - 56px); box-shadow: 0 30px 80px -20px rgba(20,26,20,0.55); }
   }
 
   header.top{
@@ -96,7 +96,13 @@
   }
   .lang-menu button.active .code{ background:rgba(10,37,64,0.15); color:#0A2540; }
 
-  main{ flex:1; padding:18px 16px 28px; }
+  main{ flex:1; min-height:0; overflow-y:auto; -webkit-overflow-scrolling:touch; padding:18px 16px 20px; }
+
+  nav.tabbar{ position:relative; flex-shrink:0; left:0; right:0; bottom:0; background: rgba(255,255,255,0.96); backdrop-filter: blur(14px); border-top:1px solid var(--line); display:flex; padding:6px 8px calc(8px + env(safe-area-inset-bottom)); gap:4px; z-index:5; }
+  nav.tabbar button, nav.tabbar a{ flex:1; display:flex; align-items:center; justify-content:center; background:none; border:none; padding:10px 4px; border-radius:14px; color:var(--ink-soft); cursor:pointer; font-family:'Comfortaa'; font-weight:600; transition:.2s; text-decoration:none; }
+  nav.tabbar button svg, nav.tabbar a svg{ width:22px; height:22px; }
+  nav.tabbar button span, nav.tabbar a span{ display:none; }
+  nav.tabbar button.active, nav.tabbar a.active{ color:var(--pine); background:var(--stone-2); }
 
   .powered-note{
     display:flex; align-items:center; gap:8px; background:var(--stone-2); color:var(--pine);
@@ -366,6 +372,25 @@
     </div>
 
     </main>
+
+  <nav class="tabbar">
+    <a class="tab-btn active" href="index.html#tours">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
+      <span>Tour ed Eventi</span>
+    </a>
+    <a class="tab-btn" href="best-of-rome.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.6 6.9L22 9.6l-5.5 4.8L18 22l-6-3.6L6 22l1.5-7.6L2 9.6l7.4-.7Z"/></svg>
+      <span>Top Tour</span>
+    </a>
+    <a class="tab-btn" href="index.html#general">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 4l9 6.5"/><path d="M5 9.5V20h14V9.5"/><path d="M9 20v-6h6v6"/></svg>
+      <span>La Nostra Casa</span>
+    </a>
+    <a class="tab-btn" href="index.html#home">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2Z"/><path d="M9 4v14M15 6v14"/></svg>
+      <span>Mappe</span>
+    </a>
+  </nav>
 
   <footer class="contact-bar">
     <div class="brandline">Passeggiata del Gelsomino<small>Guest Guide</small></div>
